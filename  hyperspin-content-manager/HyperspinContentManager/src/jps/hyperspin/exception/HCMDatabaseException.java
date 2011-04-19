@@ -5,7 +5,7 @@ package jps.hyperspin.exception;
  * @author JPS
  * 
  */
-public class HyperSpinDatabaseException extends Exception {
+public class HCMDatabaseException extends Exception {
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class HyperSpinDatabaseException extends Exception {
 	 * @param cause
 	 *            cause
 	 */
-	public HyperSpinDatabaseException(final Throwable cause,
+	public HCMDatabaseException(final Throwable cause,
 			final String... messages) {
 		super(cause);
 		this.messages = messages;

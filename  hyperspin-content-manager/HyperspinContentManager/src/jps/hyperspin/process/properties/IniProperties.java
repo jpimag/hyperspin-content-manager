@@ -6,8 +6,8 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
-import jps.hyperspin.exception.HSDInternalException;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMInternalException;
+import jps.hyperspin.exception.HCMDatabaseException;
 
 /**
  * 
@@ -32,10 +32,10 @@ public final class IniProperties {
 	 * 
 	 * @param reader
 	 *            reader
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
-	public void load(final Reader reader) throws HyperSpinDatabaseException {
+	public void load(final Reader reader) throws HCMDatabaseException {
 		try {
 			BufferedReader br = new BufferedReader(reader);
 			String strLine;
@@ -60,7 +60,7 @@ public final class IniProperties {
 				}
 			}
 		} catch (IOException e) {
-			throw new HSDInternalException(e, "error loading ini file");
+			throw new HCMInternalException(e, "error loading ini file");
 		}
 	}
 

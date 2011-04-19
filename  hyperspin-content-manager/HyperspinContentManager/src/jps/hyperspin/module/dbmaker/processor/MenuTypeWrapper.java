@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.process;
+package jps.hyperspin.module.dbmaker.processor;
 
 import java.util.ArrayList;
 import java.util.List;

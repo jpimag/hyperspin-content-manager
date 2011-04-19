@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.main;
+package jps.hyperspin.module.database.presentation.downloader;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

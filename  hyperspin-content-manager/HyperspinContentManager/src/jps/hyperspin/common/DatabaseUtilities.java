@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.database.model.MenuType;
 import jps.hyperspin.process.xml.XmlBinding;
@@ -20,11 +20,11 @@ public class DatabaseUtilities {
 	 * @param databaseFullPath
 	 * @param logger
 	 * @return
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 * @throws FileNotFoundException
 	 */
 	public static MenuType loadDatabase(String databaseFullPath,
-			final Logger logger) throws HyperSpinDatabaseException,
+			final Logger logger) throws HCMDatabaseException,
 			FileNotFoundException {
 		File database = new File(databaseFullPath);
 		logger.info("Database to be parsed : " + database.getName());
@@ -84,7 +84,7 @@ public class DatabaseUtilities {
 					"Database File writed : " + path);
 		} catch (IOException e) {
 			MainClass.mainFrame.getLogger().error(e.getMessage());
-		} catch (HyperSpinDatabaseException e) {
+		} catch (HCMDatabaseException e) {
 			MainClass.mainFrame.getLogger().error(e.getMessage());
 		}
 	}

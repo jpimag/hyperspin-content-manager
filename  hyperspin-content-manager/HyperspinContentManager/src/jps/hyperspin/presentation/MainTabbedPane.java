@@ -2,8 +2,8 @@ package jps.hyperspin.presentation;
 
 import javax.swing.JTabbedPane;
 
-import jps.hyperspin.module.database.presentation.action.DatabaseActionTab;
-import jps.hyperspin.module.database.presentation.main.DatabaseTab;
+import jps.hyperspin.module.database.presentation.downloader.DatabaseTab;
+import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;
 
 public class MainTabbedPane extends JTabbedPane {
 
@@ -16,10 +16,10 @@ public class MainTabbedPane extends JTabbedPane {
 
 	public void init() {
 
-		this.addTab("Reference Database", databaseTab);
+		this.addTab("Database Downloader", databaseTab);
 		this.addTab("Database Maker", new DatabaseActionTab(databaseTab));
 
-		this.addTab("Medias", new DatabaseActionTab(databaseTab));
+		this.addTab("Media Checker", new DatabaseActionTab(databaseTab));
 		// this.addTab("WHDLoad Tool", new WhdloadTab());
 	}
 

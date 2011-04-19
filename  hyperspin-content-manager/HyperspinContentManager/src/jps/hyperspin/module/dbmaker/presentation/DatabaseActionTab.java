@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.action;
+package jps.hyperspin.module.dbmaker.presentation;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -11,8 +11,8 @@ import javax.swing.SwingConstants;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.LayoutUtilities;
-import jps.hyperspin.module.database.presentation.main.DatabaseTab;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.DatabaseTab;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
 
 public class DatabaseActionTab extends JPanel implements ActionListener {
 

@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.database.process.SystemIniProperties;
 
 /**
@@ -94,7 +94,7 @@ public class WhdloadFormPanel extends JPanel {
 			whdloadXmlField.setText(getHyperSpinPath()
 					+ "/Emulators/WinUAELoader/Data/WHDLoad.xml");
 
-		} catch (HyperSpinDatabaseException e) {
+		} catch (HCMDatabaseException e) {
 			e.printStackTrace();
 		}
 

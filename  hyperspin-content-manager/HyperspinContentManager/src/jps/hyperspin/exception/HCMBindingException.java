@@ -5,7 +5,7 @@ package jps.hyperspin.exception;
  * @author JPS
  * 
  */
-public final class HSDInternalException extends HyperSpinDatabaseException {
+public class HCMBindingException extends HCMDatabaseException {
 
 	/**
 	 * 
@@ -19,7 +19,8 @@ public final class HSDInternalException extends HyperSpinDatabaseException {
 	 * @param messages
 	 *            messages
 	 */
-	public HSDInternalException(final Throwable cause, final String... messages) {
+	public HCMBindingException(final Throwable cause, final String... messages) {
 		super(cause, messages);
 	}
+
 }

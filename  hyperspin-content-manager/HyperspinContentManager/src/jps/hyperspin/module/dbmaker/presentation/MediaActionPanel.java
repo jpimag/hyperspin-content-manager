@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.action;
+package jps.hyperspin.module.dbmaker.presentation;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.module.database.process.MediaProcessor;
+import jps.hyperspin.module.dbmaker.processor.MediaProcessor;
 
 /**
  * Panel des actions pour la categorie media

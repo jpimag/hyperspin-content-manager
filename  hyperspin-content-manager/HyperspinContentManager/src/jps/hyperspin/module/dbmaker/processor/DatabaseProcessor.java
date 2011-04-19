@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.process;
+package jps.hyperspin.module.dbmaker.processor;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,14 +13,14 @@ import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.FileUtilities;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.database.model.GameType;
 import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.presentation.action.IDatabaseOption;
-import jps.hyperspin.module.database.presentation.main.ChoiceDialog;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.ChoiceDialog;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import jps.hyperspin.process.file.FileFilterExtension;
 import jps.hyperspin.process.xml.XmlBinding;
 
@@ -50,11 +50,11 @@ public class DatabaseProcessor extends AbstractProcessor {
 	 *            request
 	 * @param logger
 	 *            logger
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
 	public final void processDatabase(final Logger logger)
-			throws HyperSpinDatabaseException, IOException {
+			throws HCMDatabaseException, IOException {
 
 		// Pre process option
 		List<PreProcessingOption> preOptions = new ArrayList<PreProcessingOption>();

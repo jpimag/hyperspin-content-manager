@@ -8,8 +8,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import jps.hyperspin.exception.HSDBindingException;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMBindingException;
+import jps.hyperspin.exception.HCMDatabaseException;
 
 /**
  * 
@@ -42,18 +42,18 @@ public final class XmlBinding {
 	 *            object
 	 * @param writer
 	 *            writer
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
 	public void java2xml(final Object object, final Writer writer)
-			throws HyperSpinDatabaseException {
+			throws HCMDatabaseException {
 		try {
 			JAXBContext context = JAXBContext.newInstance(object.getClass());
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(object, writer);
 		} catch (JAXBException e) {
-			throw new HSDBindingException(e, "[java2xml] jaxb exception");
+			throw new HCMBindingException(e, "[java2xml] jaxb exception");
 		}
 	}
 
@@ -64,21 +64,21 @@ public final class XmlBinding {
 	 * @param reader
 	 *            reader
 	 * @return the object load
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
 	public Object xml2java(final Class<?> classe, final Reader reader)
-			throws HyperSpinDatabaseException {
+			throws HCMDatabaseException {
 		try {
 			JAXBContext context = JAXBContext.newInstance(classe);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			Object o = unmarshaller.unmarshal(reader);
 			if (!o.getClass().equals(classe)) {
-				throw new HSDBindingException(null, "{xml2java] badType");
+				throw new HCMBindingException(null, "{xml2java] badType");
 			}
 			return o;
 		} catch (JAXBException e) {
-			throw new HSDBindingException(e, "[xml2java]jaxb exception");
+			throw new HCMBindingException(e, "[xml2java]jaxb exception");
 		}
 
 	}

@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.main;
+package jps.hyperspin.module.database.presentation.downloader;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -17,7 +17,7 @@ import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.FileUtilities;
 import jps.hyperspin.common.LayoutUtilities;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.database.model.MenuType;
 import jps.hyperspin.module.database.process.DownloadProcessor;
 import jps.hyperspin.module.database.process.SystemIniProperties;
@@ -229,7 +229,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 				romsPathField.setText("");
 
 			}
-		} catch (HyperSpinDatabaseException e) {
+		} catch (HCMDatabaseException e) {
 			MainClass.mainFrame.getLogger().info("Erreur : " + e);
 		}
 	}
