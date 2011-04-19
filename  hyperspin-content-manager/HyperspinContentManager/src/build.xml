@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HyperspinDatabaseUtility" basedir="." default="generateModel">
+
+	<taskdef name="xjc"
+	      classname="com.sun.tools.xjc.XJCTask">
+		<classpath>
+			<fileset dir="C:/dev/products/GlassFishv3/glassfish/modules/">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<property environment="env" />
+
+
+	<!--
+		AFTER GENERATION : 
+		Remove  : namespace = "http://jps.hypersin/Database" from package-info.java
+		Add     : @XmlRootElement(name = "menu") from MenuType.java
+	 -->
+	<target name="generateModel">
+		<xjc  schema="../conf/database.xsd"  package="jps.hyperspin.module.database.model"/>
+	</target>
+
+	<target name="generateWhdModel">
+		<xjc  schema="../conf/whdload.xsd"  package="jps.hyperspin.module.whdload.model"/>
+	</target>
+
+</project>

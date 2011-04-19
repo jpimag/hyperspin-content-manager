@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://jps.hypersin/Database" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jps.hypersin/Database">
+
+    <complexType name="menuType">
+    	<sequence>
+    		<element name="header" type="tns:headerType" maxOccurs="1" minOccurs="0"></element>
+    		<element name="game" type="tns:gameType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+  <complexType name="headerType">
+    	<sequence maxOccurs="1" minOccurs="1">
+    		<element name="listname" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="lastlistupdate" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>    		
+    		<element name="listversion" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="exporterversion" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="gameType">
+    	<sequence maxOccurs="1" minOccurs="1">
+    		<element name="description" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="cloneof" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>    		
+    		<element name="crc" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="manufacturer" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="year" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+			<element name="genre" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+			<element name="rating" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+			<element name="enabled" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>      		      		    		
+    	</sequence>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="index" type="string" use="optional"></attribute>
+    	<attribute name="image" type="string" use="optional"></attribute>
+    </complexType>
+    
+
+
+
+</schema>
