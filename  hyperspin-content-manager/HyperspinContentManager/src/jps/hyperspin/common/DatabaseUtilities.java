@@ -9,7 +9,7 @@ import java.io.IOException;
 import jps.hyperspin.MainClass;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
-import jps.hyperspin.module.database.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.process.xml.XmlBinding;
 
 public class DatabaseUtilities {

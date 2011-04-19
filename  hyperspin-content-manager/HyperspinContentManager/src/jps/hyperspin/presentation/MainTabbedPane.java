@@ -2,7 +2,7 @@ package jps.hyperspin.presentation;
 
 import javax.swing.JTabbedPane;
 
-import jps.hyperspin.module.database.presentation.downloader.DatabaseTab;
+import jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
 import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;
 
 public class MainTabbedPane extends JTabbedPane {

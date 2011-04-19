@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
 
 /**

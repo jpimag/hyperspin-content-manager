@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.process;
+package jps.hyperspin.module.dbdownloader.process;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.util.Map;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
 import jps.hyperspin.process.xml.XmlBinding;
 
 /**

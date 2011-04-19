@@ -15,8 +15,8 @@ import jps.hyperspin.common.FileUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.database.presentation.downloader.ChoiceDialog;
-import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.presentation.ChoiceDialog;
+import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**

@@ -11,10 +11,10 @@ import java.util.Set;
 
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
-import jps.hyperspin.module.database.model.GameType;
-import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
-import jps.hyperspin.module.database.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.model.GameType;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import jps.hyperspin.process.file.FileFilterDirectory;
 import jps.hyperspin.process.file.FileFilterExtension;
