@@ -12,7 +12,7 @@ import java.util.Map;
 import jps.hyperspin.MainClass;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
 import jps.hyperspin.process.xml.XmlBinding;
 
 /**

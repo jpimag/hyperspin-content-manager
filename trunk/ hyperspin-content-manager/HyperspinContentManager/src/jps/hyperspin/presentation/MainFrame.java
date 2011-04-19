@@ -60,6 +60,7 @@ public class MainFrame extends JFrame implements ComponentListener {
 	private void init() {
 		GridBagConstraints c = LayoutUtilities.newConstraint(0, 0);
 		this.setLayout(LayoutUtilities.newLayout());
+		this.setResizable(false);
 
 		// Frame properties
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

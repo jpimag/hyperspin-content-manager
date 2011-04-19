@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jps.hyperspin.common.FileUtilities;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.database.process.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
@@ -29,7 +29,7 @@ public class WhdloadProcessor extends AbstractProcessor {
 
 	private Map<String, String> loadWhdLoadGameList(
 			final WhdloadFormPanel form, final PanelLogger logger)
-			throws HyperSpinDatabaseException, IOException {
+			throws HCMDatabaseException, IOException {
 
 		Map<String, String> whdLoadGames = new HashMap<String, String>();
 		File whdload = new File(form.getWhdLoadXml());
@@ -54,11 +54,11 @@ public class WhdloadProcessor extends AbstractProcessor {
 	 *            request
 	 * @param logger
 	 *            logger
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
 	public final void processMissingFiles(final WhdloadFormPanel form,
-			final PanelLogger logger) throws HyperSpinDatabaseException,
+			final PanelLogger logger) throws HCMDatabaseException,
 			IOException {
 
 		logger.info("----------------------------------");
@@ -89,11 +89,11 @@ public class WhdloadProcessor extends AbstractProcessor {
 	 *            request
 	 * @param logger
 	 *            logger
-	 * @throws HyperSpinDatabaseException
+	 * @throws HCMDatabaseException
 	 *             exception
 	 */
 	public final void processNotUsedFiles(final WhdloadFormPanel form,
-			final PanelLogger logger) throws HyperSpinDatabaseException,
+			final PanelLogger logger) throws HCMDatabaseException,
 			IOException {
 
 		logger.info("----------------------------------");

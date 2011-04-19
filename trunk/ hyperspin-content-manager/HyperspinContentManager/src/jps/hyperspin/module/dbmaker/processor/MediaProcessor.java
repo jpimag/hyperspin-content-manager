@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.process;
+package jps.hyperspin.module.dbmaker.processor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.FileUtilities;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.database.presentation.action.IDatabaseOption;
-import jps.hyperspin.module.database.presentation.main.ChoiceDialog;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.ChoiceDialog;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**
  * 
@@ -37,7 +37,7 @@ public class MediaProcessor extends AbstractProcessor {
 	}
 
 	public void processMedia(String relativePath, final Logger logger)
-			throws HyperSpinDatabaseException, IOException {
+			throws HCMDatabaseException, IOException {
 
 		// Database or roms
 		List<ProcessingOption> options = new ArrayList<ProcessingOption>();
@@ -220,7 +220,7 @@ public class MediaProcessor extends AbstractProcessor {
 	public final void reverseProcessMedia(String relativePath,
 			Map<String, String> medias, Map<String, String> games,
 			final Logger logger) throws FileNotFoundException,
-			HyperSpinDatabaseException {
+			HCMDatabaseException {
 
 		String mediaDir = databaseDetail.getMediaRepository() + "/"
 				+ relativePath;
@@ -325,7 +325,7 @@ public class MediaProcessor extends AbstractProcessor {
 	}
 
 	public final void purgeMedia(String relativePath, final Logger logger)
-			throws FileNotFoundException, HyperSpinDatabaseException {
+			throws FileNotFoundException, HCMDatabaseException {
 
 		String mediaDir = databaseDetail.getMediaRepository() + "/"
 				+ relativePath;

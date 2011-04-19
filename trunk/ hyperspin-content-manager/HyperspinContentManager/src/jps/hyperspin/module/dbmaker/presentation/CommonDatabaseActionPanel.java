@@ -1,12 +1,12 @@
-package jps.hyperspin.module.database.presentation.action;
+package jps.hyperspin.module.dbmaker.presentation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-import jps.hyperspin.module.database.presentation.action.DatabaseActionTab.Action;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
+import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
 
 /**
  * Panel commun à toutes les categories d'action.

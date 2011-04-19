@@ -5,7 +5,7 @@ package jps.hyperspin.exception;
  * @author JPS
  * 
  */
-public class HSDNotExistingFileOrDirException extends HyperSpinDatabaseException {
+public final class HCMInternalException extends HCMDatabaseException {
 
 	/**
 	 * 
@@ -19,8 +19,7 @@ public class HSDNotExistingFileOrDirException extends HyperSpinDatabaseException
 	 * @param messages
 	 *            messages
 	 */
-	public HSDNotExistingFileOrDirException(final Throwable cause, final String... messages) {
+	public HCMInternalException(final Throwable cause, final String... messages) {
 		super(cause, messages);
 	}
-
 }

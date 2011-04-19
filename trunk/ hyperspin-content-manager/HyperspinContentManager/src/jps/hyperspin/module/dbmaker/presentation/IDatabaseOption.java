@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.action;
+package jps.hyperspin.module.dbmaker.presentation;
 
 
 /**

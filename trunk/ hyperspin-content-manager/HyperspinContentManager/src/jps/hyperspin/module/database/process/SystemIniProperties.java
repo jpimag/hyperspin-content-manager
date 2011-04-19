@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import jps.hyperspin.exception.HSDBadFileException;
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDBadFileException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.process.properties.IniProperties;
 
 public class SystemIniProperties {
@@ -22,21 +22,21 @@ public class SystemIniProperties {
 			iniProp.load(new FileReader(iniFile));
 		} catch (FileNotFoundException e) {
 
-		} catch (HyperSpinDatabaseException e) {
+		} catch (HCMDatabaseException e) {
 
 		}
 
 	}
 
-	public String getSystemName() throws HyperSpinDatabaseException {
+	public String getSystemName() throws HCMDatabaseException {
 		return inFileName;
 
 	}
 
-	public String getRomExtension() throws HyperSpinDatabaseException {
+	public String getRomExtension() throws HCMDatabaseException {
 		String romExtension = iniProp.getProperty("[exe info]", "romextension");
 		if (romExtension == null) {
-			throw new HSDBadFileException(null,
+			throw new HCMDBadFileException(null,
 					"romExtension not found in ini file");
 		}
 		// Workaround for MAME. With MAME we have to include sub dir as rom.
@@ -47,10 +47,10 @@ public class SystemIniProperties {
 
 	}
 
-	public String getRomPath() throws HyperSpinDatabaseException {
+	public String getRomPath() throws HCMDatabaseException {
 		String romPath = iniProp.getProperty("[exe info]", "rompath");
 		if (romPath == null) {
-			throw new HSDBadFileException(null, "romPath not found in ini file");
+			throw new HCMDBadFileException(null, "romPath not found in ini file");
 		}
 		return romPath;
 

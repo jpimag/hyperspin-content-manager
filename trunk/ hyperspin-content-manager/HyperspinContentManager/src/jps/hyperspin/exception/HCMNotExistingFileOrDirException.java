@@ -5,7 +5,7 @@ package jps.hyperspin.exception;
  * @author JPS
  * 
  */
-public class HSDBindingException extends HyperSpinDatabaseException {
+public class HCMNotExistingFileOrDirException extends HCMDatabaseException {
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class HSDBindingException extends HyperSpinDatabaseException {
 	 * @param messages
 	 *            messages
 	 */
-	public HSDBindingException(final Throwable cause, final String... messages) {
+	public HCMNotExistingFileOrDirException(final Throwable cause, final String... messages) {
 		super(cause, messages);
 	}
 

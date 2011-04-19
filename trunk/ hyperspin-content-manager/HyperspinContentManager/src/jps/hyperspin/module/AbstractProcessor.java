@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jps.hyperspin.exception.HyperSpinDatabaseException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.database.model.GameType;
 import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.presentation.action.IDatabaseOption;
-import jps.hyperspin.module.database.presentation.main.IDatabaseDetail;
+import jps.hyperspin.module.database.presentation.downloader.IDatabaseDetail;
 import jps.hyperspin.module.database.process.SystemIniProperties;
+import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import jps.hyperspin.process.file.FileFilterDirectory;
 import jps.hyperspin.process.file.FileFilterExtension;
 import jps.hyperspin.process.xml.XmlBinding;
@@ -77,7 +77,7 @@ public abstract class AbstractProcessor {
 	}
 
 	protected Map<String, String> loadDatabase(String databaseFullPath,
-			final Logger logger) throws HyperSpinDatabaseException,
+			final Logger logger) throws HCMDatabaseException,
 			FileNotFoundException {
 		// Step 5 : Load main database
 		File database = new File(databaseFullPath);
