@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://jps.hypersin/Database" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://jps.hypersin/Database">
+
+	
+
+    <complexType name="whdloadType">
+    	<sequence>
+    		<element name="Game" type="tns:gameType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="gameType">
+    	<attribute name="Name" type="string" use="required"></attribute>
+    	<attribute name="FileName" type="string" use="required"></attribute>
+    </complexType>
+    
+
+
+
+</schema>
