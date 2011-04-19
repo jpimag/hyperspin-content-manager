@@ -9,7 +9,7 @@ import java.util.Map;
 import jps.hyperspin.common.FileUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.database.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
 import jps.hyperspin.module.whdload.model.WhdloadType;
 import jps.hyperspin.module.whdload.presentation.WhdloadFormPanel;

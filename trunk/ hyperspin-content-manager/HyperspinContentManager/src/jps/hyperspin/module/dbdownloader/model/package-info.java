@@ -6,5 +6,5 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package jps.hyperspin.module.database.model;
+package jps.hyperspin.module.dbdownloader.model;
 

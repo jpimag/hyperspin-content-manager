@@ -6,7 +6,7 @@
 //
 
 
-package jps.hyperspin.module.database.model;
+package jps.hyperspin.module.dbdownloader.model;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.module.database.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
 
 /**
  * 

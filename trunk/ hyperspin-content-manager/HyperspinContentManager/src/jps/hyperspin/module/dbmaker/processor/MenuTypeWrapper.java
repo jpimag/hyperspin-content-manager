@@ -3,8 +3,8 @@ package jps.hyperspin.module.dbmaker.processor;
 import java.util.ArrayList;
 import java.util.List;
 
-import jps.hyperspin.module.database.model.GameType;
-import jps.hyperspin.module.database.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.GameType;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 public class MenuTypeWrapper {
 

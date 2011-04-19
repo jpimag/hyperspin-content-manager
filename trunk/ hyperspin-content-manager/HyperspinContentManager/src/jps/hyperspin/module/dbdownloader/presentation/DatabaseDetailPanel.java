@@ -1,4 +1,4 @@
-package jps.hyperspin.module.database.presentation.downloader;
+package jps.hyperspin.module.dbdownloader.presentation;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -18,9 +18,9 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.FileUtilities;
 import jps.hyperspin.common.LayoutUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.module.database.model.MenuType;
-import jps.hyperspin.module.database.process.DownloadProcessor;
-import jps.hyperspin.module.database.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.process.DownloadProcessor;
+import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
 
 /**
  * This panel display the detailed information of the selected system. It
