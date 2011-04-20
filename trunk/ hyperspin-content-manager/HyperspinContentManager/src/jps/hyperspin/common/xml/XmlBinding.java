@@ -1,4 +1,4 @@
-package jps.hyperspin.process.xml;
+package jps.hyperspin.common.xml;
 
 import java.io.Reader;
 import java.io.Writer;

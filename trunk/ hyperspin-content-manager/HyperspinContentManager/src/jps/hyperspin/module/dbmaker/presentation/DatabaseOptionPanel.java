@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
 
 /**
  * 

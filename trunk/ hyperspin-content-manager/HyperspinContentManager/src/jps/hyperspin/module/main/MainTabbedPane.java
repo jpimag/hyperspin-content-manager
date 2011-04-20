@@ -1,4 +1,4 @@
-package jps.hyperspin.presentation;
+package jps.hyperspin.module.main;
 
 import javax.swing.JTabbedPane;
 

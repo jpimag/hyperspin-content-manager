@@ -1,4 +1,4 @@
-package jps.hyperspin.common;
+package jps.hyperspin.common.presentation;
 
 import java.awt.Component;
 import java.awt.Font;

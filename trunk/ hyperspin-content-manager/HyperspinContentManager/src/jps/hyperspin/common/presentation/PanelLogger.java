@@ -1,4 +1,4 @@
-package jps.hyperspin.presentation;
+package jps.hyperspin.common.presentation;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,8 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import jps.hyperspin.common.LayoutUtilities;
-import jps.hyperspin.log.Logger;
+import jps.hyperspin.common.log.Logger;
 
 /**
  * 

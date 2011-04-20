@@ -1,12 +1,12 @@
-package jps.hyperspin.module.dbdownloader.process;
+package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import jps.hyperspin.common.properties.IniProperties;
 import jps.hyperspin.exception.HCMDBadFileException;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.process.properties.IniProperties;
 
 public class SystemIniProperties {
 	private IniProperties iniProp = new IniProperties();

@@ -1,6 +1,6 @@
 package jps.hyperspin.module.dbdownloader.presentation;
 
-import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
 
 /**
  * Options disponibles de l'onglet Database

@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import jps.hyperspin.common.file.FileFilterDirectory;
+import jps.hyperspin.common.file.FileFilterExtension;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
-import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
-import jps.hyperspin.process.file.FileFilterDirectory;
-import jps.hyperspin.process.file.FileFilterExtension;
-import jps.hyperspin.process.xml.XmlBinding;
 
 import org.apache.commons.lang.StringUtils;
 

@@ -1,4 +1,4 @@
-package jps.hyperspin.process.file;
+package jps.hyperspin.common.file;
 
 import java.io.File;
 import java.io.FileFilter;

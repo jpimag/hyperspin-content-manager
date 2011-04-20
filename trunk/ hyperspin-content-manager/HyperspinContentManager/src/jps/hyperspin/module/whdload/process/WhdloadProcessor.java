@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jps.hyperspin.common.FileUtilities;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.presentation.PanelLogger;
+import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
 import jps.hyperspin.module.whdload.model.WhdloadType;
 import jps.hyperspin.module.whdload.presentation.WhdloadFormPanel;
-import jps.hyperspin.presentation.PanelLogger;
-import jps.hyperspin.process.xml.XmlBinding;
 
 /**
  * 

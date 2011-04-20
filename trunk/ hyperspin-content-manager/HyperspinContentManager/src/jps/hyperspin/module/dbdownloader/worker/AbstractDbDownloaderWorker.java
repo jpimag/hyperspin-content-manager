@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.process;
+package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,28 +10,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.module.AbstractProcessor;
+import jps.hyperspin.common.worker.CommonWorker;
+import jps.hyperspin.common.xml.XmlBinding;
+import jps.hyperspin.exception.HCMBindingException;
+import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
-import jps.hyperspin.process.xml.XmlBinding;
 
 /**
  * 
  * @author JPS
  * 
  */
-public class DownloadProcessor extends AbstractProcessor {
+public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 
 	private static final String HYPERLIST_URL = "http://hyperlist.hyperspin-fe.com/";
-
-	public DownloadProcessor(IDatabaseDetail databaseDetail) {
-		super(databaseDetail, null);
-	}
 
 	private class DatabaseUrls {
 		public String urlDb;
 		public String urlGenre;
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @param progressBarDialog
+	 */
+	public AbstractDbDownloaderWorker() {
+		super();
 	}
 
 	/**
@@ -93,14 +99,12 @@ public class DownloadProcessor extends AbstractProcessor {
 	}
 
 	/**
-	 * Retourne la derniere version des databases du systeme selectionné dans le
-	 * tableau HyperList sur le site officiel d'Hyperspin.
+	 * Retourne la derniere version de la database principale du systeme
+	 * selectionné dans le tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	public Map<String, MenuType> getLastAvailableDbs(boolean all) {
-		Map<String, MenuType> map = new HashMap<String, MenuType>();
+	public MenuType getLastAvailableDb() throws IOException,
+			HCMBindingException, HCMDatabaseException {
 		HttpURLConnection urlConn = null;
-		HttpURLConnection urlConnGenre = null;
-		HttpURLConnection urlConnTmp = null;
 		try {
 			DatabaseUrls dbUrl = getLastAvailableDbUrls();
 
@@ -114,45 +118,63 @@ public class DownloadProcessor extends AbstractProcessor {
 
 			MenuType main = (MenuType) XmlBinding.getInstance().xml2java(
 					MenuType.class, in);
-			map.put(MainClass.mainFrame.getSystemSelected(), main);
+			return main;
 
-			// Genre databases
-			// ---------------
-			if (all) {
-				url = new URL(getLastAvailableDbUrls().urlGenre);
-				urlConnGenre = (HttpURLConnection) url.openConnection();
-				in = new BufferedReader(new InputStreamReader(
-						urlConnGenre.getInputStream()));
-				String sLine;
-				String fileContent = "";
-				while ((sLine = in.readLine()) != null) {
-					fileContent += sLine;
-				}
-
-				String[] options = fileContent.split("<option");
-				for (int i = 2; i <= options.length; i++) {
-					String urlGenre = options[i].split("value='")[1];
-					urlGenre = urlGenre.split("'")[0];
-					urlGenre = urlGenre.replaceAll("%20", " ");
-					url = new URL(HYPERLIST_URL + urlGenre);
-					urlConnTmp = (HttpURLConnection) url.openConnection();
-					BufferedReader inGenre = new BufferedReader(
-							new InputStreamReader(urlConnTmp.getInputStream()));
-					MenuType genre = (MenuType) XmlBinding.getInstance()
-							.xml2java(MenuType.class, inGenre);
-					String[] tab = urlGenre.split("=");
-					map.put(tab[tab.length - 1], genre);
-					urlConnTmp.disconnect();
-				}
-
-			}
-
-		} catch (Exception e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
 		} finally {
 			if (urlConn != null) {
 				urlConn.disconnect();
 			}
+		}
+
+	}
+
+	/**
+	 * Retourne la derniere version des databases du systeme selectionné dans le
+	 * tableau HyperList sur le site officiel d'Hyperspin.
+	 */
+	public Map<String, MenuType> getLastAvailableDbs() throws IOException,
+			HCMDatabaseException, HCMBindingException {
+		Map<String, MenuType> map = new HashMap<String, MenuType>();
+		HttpURLConnection urlConnGenre = null;
+		HttpURLConnection urlConnTmp = null;
+		try {
+
+			// Main database
+			// -------------
+			map.put(MainClass.mainFrame.getSystemSelected(),
+					getLastAvailableDb());
+
+			// Genre databases
+			// ---------------
+
+			URL url = new URL(getLastAvailableDbUrls().urlGenre);
+			urlConnGenre = (HttpURLConnection) url.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					urlConnGenre.getInputStream()));
+			String sLine;
+			String fileContent = "";
+			while ((sLine = in.readLine()) != null) {
+				fileContent += sLine;
+			}
+
+			String[] options = fileContent.split("<option");
+			for (int i = 2; i <= options.length; i++) {
+				String urlGenre = options[i].split("value='")[1];
+				urlGenre = urlGenre.split("'")[0];
+				urlGenre = urlGenre.replaceAll("%20", " ");
+				url = new URL(HYPERLIST_URL + urlGenre);
+				urlConnTmp = (HttpURLConnection) url.openConnection();
+				BufferedReader inGenre = new BufferedReader(
+						new InputStreamReader(urlConnTmp.getInputStream()));
+				MenuType genre = (MenuType) XmlBinding.getInstance().xml2java(
+						MenuType.class, inGenre);
+				String[] tab = urlGenre.split("=");
+				map.put(tab[tab.length - 1], genre);
+				urlConnTmp.disconnect();
+			}
+
+		} finally {
+
 			if (urlConnGenre != null) {
 				urlConnGenre.disconnect();
 			}
