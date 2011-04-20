@@ -12,17 +12,17 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.FileUtilities;
+import jps.hyperspin.common.file.FileFilterExtension;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.presentation.ChoiceDialog;
 import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
-import jps.hyperspin.process.file.FileFilterExtension;
-import jps.hyperspin.process.xml.XmlBinding;
 
 /**
  * 

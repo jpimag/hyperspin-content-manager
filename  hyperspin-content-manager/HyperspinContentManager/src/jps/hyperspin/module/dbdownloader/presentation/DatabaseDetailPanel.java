@@ -5,8 +5,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,13 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.FileUtilities;
-import jps.hyperspin.common.LayoutUtilities;
+import jps.hyperspin.common.presentation.BasicProgressDialog;
+import jps.hyperspin.common.presentation.LayoutUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.process.DownloadProcessor;
-import jps.hyperspin.module.dbdownloader.process.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
+import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
 
 /**
  * This panel display the detailed information of the selected system. It
@@ -183,8 +180,6 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		try {
 			String system = MainClass.mainFrame.getSystemSelected();
 			if (system != null) {
-				// Processor
-				DownloadProcessor writeDbProcessor = new DownloadProcessor(this);
 
 				// ini
 				iniProp = new SystemIniProperties(
@@ -201,27 +196,41 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 
 				romsPathField.setText(getIniProp().getRomPath());
 
-				// Database version
-				try {
-					MenuType db = DatabaseUtilities.loadDatabase(
-							DatabaseUtilities.getReferenceDatabasePath(),
-							MainClass.mainFrame.getLogger());
-					if (db.getHeader() != null) {
-						currentVersion.setText(getVersion(db));
-					} else {
-						currentVersion.setText("Unknown");
-					}
-				} catch (FileNotFoundException e) {
-					currentVersion.setText("Unknown");
-				}
+				// worker
+				CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker() {
 
-				// Check DB from hyperlist web site
-				lastVersion.setText(getVersion(writeDbProcessor
-						.getLastAvailableDbs(false).get(
-								MainClass.mainFrame.getSystemSelected())));
+					/* (non-Javadoc)
+					 * @see jps.hyperspin.common.worker.CommonWorker#done()
+					 */
+					@Override
+					public void done() {
+						// Update fields
+						if (getCurrentDatabase() != null
+								&& getCurrentDatabase().getHeader() != null) {
+							currentVersion
+									.setText(getVersion(getCurrentDatabase()));
+						} else {
+							currentVersion.setText("Unknown");
+						}
+						if (getLastDatabase() != null
+								&& getLastDatabase().getHeader() != null) {
+							lastVersion.setText(getVersion(getLastDatabase()));
+						} else {
+							lastVersion.setText("Unknown");
+						}
+
+						// Enable update button
+						updateNow.setEnabled(false);
+
+						super.done();
+					}
+
+				};
+				BasicProgressDialog progressDialog = new BasicProgressDialog(
+						worker);
 
 				// Update button
-				updateNow.setEnabled(true);
+				updateNow.setEnabled(false);
 
 			} else {
 				generatedDatabaseDirField.setText("");
@@ -244,7 +253,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == updateNow) {
+		/*if (e.getSource() == updateNow) {
 			// Processor
 			DownloadProcessor downloadProcessor = new DownloadProcessor(this);
 
@@ -264,7 +273,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 
 			// Update filed
 			updateFields();
-		}
+		}*/
 
 	}
 

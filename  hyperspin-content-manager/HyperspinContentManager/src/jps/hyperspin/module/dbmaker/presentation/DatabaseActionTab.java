@@ -10,7 +10,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.LayoutUtilities;
+import jps.hyperspin.common.presentation.LayoutUtilities;
 import jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
 import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
 

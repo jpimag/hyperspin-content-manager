@@ -1,4 +1,4 @@
-package jps.hyperspin.presentation;
+package jps.hyperspin.module.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import jps.hyperspin.common.LayoutUtilities;
-import jps.hyperspin.log.Logger;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.common.presentation.PanelLogger;
 
 /**
  * Main frame. Display the system list to the right and the tabs to the left .

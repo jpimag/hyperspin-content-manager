@@ -1,4 +1,4 @@
-package jps.hyperspin.process.properties;
+package jps.hyperspin.common.properties;
 
 import java.io.BufferedReader;
 import java.io.IOException;

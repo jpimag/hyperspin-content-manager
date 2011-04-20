@@ -11,9 +11,9 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.FileUtilities;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.log.Logger;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.presentation.ChoiceDialog;
 import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;

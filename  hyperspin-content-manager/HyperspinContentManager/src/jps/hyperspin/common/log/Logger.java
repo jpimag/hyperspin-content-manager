@@ -1,4 +1,4 @@
-package jps.hyperspin.log;
+package jps.hyperspin.common.log;
 
 /**
  * 

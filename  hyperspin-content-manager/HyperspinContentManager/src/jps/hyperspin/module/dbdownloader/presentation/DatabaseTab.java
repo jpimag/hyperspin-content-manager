@@ -9,7 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.LayoutUtilities;
+import jps.hyperspin.common.presentation.LayoutUtilities;
 
 public class DatabaseTab extends JPanel implements ListSelectionListener {
 
@@ -63,11 +63,16 @@ public class DatabaseTab extends JPanel implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent listselectionevent) {
-		if (lastSelection != getSystemSelected()) {
-			lastSelection = getSystemSelected();
-			formPanel.updateFields();
+		try {
+
+			if (lastSelection != getSystemSelected()) {
+
+				lastSelection = getSystemSelected();
+				formPanel.updateFields();
+
+			}
+
+		} catch (Exception e) {
 		}
-
 	}
-
 }

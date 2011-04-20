@@ -1,6 +1,6 @@
 package jps.hyperspin;
 
-import jps.hyperspin.presentation.MainFrame;
+import jps.hyperspin.module.main.MainFrame;
 
 /**
  * 
