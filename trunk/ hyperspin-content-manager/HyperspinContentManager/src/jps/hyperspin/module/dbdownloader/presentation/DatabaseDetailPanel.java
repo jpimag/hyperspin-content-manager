@@ -17,7 +17,7 @@ import jps.hyperspin.common.presentation.LayoutUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
-import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.worker.DbDowloaderWorker;
 
 /**
  * This panel display the detailed information of the selected system. It
@@ -165,7 +165,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		updateNow.setEnabled(false);
 		LayoutUtilities.fixSize(updateNow, generatedDatabaseDirField);
 		updateNow.addActionListener(this);
-
+		updateNow.setEnabled(false);
 	}
 
 	/**
@@ -220,17 +220,13 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 						}
 
 						// Enable update button
-						updateNow.setEnabled(false);
+						updateNow.setEnabled(true);
 
 						super.done();
 					}
 
 				};
-				BasicProgressDialog progressDialog = new BasicProgressDialog(
-						worker);
-
-				// Update button
-				updateNow.setEnabled(false);
+				new BasicProgressDialog(worker);
 
 			} else {
 				generatedDatabaseDirField.setText("");
@@ -253,27 +249,14 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*if (e.getSource() == updateNow) {
-			// Processor
-			DownloadProcessor downloadProcessor = new DownloadProcessor(this);
+		if (e.getSource() == updateNow) {
 
-			// Getdatabases from HyperList site
-			Map<String, MenuType> map = downloadProcessor
-					.getLastAvailableDbs(true);
-
-			// Delete all existing files
-			FileUtilities.deleteAllFiles(
-					DatabaseUtilities.getReferenceDatabaseDir(), "xml");
-
-			// Write databases from HyperList site
-			for (String genre : map.keySet()) {
-				DatabaseUtilities.writeDatabase(map.get(genre),
-						DatabaseUtilities.getGenreDatabasePath(genre));
-			}
+			// Process
+			new BasicProgressDialog(new DbDowloaderWorker());
 
 			// Update filed
 			updateFields();
-		}*/
+		}
 
 	}
 

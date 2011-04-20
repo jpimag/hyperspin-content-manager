@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 /**
@@ -26,7 +25,7 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Void doInBackground() throws Exception {
+	protected void executeInternal() throws Exception {
 		try {
 			setProgress(1);
 
@@ -47,13 +46,11 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 				// Check DB from hyperlist web site
 				lastDatabase = getLastAvailableDb();
 
-				setProgress(100);
-
 			}
-		} catch (HCMDatabaseException e) {
-			MainClass.mainFrame.getLogger().info("Erreur : " + e);
+		} finally {
+			setProgress(100);
+
 		}
-		return null;
 
 	}
 
