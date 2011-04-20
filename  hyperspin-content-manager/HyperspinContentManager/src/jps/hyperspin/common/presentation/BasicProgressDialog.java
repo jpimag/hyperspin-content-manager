@@ -33,7 +33,7 @@ public class BasicProgressDialog extends JDialog implements
 		super(MainClass.mainFrame);
 
 		// Dialog component
-		progressBar = new JProgressBar(0, 100);
+		progressBar = new JProgressBar(0, CommonWorker.MAX_PROGRESS_VALUE);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		progressBar.setString("In Progress");
@@ -64,7 +64,7 @@ public class BasicProgressDialog extends JDialog implements
 			int progress = (Integer) evt.getNewValue();
 			progressBar.setValue(progress);
 
-			if (progress == 100) {
+			if (progress == CommonWorker.MAX_PROGRESS_VALUE) {
 				this.dispose();
 			}
 		}

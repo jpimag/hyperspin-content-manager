@@ -17,7 +17,7 @@ import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
-import jps.hyperspin.module.dbdownloader.worker.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 import org.apache.commons.lang.StringUtils;

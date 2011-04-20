@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.worker.CommonWorker;
@@ -23,9 +21,9 @@ import jps.hyperspin.module.dbdownloader.model.MenuType;
  */
 public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 
-	private static final String HYPERLIST_URL = "http://hyperlist.hyperspin-fe.com/";
+	protected static final String HYPERLIST_URL = "http://hyperlist.hyperspin-fe.com/";
 
-	private class DatabaseUrls {
+	protected class DatabaseUrls {
 		public String urlDb;
 		public String urlGenre;
 
@@ -44,7 +42,7 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * Retourne la l'url de la derniere version du systeme selectionné dans le
 	 * tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	private DatabaseUrls getLastAvailableDbUrls() {
+	protected DatabaseUrls getLastAvailableDbUrls() {
 		DatabaseUrls databaseUrls = new DatabaseUrls();
 		try {
 			URL url = new URL(HYPERLIST_URL);
@@ -128,61 +126,4 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 
 	}
 
-	/**
-	 * Retourne la derniere version des databases du systeme selectionné dans le
-	 * tableau HyperList sur le site officiel d'Hyperspin.
-	 */
-	public Map<String, MenuType> getLastAvailableDbs() throws IOException,
-			HCMDatabaseException, HCMBindingException {
-		Map<String, MenuType> map = new HashMap<String, MenuType>();
-		HttpURLConnection urlConnGenre = null;
-		HttpURLConnection urlConnTmp = null;
-		try {
-
-			// Main database
-			// -------------
-			map.put(MainClass.mainFrame.getSystemSelected(),
-					getLastAvailableDb());
-
-			// Genre databases
-			// ---------------
-
-			URL url = new URL(getLastAvailableDbUrls().urlGenre);
-			urlConnGenre = (HttpURLConnection) url.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					urlConnGenre.getInputStream()));
-			String sLine;
-			String fileContent = "";
-			while ((sLine = in.readLine()) != null) {
-				fileContent += sLine;
-			}
-
-			String[] options = fileContent.split("<option");
-			for (int i = 2; i <= options.length; i++) {
-				String urlGenre = options[i].split("value='")[1];
-				urlGenre = urlGenre.split("'")[0];
-				urlGenre = urlGenre.replaceAll("%20", " ");
-				url = new URL(HYPERLIST_URL + urlGenre);
-				urlConnTmp = (HttpURLConnection) url.openConnection();
-				BufferedReader inGenre = new BufferedReader(
-						new InputStreamReader(urlConnTmp.getInputStream()));
-				MenuType genre = (MenuType) XmlBinding.getInstance().xml2java(
-						MenuType.class, inGenre);
-				String[] tab = urlGenre.split("=");
-				map.put(tab[tab.length - 1], genre);
-				urlConnTmp.disconnect();
-			}
-
-		} finally {
-
-			if (urlConnGenre != null) {
-				urlConnGenre.disconnect();
-			}
-			if (urlConnTmp != null) {
-				urlConnTmp.disconnect();
-			}
-		}
-
-		return map;
-	}
 }
