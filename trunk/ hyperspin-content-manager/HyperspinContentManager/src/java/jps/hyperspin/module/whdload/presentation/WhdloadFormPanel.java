@@ -1,8 +1,8 @@
 package jps.hyperspin.module.whdload.presentation;
 
 import java.awt.GridLayout;
-import java.jps.hyperspin.exception.HCMDatabaseException;
-import java.jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;

@@ -1,7 +1,7 @@
 package jps.hyperspin.module.dbmaker.processor;
 
-import java.jps.hyperspin.module.dbdownloader.model.GameType;
-import java.jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.GameType;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 import java.util.ArrayList;
 import java.util.List;
 

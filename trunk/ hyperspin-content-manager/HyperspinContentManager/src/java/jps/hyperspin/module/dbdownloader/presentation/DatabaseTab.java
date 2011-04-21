@@ -3,8 +3,8 @@ package jps.hyperspin.module.dbdownloader.presentation;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.presentation.LayoutUtilities;
 
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;

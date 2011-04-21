@@ -2,8 +2,8 @@ package jps.hyperspin.module.dbmaker.presentation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
-import java.jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
+import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
+import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
 
 import javax.swing.JPanel;
 

@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.common.log.Logger;
-import java.jps.hyperspin.common.xml.XmlBinding;
-import java.jps.hyperspin.exception.HCMDatabaseException;
-import java.jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.xml.XmlBinding;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 
 public class DatabaseUtilities {

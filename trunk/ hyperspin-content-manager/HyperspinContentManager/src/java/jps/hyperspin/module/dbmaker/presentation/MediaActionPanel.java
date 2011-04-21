@@ -4,8 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.module.dbmaker.processor.MediaProcessor;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.module.dbmaker.processor.MediaProcessor;
 
 import javax.swing.JButton;
 

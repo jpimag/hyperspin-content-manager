@@ -7,9 +7,9 @@ import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
-import java.jps.hyperspin.common.log.Logger;
-import java.jps.hyperspin.common.presentation.LayoutUtilities;
-import java.jps.hyperspin.common.presentation.PanelLogger;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.common.presentation.PanelLogger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;

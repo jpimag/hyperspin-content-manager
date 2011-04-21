@@ -1,9 +1,9 @@
 package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.FileNotFoundException;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.common.DatabaseUtilities;
-import java.jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 
 /**
