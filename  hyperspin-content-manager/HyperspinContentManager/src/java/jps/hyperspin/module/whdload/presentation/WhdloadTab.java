@@ -5,8 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.jps.hyperspin.common.presentation.PanelLogger;
-import java.jps.hyperspin.module.whdload.process.WhdloadProcessor;
+import jps.hyperspin.common.presentation.PanelLogger;
+import jps.hyperspin.module.whdload.process.WhdloadProcessor;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

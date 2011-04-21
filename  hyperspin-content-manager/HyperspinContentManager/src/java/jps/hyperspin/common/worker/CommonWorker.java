@@ -1,6 +1,6 @@
 package jps.hyperspin.common.worker;
 
-import java.jps.hyperspin.MainClass;
+import jps.hyperspin.MainClass;
 
 import javax.swing.SwingWorker;
 

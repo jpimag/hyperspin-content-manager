@@ -1,7 +1,7 @@
 package jps.hyperspin.main;
 
-import java.jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
-import java.jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;
+import jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
+import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;
 
 import javax.swing.JTabbedPane;
 

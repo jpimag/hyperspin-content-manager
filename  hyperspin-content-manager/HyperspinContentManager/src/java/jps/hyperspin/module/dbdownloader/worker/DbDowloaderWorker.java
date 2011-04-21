@@ -2,11 +2,11 @@ package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.common.DatabaseUtilities;
-import java.jps.hyperspin.common.file.FileUtilities;
-import java.jps.hyperspin.common.xml.XmlBinding;
-import java.jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.xml.XmlBinding;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;

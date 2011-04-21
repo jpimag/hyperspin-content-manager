@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.log.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;

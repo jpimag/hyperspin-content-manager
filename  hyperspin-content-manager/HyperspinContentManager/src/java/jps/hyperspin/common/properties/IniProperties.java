@@ -3,8 +3,8 @@ package jps.hyperspin.common.properties;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.jps.hyperspin.exception.HCMDatabaseException;
-import java.jps.hyperspin.exception.HCMInternalException;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.exception.HCMInternalException;
 import java.util.HashMap;
 import java.util.Map;
 

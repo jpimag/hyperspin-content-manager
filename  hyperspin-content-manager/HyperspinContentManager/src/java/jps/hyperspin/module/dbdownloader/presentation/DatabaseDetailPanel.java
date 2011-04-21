@@ -5,15 +5,19 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.jps.hyperspin.module.dbdownloader.model.MenuType;
-import java.jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
-import java.jps.hyperspin.module.dbdownloader.worker.DbDowloaderWorker;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.presentation.BasicProgressDialog;
+import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
+import jps.hyperspin.module.dbdownloader.worker.DbDowloaderWorker;
 
 /**
  * This panel display the detailed information of the selected system. It

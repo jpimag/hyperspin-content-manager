@@ -3,8 +3,8 @@ package jps.hyperspin.common.presentation;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.jps.hyperspin.MainClass;
-import java.jps.hyperspin.common.worker.CommonWorker;
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.worker.CommonWorker;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;

@@ -2,8 +2,8 @@ package jps.hyperspin.common.xml;
 
 import java.io.Reader;
 import java.io.Writer;
-import java.jps.hyperspin.exception.HCMBindingException;
-import java.jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.exception.HCMBindingException;
+import jps.hyperspin.exception.HCMDatabaseException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

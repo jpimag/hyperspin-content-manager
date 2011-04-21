@@ -3,7 +3,7 @@ package jps.hyperspin.module.dbmaker.presentation;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
