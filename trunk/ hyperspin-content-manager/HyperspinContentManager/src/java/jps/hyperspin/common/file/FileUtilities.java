@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-
 public class FileUtilities {
 
 	public static String getExtension(File f) {
@@ -45,8 +44,11 @@ public class FileUtilities {
 
 	public static void deleteAllFiles(String directorySource, String extension) {
 		File file = new File(directorySource);
-		for (File child : file.listFiles(new FileFilterExtension(extension))) {
-			child.delete();
+		if (file.exists() && file.isDirectory()) {
+			for (File child : file
+					.listFiles(new FileFilterExtension(extension))) {
+				child.delete();
+			}
 		}
 	}
 

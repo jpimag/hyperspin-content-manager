@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
-
 
 public class DatabaseUtilities {
 
@@ -40,18 +40,11 @@ public class DatabaseUtilities {
 	 * 
 	 * @return
 	 */
-	public static String getReferenceDatabaseDir() {
+	public static String getDownloadedDatabaseDir() {
 		String path = System.getProperty("user.dir") + File.separator
 				+ "database";
-		File file = new File(path);
-		if (!file.exists()) {
-			file.mkdir();
-		}
 		path += File.separator + MainClass.mainFrame.getSystemSelected();
-		file = new File(path);
-		if (!file.exists()) {
-			file.mkdir();
-		}
+
 		return path;
 	}
 
@@ -61,23 +54,38 @@ public class DatabaseUtilities {
 	 * 
 	 * @return
 	 */
-	public static String getReferenceDatabasePath() {
-		return getReferenceDatabaseDir() + File.separator
+	public static String getDownloadedDatabasePath() {
+		return getDownloadedDatabaseDir() + File.separator
 				+ MainClass.mainFrame.getSystemSelected() + ".xml";
 	}
 
-	public static String getGenreDatabasePath(String genre) {
-		return getReferenceDatabaseDir() + File.separator + genre + ".xml";
+	public static String getDownloadedGenreDatabasePath(String genre) {
+		return getDownloadedDatabaseDir() + File.separator + genre + ".xml";
+	}
+
+	/**
+	 * Get the main directory path of the reference directory of the selected
+	 * system.
+	 * 
+	 * @return
+	 */
+	public static String getUserDatabasePath() {
+		String path = MainClass.mainFrame.getHyperSpinPath() + File.separator
+				+ "Databases" + File.separator
+				+ MainClass.mainFrame.getSystemSelected() + File.separator
+				+ MainClass.mainFrame.getSystemSelected() + ".xml";
+		return path;
 	}
 
 	/**
 	 * Retourne la derniere version de la database principal du systeme
 	 * selectionné dans le tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	public static void writeDatabase(MenuType db, String path) {
+	public static void writeDatabase(MenuType db, String path, String fileName) {
 		try {
-
-			FileWriter writer = new FileWriter(path);
+			File file = new File(path);
+			file.mkdirs();
+			FileWriter writer = new FileWriter(path + File.separator + fileName);
 			XmlBinding.getInstance().java2xml(db, writer);
 			writer.close();
 			MainClass.mainFrame.getLogger().info(

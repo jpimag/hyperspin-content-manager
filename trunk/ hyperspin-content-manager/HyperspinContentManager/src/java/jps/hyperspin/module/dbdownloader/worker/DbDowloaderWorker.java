@@ -2,16 +2,16 @@ package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.xml.XmlBinding;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.xml.XmlBinding;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 /**
  * This worker in in charge to check database version for the selected system.
@@ -84,15 +84,16 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 				// Delete all existing files
 				// ---------------
 				FileUtilities.deleteAllFiles(
-						DatabaseUtilities.getReferenceDatabaseDir(), "xml");
+						DatabaseUtilities.getDownloadedDatabaseDir(), "xml");
 				setProgress(60);
 
 				// Write databases from HyperList site
 				// ---------------
 				int i = 2;
-				for (String genre : map.keySet()) {
-					DatabaseUtilities.writeDatabase(map.get(genre),
-							DatabaseUtilities.getGenreDatabasePath(genre));
+				for (String fileName : map.keySet()) {
+					DatabaseUtilities.writeDatabase(map.get(fileName),
+							DatabaseUtilities.getDownloadedDatabaseDir(),
+							fileName + ".xml");
 					i++;
 					computeProgressFromAchievedStep(i, options.length, 99);
 				}

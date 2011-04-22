@@ -91,7 +91,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		// Parse database
 		Map<String, String> databaseGame = null;
-		File dir = new File(DatabaseUtilities.getReferenceDatabaseDir());
+		File dir = new File(DatabaseUtilities.getDownloadedDatabaseDir());
 		File[] databases = dir.listFiles(new FileFilterExtension("xml"));
 		for (File file : databases) {
 
@@ -308,7 +308,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 		for (MenuTypeWrapper menu : menus) {
 			if (menu.getMenu().getGame().size() > 0) {
 				FileWriter writer = new FileWriter(
-						databaseDetail.getGeneratedDatabaseDir()
+						databaseDetail.getUserDatabaseDir()
 								+ File.separator + menu.getFileName());
 				XmlBinding.getInstance().java2xml(menu.getMenu(), writer);
 				writer.close();
