@@ -3,16 +3,16 @@ package jps.hyperspin.module.dbdownloader.worker;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMBindingException;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 
 /**
  * 
@@ -43,14 +43,17 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * tableau HyperList sur le site officiel d'Hyperspin.
 	 */
 	protected DatabaseUrls getLastAvailableDbUrls() {
+		BufferedReader in = null;
+		HttpURLConnection urlConn = null;
+
 		DatabaseUrls databaseUrls = new DatabaseUrls();
 		try {
+
 			URL url = new URL(HYPERLIST_URL);
-			HttpURLConnection urlConn = (HttpURLConnection) url
-					.openConnection();
+			urlConn = (HttpURLConnection) url.openConnection();
 
 			// Lire la reponse
-			BufferedReader in = new BufferedReader(new InputStreamReader(
+			in = new BufferedReader(new InputStreamReader(
 					urlConn.getInputStream()));
 			boolean found = false;
 			String sLine;
@@ -85,13 +88,18 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 					}
 				}
 			}
-			// deconnection
-			in.close();
-			urlConn.disconnect();
 		} catch (MalformedURLException e) {
 			MainClass.mainFrame.getLogger().error(e.getMessage());
 		} catch (IOException e) {
 			MainClass.mainFrame.getLogger().error(e.getMessage());
+		} finally {
+			try {
+				// deconnection
+				in.close();
+				urlConn.disconnect();
+			} catch (Exception e) {
+
+			}
 		}
 		return databaseUrls;
 	}
@@ -100,9 +108,10 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * Retourne la derniere version de la database principale du systeme
 	 * selectionné dans le tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	public MenuType getLastAvailableDb() throws IOException,
-			HCMBindingException, HCMDatabaseException {
+	public MenuType getLastAvailableDb() throws HCMBindingException,
+			HCMDatabaseException {
 		HttpURLConnection urlConn = null;
+		MenuType main = null;
 		try {
 			DatabaseUrls dbUrl = getLastAvailableDbUrls();
 
@@ -114,15 +123,20 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					urlConn.getInputStream()));
 
-			MenuType main = (MenuType) XmlBinding.getInstance().xml2java(
-					MenuType.class, in);
-			return main;
+			main = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class,
+					in);
+
+		} catch (MalformedURLException e) {
+			MainClass.mainFrame.getLogger().error(e.getMessage());
+		} catch (IOException e) {
+			MainClass.mainFrame.getLogger().error(e.getMessage());
 
 		} finally {
 			if (urlConn != null) {
 				urlConn.disconnect();
 			}
 		}
+		return main;
 
 	}
 

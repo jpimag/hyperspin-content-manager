@@ -1,6 +1,7 @@
 package jps.hyperspin.common.presentation;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,6 +38,12 @@ public final class LayoutUtilities {
 	public static void fixSize(Component c, Component ref) {
 		c.setPreferredSize(ref.getPreferredSize());
 		c.setMinimumSize(ref.getMinimumSize());
+	}
+
+	public static void fixSize(Component c, int x, int y) {
+		c.setSize(new Dimension(x, y));
+		c.setPreferredSize(c.getSize());
+		c.setMinimumSize(c.getSize());
 	}
 
 	public static JSeparator newSeparator(GridBagConstraints c) {

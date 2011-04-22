@@ -55,10 +55,10 @@ public class MediaProcessor extends AbstractProcessor {
 
 		Map<String, String> games = null;
 		if (processingOption == ProcessingOption.DATABASE) {
-			games = loadDatabase(databaseDetail.getGeneratedDatabaseDir() + "/"
+			games = loadDatabase(databaseDetail.getUserDatabaseDir() + "/"
 					+ databaseDetail.getIniSelected() + ".xml", logger);
 		} else if (processingOption == ProcessingOption.REFERENCE_DATABASE) {
-			games = loadDatabase(DatabaseUtilities.getReferenceDatabasePath(),
+			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(),
 					logger);
 
 		} else if (processingOption == ProcessingOption.ROMS) {
@@ -331,7 +331,7 @@ public class MediaProcessor extends AbstractProcessor {
 				+ relativePath;
 		Map<String, String> games = loadDatabase(
 
-		DatabaseUtilities.getReferenceDatabasePath(), logger);
+		DatabaseUtilities.getDownloadedDatabasePath(), logger);
 
 		// Medias
 		File dir = new File(mediaDir);

@@ -11,7 +11,7 @@ public interface IDatabaseDetail {
 
 	String getMediaRepository();
 
-	String getGeneratedDatabaseDir();
+	String getUserDatabaseDir();
 
 	String getIniSelected();
 

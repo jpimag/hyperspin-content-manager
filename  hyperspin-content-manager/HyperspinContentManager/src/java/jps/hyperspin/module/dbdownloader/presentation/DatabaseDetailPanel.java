@@ -6,12 +6,16 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.presentation.BasicProgressDialog;
 import jps.hyperspin.common.presentation.LayoutUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
@@ -32,18 +36,19 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 * 
 	 */
-	private JLabel generatedDatabaseDirLabel = new JLabel(
-			"Current database dir ");
+	private JLabel userDatabaseDirLabel = new JLabel(
+			Message.getMessage("dbdownloader.user.database.dir.label"));
 
 	/**
 	 * 
 	 */
-	private JTextField generatedDatabaseDirField = new JTextField();
+	private JTextField userDatabaseDirField = new JTextField();
 
 	/**
 	 *  
 	 */
-	private JLabel mediaRepositoryLabel = new JLabel("Media repository ");
+	private JLabel mediaRepositoryLabel = new JLabel(
+			Message.getMessage("dbdownloader.media.dir.label"));
 
 	/**
 	 *  
@@ -53,7 +58,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JLabel romsPathLabel = new JLabel("Roms path ");
+	private JLabel romsPathLabel = new JLabel(
+			Message.getMessage("dbdownloader.rom.dir.label"));
 
 	/**
 	 *  
@@ -63,7 +69,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JLabel userVersionLabel = new JLabel("Your DB Version");
+	private JLabel userVersionLabel = new JLabel(
+			Message.getMessage("dbdownloader.user.version"));
 
 	/**
 	 *  
@@ -73,7 +80,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JLabel downloadedVersionLabel = new JLabel("Downloaded DB Version");
+	private JLabel downloadedVersionLabel = new JLabel(
+			Message.getMessage("dbdownloader.downoader.version"));
 
 	/**
 	 *  
@@ -82,7 +90,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JLabel hyperlistVersionLabel = new JLabel("HyperList DB Version");
+	private JLabel hyperlistVersionLabel = new JLabel(
+			Message.getMessage("dbdownloader.hyperlist.version"));
 
 	/**
 	 *  
@@ -92,7 +101,13 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JButton updateNow = new JButton("Download from HyperList");
+	private JButton updateNow = new JButton(
+			Message.getMessage("dbdownloader.upload.database.label"));
+
+	/**
+	 *  
+	 */
+	private JPanel note;
 
 	/**
 	 *  
@@ -118,7 +133,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		this.setLayout(LayoutUtilities.newLayout());
 		GridBagConstraints c = LayoutUtilities.newConstraint(0, 0);
 
-		this.add(generatedDatabaseDirLabel, c);
+		this.add(userDatabaseDirLabel, c);
 
 		c.gridy++;
 		this.add(mediaRepositoryLabel, c);
@@ -127,18 +142,17 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		this.add(romsPathLabel, c);
 
 		c.gridy++;
-		c.insets = new Insets(30, 0, 0, 0);
 		this.add(userVersionLabel, c);
-		c.insets = LayoutUtilities.defaultInsets();
 
 		c.gridy++;
+		c.insets = new Insets(30, 0, 0, 0);
 		this.add(hyperlistVersionLabel, c);
+		c.insets = LayoutUtilities.defaultInsets();
 
 		c.gridy++;
 		this.add(downloadedVersionLabel, c);
 
-		LayoutUtilities.fixSize(generatedDatabaseDirLabel,
-				downloadedVersionLabel);
+		LayoutUtilities.fixSize(userDatabaseDirLabel, downloadedVersionLabel);
 		LayoutUtilities.fixSize(romsPathLabel, downloadedVersionLabel);
 		LayoutUtilities.fixSize(mediaRepositoryLabel, downloadedVersionLabel);
 		LayoutUtilities.fixSize(hyperlistVersionLabel, downloadedVersionLabel);
@@ -147,46 +161,58 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		// Fields
 		c = LayoutUtilities.newConstraint(1, 0);
 
-		this.add(generatedDatabaseDirField, c);
-		generatedDatabaseDirField.setColumns(40);
-		generatedDatabaseDirField.setEnabled(false);
+		this.add(userDatabaseDirField, c);
+		userDatabaseDirField.setColumns(40);
+		userDatabaseDirField.setEnabled(false);
 
 		c.gridy++;
 		this.add(mediaRepositoryField, c);
 		mediaRepositoryField.setEnabled(false);
-		LayoutUtilities
-				.fixSize(mediaRepositoryField, generatedDatabaseDirField);
+		LayoutUtilities.fixSize(mediaRepositoryField, userDatabaseDirField);
 
 		c.gridy++;
 		this.add(romsPathField, c);
 		romsPathField.setEnabled(false);
-		LayoutUtilities.fixSize(romsPathField, generatedDatabaseDirField);
-
-		c.insets = new Insets(30, 0, 0, 0);
+		LayoutUtilities.fixSize(romsPathField, userDatabaseDirField);
 
 		c.gridy++;
 		this.add(userVersion, c);
 		userVersion.setEnabled(false);
-		LayoutUtilities.fixSize(userVersion, generatedDatabaseDirField);
-		c.insets = LayoutUtilities.defaultInsets();
+		LayoutUtilities.fixSize(userVersion, userDatabaseDirField);
+		c.insets = new Insets(30, 0, 0, 0);
 
 		c.gridy++;
 		this.add(hyperlistVersion, c);
 		hyperlistVersion.setEnabled(false);
-		LayoutUtilities.fixSize(hyperlistVersion, generatedDatabaseDirField);
+		LayoutUtilities.fixSize(hyperlistVersion, userDatabaseDirField);
+		c.insets = LayoutUtilities.defaultInsets();
 
 		c.gridy++;
 		this.add(downloadedVersion, c);
 		downloadedVersion.setEnabled(false);
-		LayoutUtilities.fixSize(downloadedVersion, generatedDatabaseDirField);
+		LayoutUtilities.fixSize(downloadedVersion, userDatabaseDirField);
 
 		c.gridy++;
 		c.anchor = GridBagConstraints.LINE_END;
 		this.add(updateNow, c);
 		updateNow.setEnabled(false);
-		LayoutUtilities.fixSize(updateNow, generatedDatabaseDirField);
+		LayoutUtilities.fixSize(updateNow, userDatabaseDirField);
 		updateNow.addActionListener(this);
 		updateNow.setEnabled(false);
+
+		// Note panel
+		note = new JPanel();
+		note.setBorder(BorderFactory.createTitledBorder(Message
+				.getMessage("dbdownloader.note.title")));
+		note.setBackground(Color.WHITE);
+		LayoutUtilities.fixSize(note, 500, 80);
+		c.insets = new Insets(30, 0, 0, 0);
+		c.gridx = 0;
+		c.gridy++;
+		c.gridwidth = 2;
+		c.anchor = GridBagConstraints.CENTER;
+		this.add(note, c);
+
 	}
 
 	/**
@@ -210,8 +236,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 				System.out.println("Ini file combo box change");
 				// Xml
 				String selected = system;
-				generatedDatabaseDirField.setText(MainClass.mainFrame
-						.getHyperSpinPath() + "/Databases/" + selected);
+				userDatabaseDirField.setText(DatabaseUtilities
+						.getUserDatabasePath());
 				mediaRepositoryField.setText(MainClass.mainFrame
 						.getHyperSpinPath() + "/Media/" + selected);
 
@@ -226,24 +252,44 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 					@Override
 					public void done() {
 						// Update fields
-						if (getCurrentDatabase() != null
-								&& getCurrentDatabase().getHeader() != null) {
-							downloadedVersion
-									.setText(getVersion(getCurrentDatabase()));
-						} else {
-							downloadedVersion.setText("Unknown");
-						}
-						if (getLastDatabase() != null
-								&& getLastDatabase().getHeader() != null) {
-							hyperlistVersion
-									.setText(getVersion(getLastDatabase()));
-						} else {
-							hyperlistVersion.setText("Unknown");
-						}
+						downloadedVersion
+								.setText(getVersion(downloadedDatabase));
+						hyperlistVersion.setText(getVersion(hyperlistDatabase));
+						userVersion.setText(getVersion(userDatabase));
 
 						// Enable update button
 						updateNow.setEnabled(true);
 
+						// Set Tip Message according to versions
+						note.removeAll();
+						JTextArea area;
+						switch (getVersionStatut()) {
+						case SYSTEM_NOT_AVAILABLE:
+							area = new JTextArea(
+									Message.getMessage("dbdownloader.hyperlist.notfound.msg"));
+							break;
+						case SYSTEM_NOT_VERSIONNED:
+							area = new JTextArea(
+									Message.getMessage("dbdownloader.hyperlist.notversionned.msg"));
+							break;
+						case OLD_DOWNLOADED_DB:
+							area = new JTextArea(
+									Message.getMessage("dbdownloader.download.db.old.msg"));
+							break;
+						case OLD_USER_DB:
+							area = new JTextArea(
+									Message.getMessage("dbdownloader.user.db.old.msg"));
+							break;
+						case UP_TO_DATE:
+						default:
+							area = new JTextArea(
+									Message.getMessage("dbdownloader.uptodate.msg"));
+						}
+						area.setLineWrap(true);
+						area.setEditable(false);
+						area.setColumns(35);
+						note.add(area);
+						note.setVisible(true);
 						super.done();
 					}
 
@@ -251,7 +297,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 				new BasicProgressDialog(worker);
 
 			} else {
-				generatedDatabaseDirField.setText("");
+				userDatabaseDirField.setText("");
 				mediaRepositoryField.setText("");
 				romsPathField.setText("");
 
@@ -262,6 +308,11 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	}
 
 	private String getVersion(MenuType db) {
+		if (db == null) {
+			return Message.getMessage("dbdownloader.db.not.found.msg");
+		} else if (db.getHeader() == null) {
+			return Message.getMessage("dbdownloader.db.noversion.msg");
+		}
 		return db.getHeader().getListversion() + " - "
 				+ db.getHeader().getLastlistupdate();
 	}
@@ -289,8 +340,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		return mediaRepositoryField.getText();
 	}
 
-	public final String getGeneratedDatabaseDir() {
-		return generatedDatabaseDirField.getText();
+	public final String getUserDatabaseDir() {
+		return userDatabaseDirField.getText();
 	}
 
 	public final String getIniSelected() {
