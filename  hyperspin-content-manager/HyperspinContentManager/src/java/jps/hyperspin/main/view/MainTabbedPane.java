@@ -1,4 +1,4 @@
-package jps.hyperspin.main;
+package jps.hyperspin.main.view;
 
 import jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
 import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;

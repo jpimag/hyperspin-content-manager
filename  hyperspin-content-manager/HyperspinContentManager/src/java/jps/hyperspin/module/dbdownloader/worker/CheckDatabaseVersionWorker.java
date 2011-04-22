@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 /**
@@ -17,14 +18,6 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 	protected MenuType downloadedDatabase;
 	protected MenuType hyperlistDatabase;
 	protected MenuType userDatabase;
-
-	/**
-	 * The statut of the user database configuration
-	 * 
-	 */
-	protected enum VersionStatut {
-		SYSTEM_NOT_AVAILABLE, SYSTEM_NOT_VERSIONNED, OLD_DOWNLOADED_DB, OLD_USER_DB, UP_TO_DATE;
-	}
 
 	public CheckDatabaseVersionWorker() {
 		super();
@@ -83,7 +76,7 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 				|| downloadedDatabase.getHeader() == null
 				|| !downloadedDatabase.getHeader().getListversion()
 						.equals(hyperlistDatabase.getHeader().getListversion())) {
-			return VersionStatut.OLD_DOWNLOADED_DB;
+			return VersionStatut.OUT_DATED_DOWNLOADED_DB;
 
 		} else if (userDatabase == null
 				|| userDatabase.getHeader() == null
@@ -91,7 +84,7 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 						.getHeader()
 						.getListversion()
 						.equals(downloadedDatabase.getHeader().getListversion())) {
-			return VersionStatut.OLD_USER_DB;
+			return VersionStatut.OUT_DATED_USER_DB;
 		} else {
 			return VersionStatut.UP_TO_DATE;
 
