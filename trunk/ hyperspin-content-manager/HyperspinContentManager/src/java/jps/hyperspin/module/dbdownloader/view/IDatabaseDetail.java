@@ -1,5 +1,4 @@
-package jps.hyperspin.module.dbdownloader.presentation;
-
+package jps.hyperspin.module.dbdownloader.view;
 
 /**
  * Options disponibles de l'onglet Database

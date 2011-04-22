@@ -2,7 +2,7 @@ package jps.hyperspin.module.whdload.presentation;
 
 import java.awt.GridLayout;
 import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;

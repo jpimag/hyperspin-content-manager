@@ -8,7 +8,7 @@ import jps.hyperspin.common.presentation.PanelLogger;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.dbdownloader.presentation.SystemIniProperties;
+import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
 import jps.hyperspin.module.whdload.model.WhdloadType;
 import jps.hyperspin.module.whdload.presentation.WhdloadFormPanel;
