@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.presentation;
+package jps.hyperspin.module.dbdownloader.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -268,8 +268,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 					String msg;
 					// Set Tip Message according to versions
 					VersionStatut statut = getVersionStatut();
-					MainController.instance.putSystem(
-							MainClass.mainFrame.getSystemSelected(), statut);
+					MainController.instance.putSystem(MainClass.mainFrame.getSystemSelected(),statut);
 					switch (statut) {
 					case SYSTEM_NOT_AVAILABLE:
 						msg = Message

@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.presentation;
+package jps.hyperspin.module.dbdownloader.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;

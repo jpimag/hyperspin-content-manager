@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.presentation;
+package jps.hyperspin.module.dbdownloader.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;

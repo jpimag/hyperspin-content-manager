@@ -14,7 +14,7 @@ import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import java.util.ArrayList;
 import java.util.HashMap;

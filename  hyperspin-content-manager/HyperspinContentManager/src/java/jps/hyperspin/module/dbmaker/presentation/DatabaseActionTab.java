@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.presentation.LayoutUtilities;
-import jps.hyperspin.module.dbdownloader.presentation.DatabaseTab;
-import jps.hyperspin.module.dbdownloader.presentation.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
+import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
