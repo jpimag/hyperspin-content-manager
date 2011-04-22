@@ -18,6 +18,8 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.presentation.BasicProgressDialog;
 import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.main.controller.MainController;
+import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
 import jps.hyperspin.module.dbdownloader.worker.DbDowloaderWorker;
@@ -265,7 +267,10 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 					updateNow.setEnabled(true);
 					String msg;
 					// Set Tip Message according to versions
-					switch (getVersionStatut()) {
+					VersionStatut statut = getVersionStatut();
+					MainController.instance.putSystem(
+							MainClass.mainFrame.getSystemSelected(), statut);
+					switch (statut) {
 					case SYSTEM_NOT_AVAILABLE:
 						msg = Message
 								.getMessage("dbdownloader.hyperlist.notfound.msg");
@@ -274,11 +279,11 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 						msg = Message
 								.getMessage("dbdownloader.hyperlist.notversionned.msg");
 						break;
-					case OLD_DOWNLOADED_DB:
+					case OUT_DATED_DOWNLOADED_DB:
 						msg = Message
 								.getMessage("dbdownloader.download.db.old.msg");
 						break;
-					case OLD_USER_DB:
+					case OUT_DATED_USER_DB:
 						msg = Message
 								.getMessage("dbdownloader.user.db.old.msg");
 						break;

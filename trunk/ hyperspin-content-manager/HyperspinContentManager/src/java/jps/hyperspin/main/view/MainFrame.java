@@ -1,20 +1,13 @@
-package jps.hyperspin.main;
+package jps.hyperspin.main.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.File;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
 import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.presentation.LayoutUtilities;
@@ -41,7 +34,7 @@ public class MainFrame extends JFrame implements ComponentListener {
 	/**
 	 * 
  	*/
-	private JList systemList = new JList();
+	private SystemListPanel systemListPanel = new SystemListPanel();
 
 	/**
 	 * 
@@ -67,10 +60,9 @@ public class MainFrame extends JFrame implements ComponentListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// System List
-		JPanel systemPanel = new JPanel();
-		systemPanel.setMinimumSize(new Dimension(350, 900));
-		systemPanel.setPreferredSize(systemPanel.getMinimumSize());
-		systemPanel.setMaximumSize(systemPanel.getMinimumSize());
+		systemListPanel.setMinimumSize(new Dimension(350, 900));
+		systemListPanel.setPreferredSize(systemListPanel.getMinimumSize());
+		systemListPanel.setMaximumSize(systemListPanel.getMinimumSize());
 		c.gridx = 0;
 		c.fill = GridBagConstraints.NONE;
 		c.weighty = 1.0;
@@ -78,18 +70,9 @@ public class MainFrame extends JFrame implements ComponentListener {
 		c.gridheight = 10;
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
-		this.add(systemPanel, c);
+		this.add(systemListPanel, c);
 
-		systemPanel.setLayout(new BorderLayout());
-		DefaultListModel listModel = new DefaultListModel();
-		systemList.setModel(listModel);
-		JLabel systemListLabel = new JLabel("System selection");
-		systemListLabel.setFont(LayoutUtilities.h2());
-		systemPanel.add(systemListLabel, BorderLayout.PAGE_START);
-		systemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane listScroller = new JScrollPane(systemList);
-		systemPanel.add(listScroller, BorderLayout.CENTER);
-		systemList.addListSelectionListener(tabs.getDatabaseTab());
+		systemListPanel.addListSelectionListener(tabs.getDatabaseTab());
 
 		// Right panel
 		c.insets = new Insets(30, 30, 30, 30);
@@ -113,9 +96,6 @@ public class MainFrame extends JFrame implements ComponentListener {
 		c2.gridy++;
 		c2.insets = new Insets(50, 30, 50, 30);
 		rightPanel.add(loggerPanel, c2);
-
-		// Update list
-		updateSystemList();
 
 		this.pack();
 		this.setVisible(true);
@@ -141,32 +121,22 @@ public class MainFrame extends JFrame implements ComponentListener {
 	}
 
 	/**
-	 * 
+	 * @return the systemListPanel
 	 */
-	private void updateSystemList() {
+	public SystemListPanel getSystemListPanel() {
+		return systemListPanel;
+	}
 
-		System.out.println("Hyper spin field  edited");
-		((DefaultListModel) systemList.getModel()).removeAllElements();
-		File file = new File(getHyperSpinPath());
-		if (file.isDirectory()) {
-			File settings = new File(getHyperSpinPath() + "/settings");
-			if (settings.isDirectory()) {
-				for (String s : settings.list()) {
-					if (s.endsWith(".ini")) {
-						String ini = s.substring(0, s.length() - 4);
-						if (!ini.equals("Main Menu") && !ini.equals("Settings")) {
-							((DefaultListModel) systemList.getModel())
-									.addElement(ini);
-						}
-					}
-				}
-			}
-		}
-
+	/**
+	 * @param systemListPanel
+	 *            the systemListPanel to set
+	 */
+	protected void setSystemListPanel(SystemListPanel systemListPanel) {
+		this.systemListPanel = systemListPanel;
 	}
 
 	public String getSystemSelected() {
-		return (String) systemList.getSelectedValue();
+		return (String) systemListPanel.getSelection();
 	}
 
 	public String getHyperSpinPath() {

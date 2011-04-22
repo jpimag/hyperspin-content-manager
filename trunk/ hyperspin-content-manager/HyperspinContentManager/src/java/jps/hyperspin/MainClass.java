@@ -1,6 +1,7 @@
 package jps.hyperspin;
 
-import jps.hyperspin.main.MainFrame;
+import jps.hyperspin.main.controller.MainController;
+import jps.hyperspin.main.view.MainFrame;
 
 /**
  * 
@@ -24,7 +25,8 @@ public final class MainClass {
 	 */
 	public static void main(final String[] args) {
 		mainFrame = new MainFrame();
-
+		// Update list
+		MainController.instance.computeSystems();
 	}
 
 }
