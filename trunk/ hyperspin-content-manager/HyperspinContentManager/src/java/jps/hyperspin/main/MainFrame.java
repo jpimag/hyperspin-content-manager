@@ -7,9 +7,6 @@ import java.awt.Insets;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
-import jps.hyperspin.common.log.Logger;
-import jps.hyperspin.common.presentation.LayoutUtilities;
-import jps.hyperspin.common.presentation.PanelLogger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -19,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.common.presentation.PanelLogger;
 
 /**
  * Main frame. Display the system list to the right and the tabs to the left .
@@ -154,8 +154,10 @@ public class MainFrame extends JFrame implements ComponentListener {
 				for (String s : settings.list()) {
 					if (s.endsWith(".ini")) {
 						String ini = s.substring(0, s.length() - 4);
-						((DefaultListModel) systemList.getModel())
-								.addElement(ini);
+						if (!ini.equals("Main Menu") && !ini.equals("Settings")) {
+							((DefaultListModel) systemList.getModel())
+									.addElement(ini);
+						}
 					}
 				}
 			}

@@ -18,7 +18,6 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.presentation.BasicProgressDialog;
 import jps.hyperspin.common.presentation.LayoutUtilities;
-import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
 import jps.hyperspin.module.dbdownloader.worker.DbDowloaderWorker;
@@ -107,7 +106,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 *  
 	 */
-	private JPanel note;
+	private JTextArea versionNoteArea = new JTextArea();;
 
 	/**
 	 *  
@@ -201,10 +200,14 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		updateNow.setEnabled(false);
 
 		// Note panel
-		note = new JPanel();
+		JPanel note = new JPanel();
 		note.setBorder(BorderFactory.createTitledBorder(Message
 				.getMessage("dbdownloader.note.title")));
 		note.setBackground(Color.WHITE);
+		versionNoteArea.setLineWrap(true);
+		versionNoteArea.setEditable(false);
+		versionNoteArea.setColumns(35);
+		note.add(versionNoteArea);
 		LayoutUtilities.fixSize(note, 500, 80);
 		c.insets = new Insets(30, 0, 0, 0);
 		c.gridx = 0;
@@ -226,84 +229,82 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	public void updateFields() {
 		try {
 			String system = MainClass.mainFrame.getSystemSelected();
-			if (system != null) {
-
-				// ini
-				iniProp = new SystemIniProperties(
-						MainClass.mainFrame.getHyperSpinPath(),
-						databaseTab.getSystemSelected());
-
-				System.out.println("Ini file combo box change");
-				// Xml
-				String selected = system;
-				userDatabaseDirField.setText(DatabaseUtilities
-						.getUserDatabasePath());
-				mediaRepositoryField.setText(MainClass.mainFrame
-						.getHyperSpinPath() + "/Media/" + selected);
-
-				romsPathField.setText(getIniProp().getRomPath());
-
-				// worker
-				CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker() {
-
-					/* (non-Javadoc)
-					 * @see jps.hyperspin.common.worker.CommonWorker#done()
-					 */
-					@Override
-					public void done() {
-						// Update fields
-						downloadedVersion
-								.setText(getVersion(downloadedDatabase));
-						hyperlistVersion.setText(getVersion(hyperlistDatabase));
-						userVersion.setText(getVersion(userDatabase));
-
-						// Enable update button
-						updateNow.setEnabled(true);
-
-						// Set Tip Message according to versions
-						note.removeAll();
-						JTextArea area;
-						switch (getVersionStatut()) {
-						case SYSTEM_NOT_AVAILABLE:
-							area = new JTextArea(
-									Message.getMessage("dbdownloader.hyperlist.notfound.msg"));
-							break;
-						case SYSTEM_NOT_VERSIONNED:
-							area = new JTextArea(
-									Message.getMessage("dbdownloader.hyperlist.notversionned.msg"));
-							break;
-						case OLD_DOWNLOADED_DB:
-							area = new JTextArea(
-									Message.getMessage("dbdownloader.download.db.old.msg"));
-							break;
-						case OLD_USER_DB:
-							area = new JTextArea(
-									Message.getMessage("dbdownloader.user.db.old.msg"));
-							break;
-						case UP_TO_DATE:
-						default:
-							area = new JTextArea(
-									Message.getMessage("dbdownloader.uptodate.msg"));
-						}
-						area.setLineWrap(true);
-						area.setEditable(false);
-						area.setColumns(35);
-						note.add(area);
-						note.setVisible(true);
-						super.done();
-					}
-
-				};
-				new BasicProgressDialog(worker);
-
-			} else {
-				userDatabaseDirField.setText("");
-				mediaRepositoryField.setText("");
-				romsPathField.setText("");
-
+			if (system == null) {
+				throw new IllegalArgumentException();
 			}
-		} catch (HCMDatabaseException e) {
+
+			// ini
+			iniProp = new SystemIniProperties(
+					MainClass.mainFrame.getHyperSpinPath(),
+					databaseTab.getSystemSelected());
+
+			System.out.println("Ini file combo box change");
+			// Xml
+			String selected = system;
+			userDatabaseDirField.setText(DatabaseUtilities
+					.getUserDatabasePath());
+			mediaRepositoryField.setText(MainClass.mainFrame.getHyperSpinPath()
+					+ "/Media/" + selected);
+
+			romsPathField.setText(getIniProp().getRomPath());
+
+			// worker
+			CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker() {
+
+				/* (non-Javadoc)
+				 * @see jps.hyperspin.common.worker.CommonWorker#done()
+				 */
+				@Override
+				public void done() {
+					// Update fields
+					downloadedVersion.setText(getVersion(downloadedDatabase));
+					hyperlistVersion.setText(getVersion(hyperlistDatabase));
+					userVersion.setText(getVersion(userDatabase));
+
+					// Enable update button
+					updateNow.setEnabled(true);
+					String msg;
+					// Set Tip Message according to versions
+					switch (getVersionStatut()) {
+					case SYSTEM_NOT_AVAILABLE:
+						msg = Message
+								.getMessage("dbdownloader.hyperlist.notfound.msg");
+						break;
+					case SYSTEM_NOT_VERSIONNED:
+						msg = Message
+								.getMessage("dbdownloader.hyperlist.notversionned.msg");
+						break;
+					case OLD_DOWNLOADED_DB:
+						msg = Message
+								.getMessage("dbdownloader.download.db.old.msg");
+						break;
+					case OLD_USER_DB:
+						msg = Message
+								.getMessage("dbdownloader.user.db.old.msg");
+						break;
+					case UP_TO_DATE:
+					default:
+						msg = Message.getMessage("dbdownloader.uptodate.msg");
+					}
+					versionNoteArea.setText(msg);
+
+					super.done();
+				}
+
+			};
+			new BasicProgressDialog(worker);
+
+		} catch (Throwable e) {
 			MainClass.mainFrame.getLogger().info("Erreur : " + e);
+			userDatabaseDirField.setText("");
+			mediaRepositoryField.setText("");
+			romsPathField.setText("");
+			hyperlistVersion.setText("");
+			downloadedVersion.setText("");
+			userVersion.setText("");
+			versionNoteArea.setText("");
+			updateNow.setEnabled(false);
+
 		}
 	}
 
