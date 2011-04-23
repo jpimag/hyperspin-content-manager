@@ -15,4 +15,5 @@ public interface IDatabaseDetail {
 	String getIniSelected();
 
 	SystemIniProperties getIniProp();
+
 }

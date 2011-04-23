@@ -3,16 +3,16 @@ package jps.hyperspin.module.dbmaker.presentation;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.common.presentation.LayoutUtilities;
-import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
+import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 
 public class DatabaseActionTab extends JPanel implements ActionListener {
 

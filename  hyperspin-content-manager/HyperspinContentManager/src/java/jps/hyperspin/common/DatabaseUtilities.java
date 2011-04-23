@@ -35,17 +35,62 @@ public class DatabaseUtilities {
 	}
 
 	/**
+	 * Get the main directory path of the reference directory of a system.
+	 * 
+	 * @param system
+	 * 
+	 * @return
+	 */
+	public static String getDownloadedDatabaseDir(String system) {
+		String path = System.getProperty("user.dir") + File.separator
+				+ "database";
+		path += File.separator + system;
+
+		return path;
+	}
+
+	/**
+	 * Get the main database full path of the reference directory a system.
+	 * 
+	 * @param system
+	 * @return
+	 */
+	public static String getDownloadedDatabasePath(String system) {
+		return getDownloadedDatabaseDir(system) + File.separator + system
+				+ ".xml";
+	}
+
+	/**
+	 * 
+	 * @param system
+	 * @param genre
+	 * @return
+	 */
+	public static String getDownloadedGenreDatabasePath(String system,
+			String genre) {
+		return getDownloadedDatabaseDir(system) + File.separator + genre
+				+ ".xml";
+	}
+
+	/**
 	 * Get the main directory path of the reference directory of the selected
 	 * system.
+	 * 
+	 * @param system
 	 * 
 	 * @return
 	 */
 	public static String getDownloadedDatabaseDir() {
-		String path = System.getProperty("user.dir") + File.separator
-				+ "database";
-		path += File.separator + MainClass.mainFrame.getSystemSelected();
+		return getDownloadedDatabaseDir(MainClass.mainFrame.getSystemSelected());
+	}
 
-		return path;
+	/**
+	 * Get the main directory path of the reference directory of a system.
+	 * 
+	 * @return
+	 */
+	public static String getUserDatabasePath() {
+		return getUserDatabasePath(MainClass.mainFrame.getSystemSelected());
 	}
 
 	/**
@@ -55,12 +100,18 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getDownloadedDatabasePath() {
-		return getDownloadedDatabaseDir() + File.separator
-				+ MainClass.mainFrame.getSystemSelected() + ".xml";
+		return getDownloadedDatabasePath(MainClass.mainFrame
+				.getSystemSelected());
 	}
 
+	/**
+	 * 
+	 * @param genre
+	 * @return
+	 */
 	public static String getDownloadedGenreDatabasePath(String genre) {
-		return getDownloadedDatabaseDir() + File.separator + genre + ".xml";
+		return getDownloadedGenreDatabasePath(MainClass.mainFrame
+				.getSystemSelected());
 	}
 
 	/**
@@ -69,11 +120,10 @@ public class DatabaseUtilities {
 	 * 
 	 * @return
 	 */
-	public static String getUserDatabasePath() {
+	public static String getUserDatabasePath(String system) {
 		String path = MainClass.mainFrame.getHyperSpinPath() + File.separator
-				+ "Databases" + File.separator
-				+ MainClass.mainFrame.getSystemSelected() + File.separator
-				+ MainClass.mainFrame.getSystemSelected() + ".xml";
+				+ "Databases" + File.separator + system + File.separator
+				+ system + ".xml";
 		return path;
 	}
 

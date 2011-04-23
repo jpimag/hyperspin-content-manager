@@ -19,6 +19,8 @@ public class MainController {
 	public void putSystem(String system, VersionStatut statut) {
 		if (!Systems.instance.exist(system)) {
 			MainClass.mainFrame.getSystemListPanel().addElement(system);
+		} else {
+			MainClass.mainFrame.getSystemListPanel().repaint();
 		}
 		Systems.instance.put(system, statut);
 

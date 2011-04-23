@@ -47,12 +47,15 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 				// Main database
 				// -------------
 				map.put(MainClass.mainFrame.getSystemSelected(),
-						getLastAvailableDb());
+						getLastAvailableDb(MainClass.mainFrame
+								.getSystemSelected()));
 				setProgress(10);
 
 				// Genre databases
 				// ---------------
-				URL url = new URL(getLastAvailableDbUrls().urlGenre);
+				URL url = new URL(
+						getLastAvailableDbUrls(MainClass.mainFrame
+								.getSystemSelected()).urlGenre);
 				urlConnGenre = (HttpURLConnection) url.openConnection();
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						urlConnGenre.getInputStream()));

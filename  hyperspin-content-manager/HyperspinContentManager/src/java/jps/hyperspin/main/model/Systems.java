@@ -1,7 +1,8 @@
 package jps.hyperspin.main.model;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * The model of the systems.
@@ -13,7 +14,7 @@ public class Systems {
 
 	public static Systems instance = new Systems();
 
-	private Map<String, VersionStatut> elements = new HashMap<String, VersionStatut>();
+	private Map<String, VersionStatut> elements = new TreeMap<String, VersionStatut>();
 
 	public void put(String system, VersionStatut statut) {
 		elements.put(system, statut);
@@ -25,5 +26,9 @@ public class Systems {
 
 	public boolean exist(String system) {
 		return elements.containsKey(system);
+	}
+
+	public Collection<String> list() {
+		return elements.keySet();
 	}
 }

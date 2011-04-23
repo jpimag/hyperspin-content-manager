@@ -3,13 +3,13 @@ package jps.hyperspin.module.dbdownloader.view;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.common.presentation.LayoutUtilities;
 
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import jps.hyperspin.MainClass;
+import jps.hyperspin.common.presentation.LayoutUtilities;
 
 public class DatabaseTab extends JPanel implements ListSelectionListener {
 

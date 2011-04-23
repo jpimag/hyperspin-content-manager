@@ -4,6 +4,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
+
+import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.file.FileFilterExtension;
 import jps.hyperspin.common.file.FileUtilities;
@@ -16,13 +24,6 @@ import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
-
 
 /**
  * 
@@ -91,7 +92,9 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		// Parse database
 		Map<String, String> databaseGame = null;
-		File dir = new File(DatabaseUtilities.getDownloadedDatabaseDir());
+		File dir = new File(
+				DatabaseUtilities.getDownloadedDatabaseDir(MainClass.mainFrame
+						.getSystemSelected()));
 		File[] databases = dir.listFiles(new FileFilterExtension("xml"));
 		for (File file : databases) {
 
@@ -308,8 +311,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 		for (MenuTypeWrapper menu : menus) {
 			if (menu.getMenu().getGame().size() > 0) {
 				FileWriter writer = new FileWriter(
-						databaseDetail.getUserDatabaseDir()
-								+ File.separator + menu.getFileName());
+						databaseDetail.getUserDatabaseDir() + File.separator
+								+ menu.getFileName());
 				XmlBinding.getInstance().java2xml(menu.getMenu(), writer);
 				writer.close();
 				logger.info("Database File writed : " + menu.getFileName());
