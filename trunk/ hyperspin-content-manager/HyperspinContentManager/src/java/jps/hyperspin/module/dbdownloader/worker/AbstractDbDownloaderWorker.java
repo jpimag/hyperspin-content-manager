@@ -42,7 +42,7 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * Retourne la l'url de la derniere version du systeme selectionné dans le
 	 * tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	protected DatabaseUrls getLastAvailableDbUrls() {
+	protected DatabaseUrls getLastAvailableDbUrls(String system) {
 		BufferedReader in = null;
 		HttpURLConnection urlConn = null;
 
@@ -61,8 +61,7 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 			while (!found && (sLine = in.readLine()) != null) {
 				if (sLine.contains("System Name")) {
 					while (!found && (sLine = in.readLine()) != null) {
-						if (sLine.contains(MainClass.mainFrame
-								.getSystemSelected())) {
+						if (sLine.contains(system)) {
 							while (!found && (sLine = in.readLine()) != null) {
 								if (sLine.contains("Download XML")) {
 									databaseUrls.urlDb = sLine.split("href='")[1];
@@ -108,12 +107,12 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * Retourne la derniere version de la database principale du systeme
 	 * selectionné dans le tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	public MenuType getLastAvailableDb() throws HCMBindingException,
-			HCMDatabaseException {
+	public MenuType getLastAvailableDb(String system)
+			throws HCMBindingException, HCMDatabaseException {
 		HttpURLConnection urlConn = null;
 		MenuType main = null;
 		try {
-			DatabaseUrls dbUrl = getLastAvailableDbUrls();
+			DatabaseUrls dbUrl = getLastAvailableDbUrls(system);
 
 			// Main database
 			// -------------

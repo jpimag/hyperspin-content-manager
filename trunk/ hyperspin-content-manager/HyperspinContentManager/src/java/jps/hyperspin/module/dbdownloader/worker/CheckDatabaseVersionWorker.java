@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 
@@ -18,9 +19,12 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 	protected MenuType downloadedDatabase;
 	protected MenuType hyperlistDatabase;
 	protected MenuType userDatabase;
+	private String system;
 
-	public CheckDatabaseVersionWorker() {
+	public CheckDatabaseVersionWorker(String system) {
 		super();
+		this.system = system;
+
 	}
 
 	/**
@@ -31,13 +35,12 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 		try {
 			setProgress(1);
 
-			String system = MainClass.mainFrame.getSystemSelected();
 			if (system != null) {
 
 				// User Database version
 				try {
 					userDatabase = DatabaseUtilities.loadDatabase(
-							DatabaseUtilities.getUserDatabasePath(),
+							DatabaseUtilities.getUserDatabasePath(system),
 							MainClass.mainFrame.getLogger());
 
 				} catch (FileNotFoundException e) {
@@ -47,9 +50,10 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 
 				// Downloaded Database version
 				try {
-					downloadedDatabase = DatabaseUtilities.loadDatabase(
-							DatabaseUtilities.getDownloadedDatabasePath(),
-							MainClass.mainFrame.getLogger());
+					downloadedDatabase = DatabaseUtilities
+							.loadDatabase(DatabaseUtilities
+									.getDownloadedDatabasePath(system),
+									MainClass.mainFrame.getLogger());
 
 				} catch (FileNotFoundException e) {
 					downloadedDatabase = null;
@@ -57,8 +61,10 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 				setProgress(50);
 
 				// Check DB from hyperlist web site
-				hyperlistDatabase = getLastAvailableDb();
+				hyperlistDatabase = getLastAvailableDb(system);
 
+				// Notify system list panel
+				MainController.instance.putSystem(system, getVersionStatut());
 			}
 		} finally {
 			setProgress(100);

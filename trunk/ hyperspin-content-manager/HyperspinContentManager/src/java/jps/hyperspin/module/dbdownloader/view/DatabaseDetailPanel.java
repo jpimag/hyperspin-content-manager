@@ -18,7 +18,6 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.presentation.BasicProgressDialog;
 import jps.hyperspin.common.presentation.LayoutUtilities;
-import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
@@ -228,6 +227,22 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 	/**
 	 * 
 	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == updateNow) {
+
+			// Process
+			new BasicProgressDialog(new DbDowloaderWorker());
+
+			// Update filed
+			updateFields();
+		}
+
+	}
+
+	/**
+	 * 
+	 */
 	public void updateFields() {
 		try {
 			String system = MainClass.mainFrame.getSystemSelected();
@@ -251,7 +266,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 			romsPathField.setText(getIniProp().getRomPath());
 
 			// worker
-			CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker() {
+			CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker(
+					MainClass.mainFrame.getSystemSelected()) {
 
 				/* (non-Javadoc)
 				 * @see jps.hyperspin.common.worker.CommonWorker#done()
@@ -268,7 +284,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 					String msg;
 					// Set Tip Message according to versions
 					VersionStatut statut = getVersionStatut();
-					MainController.instance.putSystem(MainClass.mainFrame.getSystemSelected(),statut);
+
 					switch (statut) {
 					case SYSTEM_NOT_AVAILABLE:
 						msg = Message
@@ -320,22 +336,6 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 		}
 		return db.getHeader().getListversion() + " - "
 				+ db.getHeader().getLastlistupdate();
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == updateNow) {
-
-			// Process
-			new BasicProgressDialog(new DbDowloaderWorker());
-
-			// Update filed
-			updateFields();
-		}
-
 	}
 
 	/**
