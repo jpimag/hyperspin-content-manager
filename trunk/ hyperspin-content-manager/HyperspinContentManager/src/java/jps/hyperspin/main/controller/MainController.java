@@ -28,17 +28,18 @@ public class MainController {
 
 	/**
 	 * Compute the system list.
+	 * 
+	 * @return th number of system foudn in user settings.
 	 */
-	public void computeSystems() {
+	public int computeSystems() {
 
 		System.out.println("Hyper spin field  edited");
 		// Update JList
 		MainClass.mainFrame.getSystemListPanel().removeAllElements();
 
-		File file = new File(MainClass.mainFrame.getHyperSpinPath());
+		File file = new File(MainClass.HYPERSPIN_PATH);
 		if (file.isDirectory()) {
-			File settings = new File(MainClass.mainFrame.getHyperSpinPath()
-					+ "/settings");
+			File settings = new File(MainClass.HYPERSPIN_PATH + "/settings");
 			if (settings.isDirectory()) {
 				for (String s : settings.list()) {
 					if (s.endsWith(".ini")) {
@@ -50,5 +51,7 @@ public class MainController {
 				}
 			}
 		}
+
+		return Systems.instance.list().size();
 	}
 }
