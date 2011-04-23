@@ -139,10 +139,6 @@ public class MainFrame extends JFrame implements ComponentListener {
 		return (String) systemListPanel.getSelection();
 	}
 
-	public String getHyperSpinPath() {
-		return "S:/HyperSpin";
-	}
-
 	/**
 	 * 
 	 * @return

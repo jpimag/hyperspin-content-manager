@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -251,8 +252,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 			}
 
 			// ini
-			iniProp = new SystemIniProperties(
-					MainClass.mainFrame.getHyperSpinPath(),
+			iniProp = new SystemIniProperties(MainClass.HYPERSPIN_PATH,
 					databaseTab.getSystemSelected());
 
 			System.out.println("Ini file combo box change");
@@ -260,8 +260,8 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 			String selected = system;
 			userDatabaseDirField.setText(DatabaseUtilities
 					.getUserDatabasePath());
-			mediaRepositoryField.setText(MainClass.mainFrame.getHyperSpinPath()
-					+ "/Media/" + selected);
+			mediaRepositoryField.setText(MainClass.HYPERSPIN_PATH
+					+ File.separator + "Media" + File.separator + selected);
 
 			romsPathField.setText(getIniProp().getRomPath());
 

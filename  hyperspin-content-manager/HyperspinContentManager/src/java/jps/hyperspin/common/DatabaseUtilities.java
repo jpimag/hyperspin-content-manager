@@ -121,9 +121,8 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getUserDatabasePath(String system) {
-		String path = MainClass.mainFrame.getHyperSpinPath() + File.separator
-				+ "Databases" + File.separator + system + File.separator
-				+ system + ".xml";
+		String path = MainClass.HYPERSPIN_PATH + File.separator + "Databases"
+				+ File.separator + system + File.separator + system + ".xml";
 		return path;
 	}
 
