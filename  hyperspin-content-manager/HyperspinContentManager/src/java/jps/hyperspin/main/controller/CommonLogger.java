@@ -2,7 +2,7 @@ package jps.hyperspin.main.controller;
 
 import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.log.LoggerLevel;
-import jps.hyperspin.common.presentation.PanelLogger;
+import jps.hyperspin.common.view.PanelLogger;
 
 public class CommonLogger implements Logger {
 

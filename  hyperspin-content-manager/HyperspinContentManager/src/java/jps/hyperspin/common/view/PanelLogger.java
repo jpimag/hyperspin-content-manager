@@ -1,4 +1,4 @@
-package jps.hyperspin.common.presentation;
+package jps.hyperspin.common.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,12 +33,6 @@ public class PanelLogger extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
-		gridBagConstraints2.fill = GridBagConstraints.BOTH;
-		gridBagConstraints2.gridy = 1;
-		gridBagConstraints2.weightx = 0.5;
-		gridBagConstraints2.anchor = GridBagConstraints.WEST;
-		gridBagConstraints2.gridx = 1;
 		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 		gridBagConstraints1.gridx = 0;
 		gridBagConstraints1.gridwidth = 1;
@@ -57,7 +51,6 @@ public class PanelLogger extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.add(getJTextArea(), gridBagConstraints);
 		this.add(getClearButton(), gridBagConstraints1);
-		this.add(getLevelBox(), gridBagConstraints2);
 		LoggerLevel[] levels = { LoggerLevel.INFO, LoggerLevel.TRACE };
 		levelBox = new JComboBox(levels);
 	}

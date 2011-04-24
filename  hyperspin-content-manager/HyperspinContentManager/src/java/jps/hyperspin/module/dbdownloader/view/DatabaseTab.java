@@ -9,7 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.common.view.LayoutUtilities;
 
 public class DatabaseTab extends JPanel implements ListSelectionListener {
 
