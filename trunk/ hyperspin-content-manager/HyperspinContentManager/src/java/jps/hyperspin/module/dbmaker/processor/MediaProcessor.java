@@ -3,14 +3,6 @@ package jps.hyperspin.module.dbmaker.processor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.log.Logger;
-import jps.hyperspin.common.presentation.ChoiceDialog;
-import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
-import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +10,14 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.file.FileUtilities;
+import jps.hyperspin.common.presentation.ChoiceDialog;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.AbstractProcessor;
+import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
+import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**
  * 
@@ -36,9 +36,9 @@ public class MediaProcessor extends AbstractProcessor {
 
 	}
 
-	public void processMedia(String relativePath, final Logger logger)
-			throws HCMDatabaseException, IOException {
-
+	public void processMedia(String relativePath) throws HCMDatabaseException,
+			IOException {
+		CommonLogger logger = CommonLogger.instance;
 		// Database or roms
 		List<ProcessingOption> options = new ArrayList<ProcessingOption>();
 		options.add(ProcessingOption.DATABASE);
@@ -55,11 +55,10 @@ public class MediaProcessor extends AbstractProcessor {
 
 		Map<String, String> games = null;
 		if (processingOption == ProcessingOption.DATABASE) {
-			games = loadDatabase(databaseDetail.getUserDatabaseDir() + "/"
-					+ databaseDetail.getIniSelected() + ".xml", logger);
+			games = loadDatabase(databaseDetail.getUserDatabaseDir()
+					+ File.separator + databaseDetail.getIniSelected() + ".xml");
 		} else if (processingOption == ProcessingOption.REFERENCE_DATABASE) {
-			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(),
-					logger);
+			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath());
 
 		} else if (processingOption == ProcessingOption.ROMS) {
 			// Step 4 : Parse roms
@@ -212,15 +211,14 @@ public class MediaProcessor extends AbstractProcessor {
 				"Do you want to manually check unused medias ?", "",
 				JOptionPane.YES_NO_OPTION);
 		if (choix == 0) {
-			reverseProcessMedia(relativePath, medias, games, logger);
+			reverseProcessMedia(relativePath, medias, games);
 		}
 
 	}
 
 	public final void reverseProcessMedia(String relativePath,
-			Map<String, String> medias, Map<String, String> games,
-			final Logger logger) throws FileNotFoundException,
-			HCMDatabaseException {
+			Map<String, String> medias, Map<String, String> games)
+			throws FileNotFoundException, HCMDatabaseException {
 
 		String mediaDir = databaseDetail.getMediaRepository() + "/"
 				+ relativePath;
@@ -253,7 +251,8 @@ public class MediaProcessor extends AbstractProcessor {
 				if (games.get(unusedMedia) == null) {
 					menuMediaNotFound++;
 
-					logger.trace("Media :" + unusedMedia + " not found.");
+					CommonLogger.instance.trace("Media :" + unusedMedia
+							+ " not found.");
 
 					// Propose matching medias
 					if (continueDeep) {
@@ -308,8 +307,8 @@ public class MediaProcessor extends AbstractProcessor {
 									medias.remove(unusedMedia);
 									medias.put(ds.string, extension);
 
-									logger.trace("Media/video :" + ds.string
-											+ " manually found.");
+									CommonLogger.instance.trace("Media/video :"
+											+ ds.string + " manually found.");
 									menuMediaNotFound--;
 								}
 							}
@@ -320,18 +319,19 @@ public class MediaProcessor extends AbstractProcessor {
 			}
 		}
 
-		logger.info("\nTotal of " + menuMediaNotFound + "unused.");
+		CommonLogger.instance.info("\nTotal of " + menuMediaNotFound
+				+ "unused.");
 
 	}
 
-	public final void purgeMedia(String relativePath, final Logger logger)
+	public final void purgeMedia(String relativePath)
 			throws FileNotFoundException, HCMDatabaseException {
 
 		String mediaDir = databaseDetail.getMediaRepository() + "/"
 				+ relativePath;
 		Map<String, String> games = loadDatabase(
 
-		DatabaseUtilities.getDownloadedDatabasePath(), logger);
+		DatabaseUtilities.getDownloadedDatabasePath());
 
 		// Medias
 		File dir = new File(mediaDir);
@@ -370,7 +370,7 @@ public class MediaProcessor extends AbstractProcessor {
 						+ medias.get(string));
 				toDelete.delete();
 			}
-			logger.info("\nTotal of " + unused.size()
+			CommonLogger.instance.info("\nTotal of " + unused.size()
 					+ " unused medias deleted.");
 		}
 

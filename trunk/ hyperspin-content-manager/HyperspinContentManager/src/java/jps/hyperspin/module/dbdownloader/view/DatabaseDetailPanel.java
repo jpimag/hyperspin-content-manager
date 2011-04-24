@@ -19,6 +19,7 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.presentation.BasicProgressDialog;
 import jps.hyperspin.common.presentation.LayoutUtilities;
+import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
@@ -315,7 +316,7 @@ public class DatabaseDetailPanel extends JPanel implements IDatabaseDetail,
 			new BasicProgressDialog(worker);
 
 		} catch (Throwable e) {
-			MainClass.mainFrame.getLogger().info("Erreur : " + e);
+			CommonLogger.instance.info("Erreur : " + e);
 			userDatabaseDirField.setText("");
 			mediaRepositoryField.setText("");
 			romsPathField.setText("");

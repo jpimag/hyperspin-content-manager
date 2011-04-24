@@ -4,5 +4,11 @@
 	<classpathentry kind="src" path="src/resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/seaglasslookandfeel-0.1.7.3.jar"/>
+	<classpathentry kind="lib" path="lib/ilf-gpl.jar"/>
+	<classpathentry kind="lib" path="lib/PgsLookAndFeel-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/PgsLookAndFeel-jide.jar"/>
+	<classpathentry kind="lib" path="lib/PgsLookAndFeel.jar"/>
+	<classpathentry kind="con" path="org.dyno.visual.swing.VS_LIBRARY/layoutext"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

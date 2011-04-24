@@ -30,10 +30,22 @@ public final class MainClass {
 	 *            main args
 	 */
 	public static void main(final String[] args) {
+		try {
+			/*UIManager
+					.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");*/
+			// UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
+			// UIManager.setLookAndFeel(new NimbusLookAndFeel());
+			// UIManager.setLookAndFeel(new PgsLookAndFeel());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		if (args != null && args.length > 0) {
 			HYPERSPIN_PATH = args[0];
 		}
 		mainFrame = new MainFrame();
+		mainFrame.setVisible(true);
 		// Update list
 		int i = MainController.instance.computeSystems();
 		if (i == 0) {

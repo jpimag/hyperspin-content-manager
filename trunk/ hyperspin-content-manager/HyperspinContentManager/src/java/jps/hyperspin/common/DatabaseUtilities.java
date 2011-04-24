@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 public class DatabaseUtilities {
@@ -23,11 +23,11 @@ public class DatabaseUtilities {
 	 * @throws HCMDatabaseException
 	 * @throws FileNotFoundException
 	 */
-	public static MenuType loadDatabase(String databaseFullPath,
-			final Logger logger) throws HCMDatabaseException,
-			FileNotFoundException {
+	public static MenuType loadDatabase(String databaseFullPath)
+			throws HCMDatabaseException, FileNotFoundException {
 		File database = new File(databaseFullPath);
-		logger.info("Database to be parsed : " + database.getName());
+		CommonLogger.instance.info("Database to be parsed : "
+				+ database.getName());
 		FileReader reader = new FileReader(database);
 		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(
 				MenuType.class, reader);
@@ -137,12 +137,11 @@ public class DatabaseUtilities {
 			FileWriter writer = new FileWriter(path + File.separator + fileName);
 			XmlBinding.getInstance().java2xml(db, writer);
 			writer.close();
-			MainClass.mainFrame.getLogger().info(
-					"Database File writed : " + path);
+			CommonLogger.instance.info("Database File writed : " + path);
 		} catch (IOException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 		} catch (HCMDatabaseException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 		}
 	}
 
