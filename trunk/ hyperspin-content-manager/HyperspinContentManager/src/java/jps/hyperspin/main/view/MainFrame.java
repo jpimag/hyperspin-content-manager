@@ -7,7 +7,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jps.hyperspin.common.presentation.PanelLogger;
+import jps.hyperspin.common.view.PanelLogger;
 
 public class MainFrame extends JFrame {
 

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.presentation.ChoiceDialog;
+import jps.hyperspin.common.view.ChoiceDialog;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.AbstractProcessor;

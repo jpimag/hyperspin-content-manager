@@ -1,4 +1,4 @@
-package jps.hyperspin.common.presentation;
+package jps.hyperspin.common.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
