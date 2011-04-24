@@ -2,149 +2,113 @@ package jps.hyperspin.main.view;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jps.hyperspin.common.log.Logger;
-import jps.hyperspin.common.presentation.LayoutUtilities;
 import jps.hyperspin.common.presentation.PanelLogger;
 
-/**
- * Main frame. Display the system list to the right and the tabs to the left .
- * 
- * @author JPS
- * 
- */
-public class MainFrame extends JFrame implements ComponentListener {
+public class MainFrame extends JFrame {
+
+	private JPanel jPanel = null; // @jve:decl-index=0:visual-constraint="10,10"
+	private SystemListPanel systemListPanel = null;
+	private PanelLogger panelLogger = null;
+	private MainTabbedPane mainTabbedPane = null;
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	private MainTabbedPane tabs = new MainTabbedPane();
-
-	/**
-	 * 
- 	*/
-	private SystemListPanel systemListPanel = new SystemListPanel();
-
-	/**
-	 * 
-	 */
-	private PanelLogger loggerPanel = new PanelLogger();
-
-	/**
+	 * This method initializes
 	 * 
 	 */
 	public MainFrame() {
-		init();
+		super();
+		initialize();
 	}
 
 	/**
+	 * This method initializes this
 	 * 
 	 */
-	private void init() {
-		GridBagConstraints c = LayoutUtilities.newConstraint(0, 0);
-		this.setLayout(LayoutUtilities.newLayout());
-		this.setResizable(false);
+	private void initialize() {
+		this.setSize(new Dimension(1266, 950));
 
-		// Frame properties
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// System List
-		systemListPanel.setMinimumSize(new Dimension(350, 900));
-		systemListPanel.setPreferredSize(systemListPanel.getMinimumSize());
-		systemListPanel.setMaximumSize(systemListPanel.getMinimumSize());
-		c.gridx = 0;
-		c.fill = GridBagConstraints.NONE;
-		c.weighty = 1.0;
-		c.weightx = 1.0;
-		c.gridheight = 10;
-		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		this.add(systemListPanel, c);
-
-		systemListPanel.addListSelectionListener(tabs.getDatabaseTab());
-
-		// Right panel
-		c.insets = new Insets(30, 30, 30, 30);
-		c.gridy = 0;
-		c.gridx = 2;
-		c.weighty = 0;
-		c.gridheight = 1;
-		JPanel rightPanel = new JPanel();
-		add(rightPanel, c);
-		rightPanel.setLayout(LayoutUtilities.newLayout());
-
-		// Tabs
-		GridBagConstraints c2 = LayoutUtilities.newConstraint(0, 0);
-		tabs.setMinimumSize(new Dimension(800, 400));
-		tabs.setPreferredSize(tabs.getMinimumSize());
-		tabs.setMaximumSize(tabs.getMinimumSize());
-		rightPanel.add(tabs, c2);
-		tabs.init();
-
-		// Panel logger
-		c2.gridy++;
-		c2.insets = new Insets(50, 30, 50, 30);
-		rightPanel.add(loggerPanel, c2);
-
-		this.pack();
-		this.setVisible(true);
-		this.addComponentListener(this);
-
-	}
-
-	public void componentHidden(ComponentEvent e) {
-		this.repaint();
-	}
-
-	public void componentMoved(ComponentEvent e) {
-		this.repaint();
-	}
-
-	public void componentResized(ComponentEvent e) {
-		this.repaint();
-	}
-
-	public void componentShown(ComponentEvent e) {
-		this.repaint();
-
+		this.setContentPane(getJPanel());
+		systemListPanel.addListSelectionListener(mainTabbedPane
+				.getDatabaseTab());
 	}
 
 	/**
-	 * @return the systemListPanel
+	 * This method initializes jPanel
+	 * 
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getJPanel() {
+		if (jPanel == null) {
+			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
+			gridBagConstraints4.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints4.gridy = 0;
+			gridBagConstraints4.weightx = 0.0;
+			gridBagConstraints4.weighty = 0.0;
+			gridBagConstraints4.gridx = 1;
+			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
+			gridBagConstraints3.gridx = 1;
+			gridBagConstraints3.weightx = 0.0;
+			gridBagConstraints3.fill = GridBagConstraints.BOTH;
+			gridBagConstraints3.weighty = 0.5;
+			gridBagConstraints3.gridy = 1;
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridheight = 3;
+			gridBagConstraints.fill = GridBagConstraints.VERTICAL;
+			gridBagConstraints.gridy = 0;
+			jPanel = new JPanel();
+			jPanel.setLayout(new GridBagLayout());
+			jPanel.setSize(new Dimension(898, 559));
+			jPanel.add(getSystemListPanel(), gridBagConstraints);
+			jPanel.add(getPanelLogger(), gridBagConstraints3);
+			jPanel.add(getMainTabbedPane(), gridBagConstraints4);
+		}
+		return jPanel;
+	}
+
+	/**
+	 * This method initializes systemListPanel
+	 * 
+	 * @return jps.hyperspin.main.view.SystemListPanel
 	 */
 	public SystemListPanel getSystemListPanel() {
+		if (systemListPanel == null) {
+			systemListPanel = new SystemListPanel();
+		}
 		return systemListPanel;
 	}
 
 	/**
-	 * @param systemListPanel
-	 *            the systemListPanel to set
+	 * This method initializes panelLogger
+	 * 
+	 * @return jps.hyperspin.common.presentation.PanelLogger
 	 */
-	protected void setSystemListPanel(SystemListPanel systemListPanel) {
-		this.systemListPanel = systemListPanel;
-	}
-
-	public String getSystemSelected() {
-		return (String) systemListPanel.getSelection();
+	private PanelLogger getPanelLogger() {
+		if (panelLogger == null) {
+			panelLogger = new PanelLogger();
+		}
+		return panelLogger;
 	}
 
 	/**
+	 * This method initializes mainTabbedPane
 	 * 
-	 * @return
+	 * @return jps.hyperspin.main.view.MainTabbedPane
 	 */
-	public Logger getLogger() {
-		return loggerPanel;
+	private MainTabbedPane getMainTabbedPane() {
+		if (mainTabbedPane == null) {
+			mainTabbedPane = new MainTabbedPane();
+		}
+		return mainTabbedPane;
 	}
 
-}
+	public String getSystemSelected() {
+		return systemListPanel.getSelection();
+	}
+
+} // @jve:decl-index=0:visual-constraint="10,10"

@@ -4,11 +4,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.module.dbmaker.processor.DatabaseProcessor;
 
 import javax.swing.JButton;
 
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbmaker.processor.DatabaseProcessor;
 
 /**
  * Panel des actions pour la categorie database
@@ -62,18 +62,17 @@ public class DatabaseActionPanel extends CommonDatabaseActionPanel {
 				getDetail(), getOption());
 		try {
 			if (e.getSource() == process) {
-				MainClass.mainFrame.getLogger().clear();
+				CommonLogger.instance.clear();
 
 				switch (getAction()) {
 				case DATABASE:
-					databaseProcessor.processDatabase(MainClass.mainFrame
-							.getLogger());
+					databaseProcessor.processDatabase();
 					break;
 
 				}
 			}
 		} catch (Exception ex) {
-			MainClass.mainFrame.getLogger().info(ex.toString());
+			CommonLogger.instance.info(ex.toString());
 		}
 	}
 }

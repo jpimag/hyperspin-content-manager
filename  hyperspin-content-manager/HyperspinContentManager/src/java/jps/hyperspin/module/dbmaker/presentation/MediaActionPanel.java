@@ -4,11 +4,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.module.dbmaker.processor.MediaProcessor;
 
 import javax.swing.JButton;
 
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbmaker.processor.MediaProcessor;
 
 /**
  * Panel des actions pour la categorie media
@@ -75,69 +75,57 @@ public class MediaActionPanel extends CommonDatabaseActionPanel {
 				getOption());
 		try {
 			if (e.getSource() == process) {
-				MainClass.mainFrame.getLogger().clear();
+				CommonLogger.instance.clear();
 
 				switch (getAction()) {
 
 				case ARTWORK1:
-					mediaProcessor.processMedia("Images/Artwork1",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Images/Artwork1");
 					break;
 				case ARTWORK2:
-					mediaProcessor.processMedia("Images/Artwork2",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Images/Artwork2");
 					break;
 				case ARTWORK3:
-					mediaProcessor.processMedia("Images/Artwork3",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Images/Artwork3");
 					break;
 				case ARTWORK4:
-					mediaProcessor.processMedia("Images/Artwork4",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Images/Artwork4");
 					break;
 				case VIDEOS:
-					mediaProcessor.processMedia("Video",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Video");
 					break;
 				case WHEEL:
-					mediaProcessor.processMedia("Images/Wheel",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.processMedia("Images/Wheel");
 					break;
 				}
 
 			} else if (e.getSource() == purge) {
-				MainClass.mainFrame.getLogger().clear();
+				CommonLogger.instance.clear();
 				switch (getAction()) {
 
 				case ARTWORK1:
-					mediaProcessor.purgeMedia("Images/Artwork1",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Images/Artwork1");
 					break;
 				case ARTWORK2:
-					mediaProcessor.purgeMedia("Images/Artwork2",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Images/Artwork2");
 					break;
 				case ARTWORK3:
-					mediaProcessor.purgeMedia("Images/Artwork3",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Images/Artwork3");
 					break;
 				case ARTWORK4:
-					mediaProcessor.purgeMedia("Images/Artwork4",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Images/Artwork4");
 					break;
 
 				case VIDEOS:
-					mediaProcessor.purgeMedia("Video",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Video");
 					break;
 				case WHEEL:
-					mediaProcessor.purgeMedia("Images/Wheel",
-							MainClass.mainFrame.getLogger());
+					mediaProcessor.purgeMedia("Images/Wheel");
 					break;
 				}
 			}
 		} catch (Exception ex) {
-			MainClass.mainFrame.getLogger().info(ex.toString());
+			CommonLogger.instance.info(ex.toString());
 		}
 	}
 }

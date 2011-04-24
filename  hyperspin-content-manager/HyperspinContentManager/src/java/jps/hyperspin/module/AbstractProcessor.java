@@ -3,22 +3,23 @@ package jps.hyperspin.module;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import jps.hyperspin.common.file.FileFilterDirectory;
-import jps.hyperspin.common.file.FileFilterExtension;
-import jps.hyperspin.common.log.Logger;
-import jps.hyperspin.common.xml.XmlBinding;
-import jps.hyperspin.exception.HCMDatabaseException;
-import jps.hyperspin.module.dbdownloader.model.GameType;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
-import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
-import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import jps.hyperspin.common.file.FileFilterDirectory;
+import jps.hyperspin.common.file.FileFilterExtension;
+import jps.hyperspin.common.log.Logger;
+import jps.hyperspin.common.xml.XmlBinding;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbdownloader.model.GameType;
+import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
+import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -76,18 +77,18 @@ public abstract class AbstractProcessor {
 		this.ini = ini;
 	}
 
-	protected Map<String, String> loadDatabase(String databaseFullPath,
-			final Logger logger) throws HCMDatabaseException,
-			FileNotFoundException {
+	protected Map<String, String> loadDatabase(String databaseFullPath)
+			throws HCMDatabaseException, FileNotFoundException {
 		// Step 5 : Load main database
 		File database = new File(databaseFullPath);
 
-		logger.info("Database to be parsed : " + database.getName());
+		CommonLogger.instance.info("Database to be parsed : "
+				+ database.getName());
 		FileReader reader = new FileReader(database);
 		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(
 				MenuType.class, reader);
 		normalizeMenu(menu);
-		logger.info(menu.getGame().size() + " games");
+		CommonLogger.instance.info(menu.getGame().size() + " games");
 		Map<String, String> games = new HashMap<String, String>();
 		for (GameType game : menu.getGame()) {
 			games.put(game.getName(), game.getName());

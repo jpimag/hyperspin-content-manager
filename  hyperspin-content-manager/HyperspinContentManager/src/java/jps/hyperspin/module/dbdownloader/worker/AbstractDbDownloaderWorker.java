@@ -7,11 +7,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import jps.hyperspin.MainClass;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMBindingException;
 import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
 
 /**
@@ -88,9 +88,9 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 				}
 			}
 		} catch (MalformedURLException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 		} catch (IOException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 		} finally {
 			try {
 				// deconnection
@@ -126,9 +126,9 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 					in);
 
 		} catch (MalformedURLException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 		} catch (IOException e) {
-			MainClass.mainFrame.getLogger().error(e.getMessage());
+			CommonLogger.instance.error(e.getMessage());
 
 		} finally {
 			if (urlConn != null) {

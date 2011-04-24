@@ -19,6 +19,7 @@ import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.presentation.ChoiceDialog;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.model.GameType;
 import jps.hyperspin.module.dbdownloader.model.MenuType;
@@ -54,9 +55,9 @@ public class DatabaseProcessor extends AbstractProcessor {
 	 * @throws HCMDatabaseException
 	 *             exception
 	 */
-	public final void processDatabase(final Logger logger)
-			throws HCMDatabaseException, IOException {
-
+	public final void processDatabase() throws HCMDatabaseException,
+			IOException {
+		CommonLogger logger = CommonLogger.instance;
 		// Pre process option
 		List<PreProcessingOption> preOptions = new ArrayList<PreProcessingOption>();
 		preOptions.add(PreProcessingOption.NONE);

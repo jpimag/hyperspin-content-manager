@@ -3,18 +3,18 @@ package jps.hyperspin.module.whdload.process;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.presentation.PanelLogger;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
 import jps.hyperspin.module.whdload.model.WhdloadType;
 import jps.hyperspin.module.whdload.presentation.WhdloadFormPanel;
-import java.util.HashMap;
-import java.util.Map;
-
 
 /**
  * 
@@ -27,8 +27,7 @@ public class WhdloadProcessor extends AbstractProcessor {
 		super(ini);
 	}
 
-	private Map<String, String> loadWhdLoadGameList(
-			final WhdloadFormPanel form, final PanelLogger logger)
+	private Map<String, String> loadWhdLoadGameList(final WhdloadFormPanel form)
 			throws HCMDatabaseException, IOException {
 
 		Map<String, String> whdLoadGames = new HashMap<String, String>();
@@ -43,8 +42,8 @@ public class WhdloadProcessor extends AbstractProcessor {
 					filename);
 
 		}
-		logger.info("Whdload list performed. (" + whdLoadGames.size()
-				+ " games)");
+		CommonLogger.instance.info("Whdload list performed. ("
+				+ whdLoadGames.size() + " games)");
 		return whdLoadGames;
 	}
 
@@ -57,29 +56,31 @@ public class WhdloadProcessor extends AbstractProcessor {
 	 * @throws HCMDatabaseException
 	 *             exception
 	 */
-	public final void processMissingFiles(final WhdloadFormPanel form,
-			final PanelLogger logger) throws HCMDatabaseException,
-			IOException {
+	public final void processMissingFiles(final WhdloadFormPanel form)
+			throws HCMDatabaseException, IOException {
 
-		logger.info("----------------------------------");
+		CommonLogger.instance.info("----------------------------------");
 		// Build whdlload list
-		Map<String, String> whdLoadGames = loadWhdLoadGameList(form, logger);
+		Map<String, String> whdLoadGames = loadWhdLoadGameList(form);
 
 		// Load roms list
 		Map<String, String> romList = listRecursiveFilesWithFilter(new File(
 				getIni().getRomPath()), false, "zip");
-		logger.info("Roms list performed. (" + romList.size() + " files)");
+		CommonLogger.instance.info("Roms list performed. (" + romList.size()
+				+ " files)");
 
 		// search missing roms
 		int missing = 0;
 		for (String whdLoadGame : whdLoadGames.keySet()) {
 			if (romList.get(whdLoadGame) == null) {
 				missing++;
-				logger.info(whdLoadGames.get(whdLoadGame) + " not found");
+				CommonLogger.instance.info(whdLoadGames.get(whdLoadGame)
+						+ " not found");
 			}
 		}
-		logger.info("A total of " + missing + " game not found.");
-		logger.info("FINISHED.");
+		CommonLogger.instance
+				.info("A total of " + missing + " game not found.");
+		CommonLogger.instance.info("FINISHED.");
 
 	}
 
@@ -92,18 +93,18 @@ public class WhdloadProcessor extends AbstractProcessor {
 	 * @throws HCMDatabaseException
 	 *             exception
 	 */
-	public final void processNotUsedFiles(final WhdloadFormPanel form,
-			final PanelLogger logger) throws HCMDatabaseException,
-			IOException {
+	public final void processNotUsedFiles(final WhdloadFormPanel form)
+			throws HCMDatabaseException, IOException {
 
-		logger.info("----------------------------------");
+		CommonLogger.instance.info("----------------------------------");
 		// Build whdlload list
-		Map<String, String> whdLoadGames = loadWhdLoadGameList(form, logger);
+		Map<String, String> whdLoadGames = loadWhdLoadGameList(form);
 
 		// Load roms list
 		Map<String, String> romList = listRecursiveFilesWithFilter(new File(
 				getIni().getRomPath()), false, "zip");
-		logger.info("Roms list performed. (" + romList.size() + " files)");
+		CommonLogger.instance.info("Roms list performed. (" + romList.size()
+				+ " files)");
 
 		// search not used
 		int notused = 0;
@@ -114,15 +115,18 @@ public class WhdloadProcessor extends AbstractProcessor {
 		for (String rom : romList.keySet()) {
 			if (whdLoadGames.get(rom) == null) {
 				notused++;
-				logger.info(romList.get(rom) + " not used");
-				FileUtilities.moveFile(getIni().getRomPath(), notuseddir
-						.getAbsolutePath(), romList.get(rom), romList.get(rom));
+				CommonLogger.instance.info(romList.get(rom) + " not used");
+				FileUtilities.moveFile(getIni().getRomPath(),
+						notuseddir.getAbsolutePath(), romList.get(rom),
+						romList.get(rom));
 			}
 		}
-		logger.info("A total of " + notused + " not used game not found.");
-		logger.info("They have been moved into 'notused' directory");
+		CommonLogger.instance.info("A total of " + notused
+				+ " not used game not found.");
+		CommonLogger.instance
+				.info("They have been moved into 'notused' directory");
 
-		logger.info("FINISHED.");
+		CommonLogger.instance.info("FINISHED.");
 
 	}
 }

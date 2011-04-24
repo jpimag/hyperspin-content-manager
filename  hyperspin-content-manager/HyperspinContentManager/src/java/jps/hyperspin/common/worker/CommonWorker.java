@@ -1,9 +1,8 @@
 package jps.hyperspin.common.worker;
 
-import jps.hyperspin.MainClass;
-
 import javax.swing.SwingWorker;
 
+import jps.hyperspin.main.controller.CommonLogger;
 
 public abstract class CommonWorker extends SwingWorker<Void, Void> {
 
@@ -35,7 +34,7 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 			executeInternal();
 		} catch (Exception e) {
 			// TODO add error dialog
-			MainClass.mainFrame.getLogger().info("Erreur : " + e);
+			CommonLogger.instance.info("Erreur : " + e);
 		}
 		return null;
 	}

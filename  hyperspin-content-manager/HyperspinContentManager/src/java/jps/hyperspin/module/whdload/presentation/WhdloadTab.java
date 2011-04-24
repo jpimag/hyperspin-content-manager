@@ -5,12 +5,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import jps.hyperspin.common.presentation.PanelLogger;
-import jps.hyperspin.module.whdload.process.WhdloadProcessor;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.whdload.process.WhdloadProcessor;
 
 public class WhdloadTab extends JPanel implements ActionListener {
 
@@ -30,11 +30,6 @@ public class WhdloadTab extends JPanel implements ActionListener {
 	private JButton notuseFiles = new JButton("List Not Use Files");
 
 	private WhdloadFormPanel formPanel = new WhdloadFormPanel();
-
-	/**
-	 * 
-	 */
-	private PanelLogger loggerPanel = new PanelLogger();
 
 	public WhdloadTab() {
 		super();
@@ -68,14 +63,6 @@ public class WhdloadTab extends JPanel implements ActionListener {
 		this.add(notuseFiles, c);
 		notuseFiles.addActionListener(this);
 
-		// Panel logger
-		c = new GridBagConstraints();
-		c.insets = new Insets(10, 0, 0, 0);
-		c.gridx = 0;
-		c.gridy = 3;
-		c.ipady = 0;
-		this.add(loggerPanel, c);
-
 		// Display frame
 
 		this.setVisible(true);
@@ -88,19 +75,19 @@ public class WhdloadTab extends JPanel implements ActionListener {
 	public final void actionPerformed(final ActionEvent e) {
 		try {
 
-			WhdloadProcessor processor = new WhdloadProcessor(formPanel
-					.getIniProp());
+			WhdloadProcessor processor = new WhdloadProcessor(
+					formPanel.getIniProp());
 
 			if (e.getSource() == notuseFiles) {
-				loggerPanel.clear();
-				processor.processNotUsedFiles(formPanel, loggerPanel);
+				CommonLogger.instance.clear();
+				processor.processNotUsedFiles(formPanel);
 
 			} else if (e.getSource() == missingFiles) {
-				loggerPanel.clear();
-				processor.processMissingFiles(formPanel, loggerPanel);
+				CommonLogger.instance.clear();
+				processor.processMissingFiles(formPanel);
 			}
 		} catch (Exception ex) {
-			loggerPanel.info(ex.toString());
+			CommonLogger.instance.info(ex.toString());
 		}
 
 	}

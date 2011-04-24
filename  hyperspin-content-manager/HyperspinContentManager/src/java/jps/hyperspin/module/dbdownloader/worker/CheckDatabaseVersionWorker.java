@@ -2,7 +2,6 @@ package jps.hyperspin.module.dbdownloader.worker;
 
 import java.io.FileNotFoundException;
 
-import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.VersionStatut;
@@ -39,9 +38,9 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 
 				// User Database version
 				try {
-					userDatabase = DatabaseUtilities.loadDatabase(
-							DatabaseUtilities.getUserDatabasePath(system),
-							MainClass.mainFrame.getLogger());
+					userDatabase = DatabaseUtilities
+							.loadDatabase(DatabaseUtilities
+									.getUserDatabasePath(system));
 
 				} catch (FileNotFoundException e) {
 					userDatabase = null;
@@ -52,8 +51,7 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 				try {
 					downloadedDatabase = DatabaseUtilities
 							.loadDatabase(DatabaseUtilities
-									.getDownloadedDatabasePath(system),
-									MainClass.mainFrame.getLogger());
+									.getDownloadedDatabasePath(system));
 
 				} catch (FileNotFoundException e) {
 					downloadedDatabase = null;
