@@ -3,11 +3,9 @@ package jps.hyperspin.module.dbmaker.presentation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
-import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
-
 import javax.swing.JPanel;
 
+import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab.Action;
 
 /**
  * Panel commun à toutes les categories d'action.
@@ -45,10 +43,6 @@ public abstract class CommonDatabaseActionPanel extends JPanel implements
 
 	public IDatabaseOption getOption() {
 		return databaseActionTab.getOption();
-	}
-
-	public IDatabaseDetail getDetail() {
-		return databaseActionTab.getDetail();
 	}
 
 	public Action getAction() {

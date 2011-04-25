@@ -19,7 +19,7 @@
 		Add     : @XmlRootElement(name = "menu") from MenuType.java
 	 -->
 	<target name="generateModel">
-		<xjc  schema="../conf/database.xsd"  package="jps.hyperspin.module.dbdownloader.model"/>
+		<xjc  schema="../conf/database.xsd"  package="jps.hyperspin.module.dbdownloader.model.generated.menu"/>
 	</target>
 
 	<target name="generateWhdModel">

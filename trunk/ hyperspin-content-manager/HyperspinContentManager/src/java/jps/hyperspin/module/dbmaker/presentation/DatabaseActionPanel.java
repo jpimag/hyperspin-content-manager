@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 import jps.hyperspin.module.dbmaker.processor.DatabaseProcessor;
 
 /**
@@ -59,7 +60,7 @@ public class DatabaseActionPanel extends CommonDatabaseActionPanel {
 	public void actionPerformed(ActionEvent e) {
 
 		DatabaseProcessor databaseProcessor = new DatabaseProcessor(
-				getDetail(), getOption());
+				DbDownLoaderController.instance.getDbDetail(), getOption());
 		try {
 			if (e.getSource() == process) {
 				CommonLogger.instance.clear();

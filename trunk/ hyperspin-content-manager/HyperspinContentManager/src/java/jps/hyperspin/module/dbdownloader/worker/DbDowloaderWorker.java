@@ -11,7 +11,7 @@ import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.xml.XmlBinding;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 /**
  * This worker in in charge to check database version for the selected system.

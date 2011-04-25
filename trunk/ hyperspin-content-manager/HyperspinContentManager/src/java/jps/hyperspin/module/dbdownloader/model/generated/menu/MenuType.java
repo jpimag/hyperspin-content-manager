@@ -5,7 +5,7 @@
 // Generated on: 2011.04.09 at 12:47:19 AM CEST 
 //
 
-package jps.hyperspin.module.dbdownloader.model;
+package jps.hyperspin.module.dbdownloader.model.generated.menu;
 
 import java.util.ArrayList;
 import java.util.List;

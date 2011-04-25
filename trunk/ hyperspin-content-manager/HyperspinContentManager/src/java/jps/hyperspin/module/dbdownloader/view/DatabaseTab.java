@@ -1,78 +1,58 @@
 package jps.hyperspin.module.dbdownloader.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import jps.hyperspin.MainClass;
-import jps.hyperspin.common.view.LayoutUtilities;
+public class DatabaseTab extends JPanel {
 
-public class DatabaseTab extends JPanel implements ListSelectionListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private DatabaseDetailPanel databaseDetailPanel = null;
 
 	/**
-	 * 
+	 * This is the default constructor
 	 */
-	private DatabaseDetailPanel formPanel = new DatabaseDetailPanel(this);
-
-	private String lastSelection;
-
 	public DatabaseTab() {
 		super();
-		init();
-	}
-
-	private void init() {
-
-		GridBagConstraints c = LayoutUtilities.newConstraint(0, 0);
-		this.setLayout(LayoutUtilities.newLayout());
-
-		// Panel file selection
-		c.fill = GridBagConstraints.NONE;
-		c.gridx++;
-		c.gridheight = 1;
-		c.gridy = 0;
-		c.insets = new Insets(30, 30, 30, 30);
-		add(formPanel, c);
-
-		this.setVisible(true);
-
-		setBackground(Color.white);
-
+		initialize();
 	}
 
 	/**
+	 * This method initializes this
 	 * 
-	 * @return
+	 * @return void
 	 */
-	public IDatabaseDetail getDetail() {
-		return formPanel;
+	private void initialize() {
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		this.setSize(800, 400);
+		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.white);
+		this.add(getDatabaseDetailPanel(), gridBagConstraints);
 	}
 
-	public String getSystemSelected() {
-		return (String) MainClass.mainFrame.getSystemSelected();
-	}
-
-	@Override
-	public void valueChanged(ListSelectionEvent listselectionevent) {
-		try {
-
-			if (lastSelection != getSystemSelected()) {
-
-				lastSelection = getSystemSelected();
-				formPanel.updateFields();
-
-			}
-
-		} catch (Exception e) {
+	/**
+	 * This method initializes databaseDetailPanel
+	 * 
+	 * @return jps.hyperspin.module.dbdownloader.view.DatabaseDetailPanel
+	 */
+	public DatabaseDetailPanel getDatabaseDetailPanel() {
+		if (databaseDetailPanel == null) {
+			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+			gridBagConstraints1.fill = GridBagConstraints.BOTH;
+			gridBagConstraints1.gridy = 14;
+			gridBagConstraints1.weightx = 1.0;
+			gridBagConstraints1.weighty = 1.0;
+			gridBagConstraints1.gridx = 5;
+			databaseDetailPanel = new DatabaseDetailPanel();
+			databaseDetailPanel.setPreferredSize(new Dimension(550, 400));
+			databaseDetailPanel.setEnabled(false);
 		}
+		return databaseDetailPanel;
 	}
+
 }
