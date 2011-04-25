@@ -10,13 +10,14 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.view.ChoiceDialog;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**
@@ -30,7 +31,7 @@ public class MediaProcessor extends AbstractProcessor {
 		DATABASE, REFERENCE_DATABASE, ROMS
 	}
 
-	public MediaProcessor(final IDatabaseDetail databaseDetail,
+	public MediaProcessor(final DatabaseDetail databaseDetail,
 			final IDatabaseOption databaseOption) {
 		super(databaseDetail, databaseOption);
 
@@ -50,13 +51,13 @@ public class MediaProcessor extends AbstractProcessor {
 						JOptionPane.WARNING_MESSAGE, null, options.toArray(),
 						options.get(0));
 
-		String mediaDir = databaseDetail.getMediaRepository() + "/"
-				+ relativePath;
+		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
 
 		Map<String, String> games = null;
 		if (processingOption == ProcessingOption.DATABASE) {
-			games = loadDatabase(databaseDetail.getUserDatabaseDir()
-					+ File.separator + databaseDetail.getIniSelected() + ".xml");
+			games = loadDatabase(databaseDetail.userDatabaseDir
+					+ File.separator + MainClass.mainFrame.getSystemSelected()
+					+ ".xml");
 		} else if (processingOption == ProcessingOption.REFERENCE_DATABASE) {
 			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath());
 
@@ -220,8 +221,7 @@ public class MediaProcessor extends AbstractProcessor {
 			Map<String, String> medias, Map<String, String> games)
 			throws FileNotFoundException, HCMDatabaseException {
 
-		String mediaDir = databaseDetail.getMediaRepository() + "/"
-				+ relativePath;
+		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
 
 		int menuMediaNotFound = 0;
 
@@ -327,8 +327,7 @@ public class MediaProcessor extends AbstractProcessor {
 	public final void purgeMedia(String relativePath)
 			throws FileNotFoundException, HCMDatabaseException {
 
-		String mediaDir = databaseDetail.getMediaRepository() + "/"
-				+ relativePath;
+		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
 		Map<String, String> games = loadDatabase(
 
 		DatabaseUtilities.getDownloadedDatabasePath());

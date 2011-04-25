@@ -6,7 +6,7 @@
 //
 
 
-package jps.hyperspin.module.dbdownloader.model;
+package jps.hyperspin.module.dbdownloader.model.generated.menu;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

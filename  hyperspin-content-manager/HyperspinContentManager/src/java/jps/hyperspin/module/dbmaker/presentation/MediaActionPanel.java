@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
 import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 import jps.hyperspin.module.dbmaker.processor.MediaProcessor;
 
 /**
@@ -71,8 +72,8 @@ public class MediaActionPanel extends CommonDatabaseActionPanel {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		MediaProcessor mediaProcessor = new MediaProcessor(getDetail(),
-				getOption());
+		MediaProcessor mediaProcessor = new MediaProcessor(
+				DbDownLoaderController.instance.getDbDetail(), getOption());
 		try {
 			if (e.getSource() == process) {
 				CommonLogger.instance.clear();

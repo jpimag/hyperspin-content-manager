@@ -1,5 +1,7 @@
 package jps.hyperspin.main.view;
 
+import java.awt.Dimension;
+
 import javax.swing.JTabbedPane;
 
 import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
@@ -24,12 +26,12 @@ public class MainTabbedPane extends JTabbedPane {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(300, 200);
+		this.setSize(800, 400);
 
 		this.addTab("Database Downloader", null, getDatabaseTab(), null);
-		this.addTab("Database Maker", new DatabaseActionTab(databaseTab));
+		this.addTab("Database Maker", new DatabaseActionTab());
 
-		this.addTab("Media Checker", new DatabaseActionTab(databaseTab));
+		this.addTab("Media Checker", new DatabaseActionTab());
 		// this.addTab("WHDLoad Tool", new WhdloadTab());
 	}
 
@@ -41,6 +43,7 @@ public class MainTabbedPane extends JTabbedPane {
 	public DatabaseTab getDatabaseTab() {
 		if (databaseTab == null) {
 			databaseTab = new DatabaseTab();
+			databaseTab.setPreferredSize(new Dimension(800, 400));
 		}
 		return databaseTab;
 	}

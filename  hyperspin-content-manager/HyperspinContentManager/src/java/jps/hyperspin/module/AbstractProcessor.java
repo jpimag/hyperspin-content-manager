@@ -15,9 +15,9 @@ import jps.hyperspin.common.log.Logger;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
-import jps.hyperspin.module.dbdownloader.model.GameType;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
@@ -33,7 +33,7 @@ public abstract class AbstractProcessor {
 	private static final int NB_BEST = 3000;
 
 	protected SystemIniProperties ini;
-	protected IDatabaseDetail databaseDetail;
+	protected DatabaseDetail databaseDetail;
 	protected IDatabaseOption databaseOption;
 
 	protected class DistanceString {
@@ -64,12 +64,12 @@ public abstract class AbstractProcessor {
 		return ini;
 	}
 
-	public AbstractProcessor(final IDatabaseDetail databaseDetail,
+	public AbstractProcessor(final DatabaseDetail databaseDetail,
 			final IDatabaseOption databaseOption) {
 		super();
 		this.databaseDetail = databaseDetail;
 		this.databaseOption = databaseOption;
-		this.ini = databaseDetail.getIniProp();
+		this.ini = databaseDetail.systemIniProperties;
 	}
 
 	public AbstractProcessor(SystemIniProperties ini) {

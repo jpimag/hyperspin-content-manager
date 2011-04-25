@@ -21,9 +21,9 @@ import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.AbstractProcessor;
-import jps.hyperspin.module.dbdownloader.model.GameType;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**
@@ -33,7 +33,7 @@ import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
  */
 public class DatabaseProcessor extends AbstractProcessor {
 
-	public DatabaseProcessor(IDatabaseDetail databaseDetail,
+	public DatabaseProcessor(DatabaseDetail databaseDetail,
 			IDatabaseOption databaseOption) {
 		super(databaseDetail, databaseOption);
 	}
@@ -108,7 +108,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 			menus.add(wrapper);
 			logger.info(menu.getGame().size() + " games");
 
-			if (!file.getName().startsWith(databaseDetail.getIniSelected())) {
+			if (!file.getName().startsWith(
+					MainClass.mainFrame.getSystemSelected())) {
 				// Add the category to genre
 				GameType category = new GameType();
 				category.setName(FileUtilities.getNameWithoutExtension(file));
@@ -218,7 +219,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 		MenuTypeWrapper mainMenu = null;
 		for (MenuTypeWrapper menu : menus) {
 
-			if (menu.getFileName().startsWith(databaseDetail.getIniSelected())) {
+			if (menu.getFileName().startsWith(
+					MainClass.mainFrame.getSystemSelected())) {
 				mainMenu = menu;
 				// Games map
 				totalGames = menu.getMenu().getGame().size();
@@ -293,7 +295,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		}
 		for (MenuTypeWrapper menu : menus) {
-			if (!menu.getFileName().startsWith(databaseDetail.getIniSelected())
+			if (!menu.getFileName().startsWith(
+					MainClass.mainFrame.getSystemSelected())
 					&& !menu.getFileName().equals("Genre.xml")) {
 				// Category file
 				List<GameType> notfoundGames = new ArrayList<GameType>();
@@ -312,7 +315,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 		for (MenuTypeWrapper menu : menus) {
 			if (menu.getMenu().getGame().size() > 0) {
 				FileWriter writer = new FileWriter(
-						databaseDetail.getUserDatabaseDir() + File.separator
+						databaseDetail.userDatabaseDir + File.separator
 								+ menu.getFileName());
 				XmlBinding.getInstance().java2xml(menu.getMenu(), writer);
 				writer.close();
@@ -322,7 +325,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		// stats
 		for (MenuTypeWrapper menu : menus) {
-			if (menu.getFileName().startsWith(databaseDetail.getIniSelected())) {
+			if (menu.getFileName().startsWith(
+					MainClass.mainFrame.getSystemSelected())) {
 				// Stats
 				logStats(menu, totalGames, true, logger);
 			}

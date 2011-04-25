@@ -10,7 +10,7 @@ import jps.hyperspin.MainClass;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 public class DatabaseUtilities {
 

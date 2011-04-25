@@ -6,11 +6,18 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import jps.hyperspin.common.view.PanelLogger;
+import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 
 public class MainFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel jPanel = null; // @jve:decl-index=0:visual-constraint="10,10"
 	private SystemListPanel systemListPanel = null;
 	private PanelLogger panelLogger = null;
@@ -33,8 +40,24 @@ public class MainFrame extends JFrame {
 		this.setSize(new Dimension(1266, 950));
 
 		this.setContentPane(getJPanel());
-		systemListPanel.addListSelectionListener(mainTabbedPane
-				.getDatabaseTab());
+		systemListPanel.addListSelectionListener(new ListSelectionListener() {
+			private String lastSelection;
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				try {
+
+					if (lastSelection != getSystemSelected()) {
+
+						lastSelection = getSystemSelected();
+						DbDownLoaderController.instance.updateDetails();
+
+					}
+
+				} catch (Exception e) {
+				}
+			}
+		});
 	}
 
 	/**
@@ -100,7 +123,7 @@ public class MainFrame extends JFrame {
 	 * 
 	 * @return jps.hyperspin.main.view.MainTabbedPane
 	 */
-	private MainTabbedPane getMainTabbedPane() {
+	public MainTabbedPane getMainTabbedPane() {
 		if (mainTabbedPane == null) {
 			mainTabbedPane = new MainTabbedPane();
 		}

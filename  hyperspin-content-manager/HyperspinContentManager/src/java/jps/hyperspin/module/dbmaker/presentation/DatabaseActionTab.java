@@ -11,8 +11,6 @@ import javax.swing.SwingConstants;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.view.LayoutUtilities;
-import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
-import jps.hyperspin.module.dbdownloader.view.IDatabaseDetail;
 
 public class DatabaseActionTab extends JPanel implements ActionListener {
 
@@ -41,14 +39,8 @@ public class DatabaseActionTab extends JPanel implements ActionListener {
 	 */
 	private DatabaseOptionPanel formPanel = new DatabaseOptionPanel();
 
-	/**
-	 * 
-	 */
-	private DatabaseTab databaseTab;
-
-	public DatabaseActionTab(DatabaseTab databaseTab) {
+	public DatabaseActionTab() {
 		super();
-		this.databaseTab = databaseTab;
 		init();
 	}
 
@@ -119,14 +111,6 @@ public class DatabaseActionTab extends JPanel implements ActionListener {
 	 */
 	public IDatabaseOption getOption() {
 		return getOption();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public IDatabaseDetail getDetail() {
-		return databaseTab.getDetail();
 	}
 
 }

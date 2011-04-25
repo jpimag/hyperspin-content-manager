@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.VersionStatut;
-import jps.hyperspin.module.dbdownloader.model.MenuType;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 /**
  * This worker in in charge to check database version for the selected system.
