@@ -28,10 +28,12 @@ public class DatabaseTab extends JPanel {
 	private void initialize() {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridy = 0;
 		this.setSize(800, 400);
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.white);
+		this.setPreferredSize(new Dimension(800, 400));
 		this.add(getDatabaseDetailPanel(), gridBagConstraints);
 	}
 

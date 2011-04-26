@@ -16,13 +16,9 @@ public class MainController {
 	 * @param system
 	 * @param statut
 	 */
-	public void putSystem(String system, VersionStatut statut) {
-		if (!Systems.instance.exist(system)) {
-			MainClass.mainFrame.getSystemListPanel().addElement(system);
-		} else {
-			MainClass.mainFrame.getSystemListPanel().repaint();
-		}
+	public void changeSystemStatut(String system, VersionStatut statut) {
 		Systems.instance.put(system, statut);
+		MainClass.mainFrame.getSystemListPanel().repaint();
 
 	}
 
@@ -35,7 +31,6 @@ public class MainController {
 
 		System.out.println("Hyper spin field  edited");
 		// Update JList
-		MainClass.mainFrame.getSystemListPanel().removeAllElements();
 
 		File file = new File(MainClass.HYPERSPIN_PATH);
 		if (file.isDirectory()) {
@@ -45,7 +40,7 @@ public class MainController {
 					if (s.endsWith(".ini")) {
 						String ini = s.substring(0, s.length() - 4);
 						if (!ini.equals("Main Menu") && !ini.equals("Settings")) {
-							MainController.instance.putSystem(ini, null);
+							Systems.instance.put(ini, null);
 						}
 					}
 				}
@@ -54,4 +49,5 @@ public class MainController {
 
 		return Systems.instance.list().size();
 	}
+
 }

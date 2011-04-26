@@ -3,7 +3,9 @@ package jps.hyperspin.main.view;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -19,7 +21,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel jPanel = null; // @jve:decl-index=0:visual-constraint="10,10"
-	private SystemListPanel systemListPanel = null;
+	private SystemTablePanel systemListPanel = null;
 	private PanelLogger panelLogger = null;
 	private MainTabbedPane mainTabbedPane = null;
 
@@ -70,8 +72,9 @@ public class MainFrame extends JFrame {
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraints4.gridy = 0;
-			gridBagConstraints4.weightx = 0.0;
+			gridBagConstraints4.weightx = 15.0;
 			gridBagConstraints4.weighty = 0.0;
+			gridBagConstraints4.anchor = GridBagConstraints.WEST;
 			gridBagConstraints4.gridx = 1;
 			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
 			gridBagConstraints3.gridx = 1;
@@ -82,7 +85,10 @@ public class MainFrame extends JFrame {
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridheight = 3;
-			gridBagConstraints.fill = GridBagConstraints.VERTICAL;
+			gridBagConstraints.fill = GridBagConstraints.BOTH;
+			gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+			gridBagConstraints.weightx = 0.5;
+			gridBagConstraints.weighty = 0.0;
 			gridBagConstraints.gridy = 0;
 			jPanel = new JPanel();
 			jPanel.setLayout(new GridBagLayout());
@@ -99,9 +105,12 @@ public class MainFrame extends JFrame {
 	 * 
 	 * @return jps.hyperspin.main.view.SystemListPanel
 	 */
-	public SystemListPanel getSystemListPanel() {
+	public SystemTablePanel getSystemListPanel() {
 		if (systemListPanel == null) {
-			systemListPanel = new SystemListPanel();
+			systemListPanel = new SystemTablePanel();
+
+			systemListPanel.setBorder(BorderFactory.createLineBorder(
+					SystemColor.activeCaption, 5));
 		}
 		return systemListPanel;
 	}
@@ -114,6 +123,8 @@ public class MainFrame extends JFrame {
 	private PanelLogger getPanelLogger() {
 		if (panelLogger == null) {
 			panelLogger = new PanelLogger();
+			panelLogger.setBorder(BorderFactory.createLineBorder(
+					SystemColor.activeCaption, 5));
 		}
 		return panelLogger;
 	}

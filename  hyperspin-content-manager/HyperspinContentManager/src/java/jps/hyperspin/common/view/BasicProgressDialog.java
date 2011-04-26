@@ -3,14 +3,13 @@ package jps.hyperspin.common.view;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jps.hyperspin.MainClass;
-import jps.hyperspin.common.worker.CommonWorker;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import jps.hyperspin.common.worker.CommonWorker;
 
 /**
  * 
@@ -30,7 +29,7 @@ public class BasicProgressDialog extends JDialog implements
 	private JProgressBar progressBar;
 
 	public BasicProgressDialog(CommonWorker worker) {
-		super(MainClass.mainFrame);
+		super();
 
 		// Dialog component
 		progressBar = new JProgressBar(0, CommonWorker.MAX_PROGRESS_VALUE);

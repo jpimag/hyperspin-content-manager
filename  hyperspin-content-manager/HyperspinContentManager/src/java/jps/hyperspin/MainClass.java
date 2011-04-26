@@ -40,12 +40,6 @@ public final class MainClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		if (args != null && args.length > 0) {
-			HYPERSPIN_PATH = args[0];
-		}
-		mainFrame = new MainFrame();
-		mainFrame.setVisible(true);
 		// Update list
 		int i = MainController.instance.computeSystems();
 		if (i == 0) {
@@ -53,11 +47,17 @@ public final class MainClass {
 			if (Systems.instance.list().size() == 0) {
 				JOptionPane.showMessageDialog(null,
 						Message.getMessage("hyperspin_load_error"));
-				mainFrame.dispose();
 				System.exit(1);
 			}
 
 		}
+		if (args != null && args.length > 0) {
+			HYPERSPIN_PATH = args[0];
+		}
+		mainFrame = new MainFrame();
+		mainFrame.setResizable(false);
+		mainFrame.setVisible(true);
+
 	}
 
 }
