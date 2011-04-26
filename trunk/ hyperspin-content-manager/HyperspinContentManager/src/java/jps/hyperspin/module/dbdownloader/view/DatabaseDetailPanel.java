@@ -87,7 +87,7 @@ public class DatabaseDetailPanel extends JPanel {
 		noteLabel.setText("");
 		noteLabel.setBorder(BorderFactory.createTitledBorder(Message
 				.getMessage("dbdownloader.note.title")));
-		noteLabel.setPreferredSize(new Dimension(100, 100));
+		noteLabel.setPreferredSize(new Dimension(300, 100));
 		noteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		noteLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		noteLabel.setBackground(Color.WHITE);
@@ -194,6 +194,9 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints2.gridx = 6;
 		this.setLayout(new GridBagLayout());
 		this.setSize(new Dimension(600, 400));
+		this.setPreferredSize(getSize());
+		this.setMinimumSize(getSize());
+		this.setMaximumSize(getSize());
 		this.setBackground(Color.white);
 		this.add(getUserDatabaseDirField(), gridBagConstraints2);
 		this.add(mediaDirLabel, gridBagConstraints3);

@@ -4,7 +4,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -16,7 +15,6 @@ public class PanelLogger extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextArea jTextArea = null;
 	private JButton clearButton = null;
-	private JComboBox levelBox = null;
 
 	/**
 	 * This is the default constructor
@@ -51,8 +49,6 @@ public class PanelLogger extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.add(getJTextArea(), gridBagConstraints);
 		this.add(getClearButton(), gridBagConstraints1);
-		LoggerLevel[] levels = { LoggerLevel.INFO, LoggerLevel.TRACE };
-		levelBox = new JComboBox(levels);
 	}
 
 	/**
@@ -87,18 +83,6 @@ public class PanelLogger extends JPanel {
 			});
 		}
 		return clearButton;
-	}
-
-	/**
-	 * This method initializes levelBox
-	 * 
-	 * @return javax.swing.JComboBox
-	 */
-	private JComboBox getLevelBox() {
-		if (levelBox == null) {
-			levelBox = new JComboBox();
-		}
-		return levelBox;
 	}
 
 	public void append(String s, LoggerLevel level) {

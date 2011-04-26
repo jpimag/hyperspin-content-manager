@@ -23,6 +23,7 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 	@Override
 	public void done() {
 		super.done();
+		// MainClass.mainFrame.pack();
 	}
 
 	/**

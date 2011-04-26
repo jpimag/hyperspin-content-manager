@@ -62,7 +62,8 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 				hyperlistDatabase = getLastAvailableDb(system);
 
 				// Notify system list panel
-				MainController.instance.putSystem(system, getVersionStatut());
+				MainController.instance.changeSystemStatut(system,
+						getVersionStatut());
 			}
 		} finally {
 			setProgress(100);
