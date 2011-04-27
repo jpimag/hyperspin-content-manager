@@ -1,11 +1,13 @@
 package jps.hyperspin;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.Systems;
 import jps.hyperspin.main.view.MainFrame;
+import jps.hyperspin.module.dbmaker.controller.DbMakerController;
 
 /**
  * 
@@ -45,8 +47,7 @@ public final class MainClass {
 		if (i == 0) {
 			// Is the hyperspin path correct ?
 			if (Systems.instance.list().size() == 0) {
-				JOptionPane.showMessageDialog(null,
-						Message.getMessage("hyperspin_load_error"));
+				JOptionPane.showMessageDialog(null, Message.getMessage("hyperspin_load_error"));
 				System.exit(1);
 			}
 
@@ -55,7 +56,12 @@ public final class MainClass {
 			HYPERSPIN_PATH = args[0];
 		}
 		mainFrame = new MainFrame();
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
+
+		// Initialize some controllers
+		DbMakerController.instance.load();
+
 		mainFrame.setVisible(true);
 
 	}

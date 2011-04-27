@@ -102,10 +102,12 @@ public class RegionPreferencePanel extends JPanel {
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-	private JRadioButton getNoIntro() {
+	public JRadioButton getNoIntro() {
 		if (noIntro == null) {
 			noIntro = new JRadioButton();
 			noIntro.setBackground(Color.white);
+			noIntro.setSelected(true);
+			noIntro.setEnabled(false);
 		}
 		return noIntro;
 	}
@@ -115,10 +117,11 @@ public class RegionPreferencePanel extends JPanel {
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-	private JRadioButton getRedumpOrg() {
+	public JRadioButton getRedumpOrg() {
 		if (redumpOrg == null) {
 			redumpOrg = new JRadioButton();
 			redumpOrg.setBackground(Color.white);
+			redumpOrg.setEnabled(false);
 		}
 		return redumpOrg;
 	}
@@ -128,10 +131,11 @@ public class RegionPreferencePanel extends JPanel {
 	 * 
 	 * @return javax.swing.JComboBox
 	 */
-	private JComboBox getPreferredRegion() {
+	public JComboBox getPreferredRegion() {
 		if (preferredRegion == null) {
 			preferredRegion = new JComboBox();
 			preferredRegion.setBackground(Color.white);
+			preferredRegion.setEnabled(false);
 		}
 		return preferredRegion;
 	}
@@ -141,10 +145,11 @@ public class RegionPreferencePanel extends JPanel {
 	 * 
 	 * @return javax.swing.JComboBox
 	 */
-	private JComboBox getPreferredCountry() {
+	public JComboBox getPreferredCountry() {
 		if (preferredCountry == null) {
 			preferredCountry = new JComboBox();
 			preferredCountry.setBackground(Color.white);
+			preferredCountry.setEnabled(false);
 		}
 		return preferredCountry;
 	}
