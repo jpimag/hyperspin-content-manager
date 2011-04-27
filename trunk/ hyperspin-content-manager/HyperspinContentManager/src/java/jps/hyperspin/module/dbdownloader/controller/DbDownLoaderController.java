@@ -19,14 +19,12 @@ public class DbDownLoaderController {
 	public static DbDownLoaderController instance = new DbDownLoaderController();
 
 	public DatabaseDetail getDbDetail() {
-		DatabaseDetailPanel detailPanel = MainClass.mainFrame
-				.getMainTabbedPane().getDatabaseTab().getDatabaseDetailPanel();
+		DatabaseDetailPanel detailPanel = MainClass.mainFrame.getMainTabbedPane().getDbDownloaderTab()
+				.getDatabaseDetailPanel();
 		DatabaseDetail detail = new DatabaseDetail();
 		detail.mediaDir = detailPanel.getMediaDirField().getText();
-		detail.userDatabaseDir = detailPanel.getUserDatabaseDirField()
-				.getText();
-		detail.systemIniProperties = new SystemIniProperties(
-				MainClass.HYPERSPIN_PATH,
+		detail.userDatabaseDir = detailPanel.getUserDatabaseDirField().getText();
+		detail.systemIniProperties = new SystemIniProperties(MainClass.HYPERSPIN_PATH,
 				MainClass.mainFrame.getSystemSelected());
 		return detail;
 
@@ -36,8 +34,8 @@ public class DbDownLoaderController {
 	 * 
 	 */
 	public void updateDetails() {
-		final DatabaseDetailPanel detailPanel = MainClass.mainFrame
-				.getMainTabbedPane().getDatabaseTab().getDatabaseDetailPanel();
+		final DatabaseDetailPanel detailPanel = MainClass.mainFrame.getMainTabbedPane().getDbDownloaderTab()
+				.getDatabaseDetailPanel();
 
 		try {
 			String system = MainClass.mainFrame.getSystemSelected();
@@ -45,33 +43,26 @@ public class DbDownLoaderController {
 				throw new IllegalArgumentException();
 			}
 			// Ini file
-			SystemIniProperties iniProp = new SystemIniProperties(
-					MainClass.HYPERSPIN_PATH, system);
+			SystemIniProperties iniProp = new SystemIniProperties(MainClass.HYPERSPIN_PATH, system);
 
 			System.out.println("Ini file combo box change");
 			// Xml
 			String selected = system;
-			detailPanel.getUserDatabaseDirField().setText(
-					DatabaseUtilities.getUserDatabasePath());
+			detailPanel.getUserDatabaseDirField().setText(DatabaseUtilities.getUserDatabasePath());
 			detailPanel.getMediaDirField().setText(
-					MainClass.HYPERSPIN_PATH + File.separator + "Media"
-							+ File.separator + selected);
+					MainClass.HYPERSPIN_PATH + File.separator + "Media" + File.separator + selected);
 
 			detailPanel.getRomsPathField().setText(iniProp.getRomPath());
 
 			// worker
-			CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker(
-					MainClass.mainFrame.getSystemSelected()) {
+			CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker(MainClass.mainFrame.getSystemSelected()) {
 
 				@Override
 				public void done() {
 					// Update fields
-					detailPanel.getDownloadedVersionField().setText(
-							getVersion(downloadedDatabase));
-					detailPanel.getHyperlistVersionField().setText(
-							getVersion(hyperlistDatabase));
-					detailPanel.getUserVersionField().setText(
-							getVersion(userDatabase));
+					detailPanel.getDownloadedVersionField().setText(getVersion(downloadedDatabase));
+					detailPanel.getHyperlistVersionField().setText(getVersion(hyperlistDatabase));
+					detailPanel.getUserVersionField().setText(getVersion(userDatabase));
 
 					// Enable update button
 					detailPanel.getDownloadButton().setEnabled(true);
@@ -81,20 +72,16 @@ public class DbDownLoaderController {
 
 					switch (statut) {
 					case SYSTEM_NOT_AVAILABLE:
-						msg = Message
-								.getMessage("dbdownloader.hyperlist.notfound.msg");
+						msg = Message.getMessage("dbdownloader.hyperlist.notfound.msg");
 						break;
 					case SYSTEM_NOT_VERSIONNED:
-						msg = Message
-								.getMessage("dbdownloader.hyperlist.notversionned.msg");
+						msg = Message.getMessage("dbdownloader.hyperlist.notversionned.msg");
 						break;
 					case OUT_DATED_DOWNLOADED_DB:
-						msg = Message
-								.getMessage("dbdownloader.download.db.old.msg");
+						msg = Message.getMessage("dbdownloader.download.db.old.msg");
 						break;
 					case OUT_DATED_USER_DB:
-						msg = Message
-								.getMessage("dbdownloader.user.db.old.msg");
+						msg = Message.getMessage("dbdownloader.user.db.old.msg");
 						break;
 					case UP_TO_DATE:
 					default:
@@ -133,8 +120,7 @@ public class DbDownLoaderController {
 		} else if (db.getHeader() == null) {
 			return Message.getMessage("dbdownloader.db.noversion.msg");
 		}
-		return db.getHeader().getListversion() + " - "
-				+ db.getHeader().getLastlistupdate();
+		return db.getHeader().getListversion() + " - " + db.getHeader().getLastlistupdate();
 	}
 
 }
