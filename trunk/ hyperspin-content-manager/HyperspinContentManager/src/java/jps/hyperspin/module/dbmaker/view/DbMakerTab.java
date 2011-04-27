@@ -41,7 +41,7 @@ public class DbMakerTab extends JPanel {
 	 * 
 	 * @return jps.hyperspin.module.dbmaker.view.DbMakerOptionPanel
 	 */
-	private DbMakerOptionPanel getDbMakerOptionPanel() {
+	public DbMakerOptionPanel getDbMakerOptionPanel() {
 		if (dbMakerOptionPanel == null) {
 			dbMakerOptionPanel = new DbMakerOptionPanel();
 			dbMakerOptionPanel.setBackground(Color.white);
