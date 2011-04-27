@@ -1,22 +1,18 @@
-package jps.hyperspin.module.dbmaker.presentation;
+package jps.hyperspin.module.dbmaker.view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.TitledBorder;
 
 import jps.hyperspin.common.i18n.Message;
 
-public class NameConventionPanel extends JPanel {
+public class RegionPreferencePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JRadioButton noIntro = null;
@@ -31,7 +27,7 @@ public class NameConventionPanel extends JPanel {
 	/**
 	 * This is the default constructor
 	 */
-	public NameConventionPanel() {
+	public RegionPreferencePanel() {
 		super();
 		initialize();
 	}
@@ -88,9 +84,7 @@ public class NameConventionPanel extends JPanel {
 		gridBagConstraints.gridy = 0;
 		this.setSize(464, 134);
 		this.setLayout(new GridBagLayout());
-		String title = Message.getMessage("dbmaker.regionpreference.title");
-		this.setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.DEFAULT_JUSTIFICATION,
-				TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
+		this.setBackground(Color.white);
 		this.add(getNoIntro(), gridBagConstraints);
 		this.add(getRedumpOrg(), gridBagConstraints1);
 		this.add(noIntroLabel, gridBagConstraints2);
@@ -100,9 +94,6 @@ public class NameConventionPanel extends JPanel {
 		this.add(preferredCountryLabel, gridBagConstraints5);
 		this.add(getPreferredRegion(), gridBagConstraints6);
 		this.add(getPreferredCountry(), gridBagConstraints7);
-		ButtonGroup group = new ButtonGroup();
-		group.add(noIntro);
-		group.add(redumpOrg);
 
 	}
 
@@ -114,6 +105,7 @@ public class NameConventionPanel extends JPanel {
 	private JRadioButton getNoIntro() {
 		if (noIntro == null) {
 			noIntro = new JRadioButton();
+			noIntro.setBackground(Color.white);
 		}
 		return noIntro;
 	}
@@ -126,6 +118,7 @@ public class NameConventionPanel extends JPanel {
 	private JRadioButton getRedumpOrg() {
 		if (redumpOrg == null) {
 			redumpOrg = new JRadioButton();
+			redumpOrg.setBackground(Color.white);
 		}
 		return redumpOrg;
 	}
@@ -138,6 +131,7 @@ public class NameConventionPanel extends JPanel {
 	private JComboBox getPreferredRegion() {
 		if (preferredRegion == null) {
 			preferredRegion = new JComboBox();
+			preferredRegion.setBackground(Color.white);
 		}
 		return preferredRegion;
 	}
@@ -150,6 +144,7 @@ public class NameConventionPanel extends JPanel {
 	private JComboBox getPreferredCountry() {
 		if (preferredCountry == null) {
 			preferredCountry = new JComboBox();
+			preferredCountry.setBackground(Color.white);
 		}
 		return preferredCountry;
 	}
