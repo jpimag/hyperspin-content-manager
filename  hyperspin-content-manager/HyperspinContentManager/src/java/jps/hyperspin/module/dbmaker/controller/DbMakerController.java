@@ -40,7 +40,7 @@ public class DbMakerController {
 		DbMakerOption option = panelToModel();
 
 		// Save the model into a file
-		// TODO
+		option.save();
 
 		// Process
 		// TODO
@@ -62,10 +62,11 @@ public class DbMakerController {
 		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(Country.NONE);
 
 		// Load preference into DbMakerOption instance
-		// TODO
+
+		DbMakerOption option = DbMakerOption.load();
 
 		// Update view according to preference
-		// TODO
+		modelToPanel(option);
 
 	}
 

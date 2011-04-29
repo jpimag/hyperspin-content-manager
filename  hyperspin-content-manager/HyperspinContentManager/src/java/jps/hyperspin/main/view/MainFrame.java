@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import jps.hyperspin.common.view.PanelLogger;
 import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
+import jps.hyperspin.module.dbmaker.controller.DbMakerController;
 
 public class MainFrame extends JFrame {
 
@@ -48,12 +49,15 @@ public class MainFrame extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				try {
-
+					if (!mainTabbedPane.isEnabled()) {
+						mainTabbedPane.setEnabled(true);
+					}
 					if (lastSelection != getSystemSelected()) {
 
 						lastSelection = getSystemSelected();
 						DbDownLoaderController.instance.updateDetails();
-
+						// Initialize some controllers
+						DbMakerController.instance.load();
 					}
 
 				} catch (Exception e) {
@@ -109,8 +113,7 @@ public class MainFrame extends JFrame {
 		if (systemListPanel == null) {
 			systemListPanel = new SystemTablePanel();
 
-			systemListPanel.setBorder(BorderFactory.createLineBorder(
-					SystemColor.activeCaption, 5));
+			systemListPanel.setBorder(BorderFactory.createLineBorder(SystemColor.activeCaption, 5));
 		}
 		return systemListPanel;
 	}
@@ -123,8 +126,7 @@ public class MainFrame extends JFrame {
 	private PanelLogger getPanelLogger() {
 		if (panelLogger == null) {
 			panelLogger = new PanelLogger();
-			panelLogger.setBorder(BorderFactory.createLineBorder(
-					SystemColor.activeCaption, 5));
+			panelLogger.setBorder(BorderFactory.createLineBorder(SystemColor.activeCaption, 5));
 		}
 		return panelLogger;
 	}
@@ -137,6 +139,7 @@ public class MainFrame extends JFrame {
 	public MainTabbedPane getMainTabbedPane() {
 		if (mainTabbedPane == null) {
 			mainTabbedPane = new MainTabbedPane();
+			mainTabbedPane.setEnabled(false);
 		}
 		return mainTabbedPane;
 	}
