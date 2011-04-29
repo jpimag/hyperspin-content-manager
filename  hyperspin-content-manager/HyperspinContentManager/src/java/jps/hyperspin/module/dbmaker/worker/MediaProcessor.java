@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbmaker.processor;
+package jps.hyperspin.module.dbmaker.worker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
