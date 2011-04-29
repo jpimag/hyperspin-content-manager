@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbmaker.processor;
+package jps.hyperspin.module.dbmaker.worker;
 
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;

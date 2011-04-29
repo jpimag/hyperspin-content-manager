@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
-import jps.hyperspin.module.dbmaker.processor.DatabaseProcessor;
+import jps.hyperspin.module.dbmaker.worker.DatabaseProcessor;
 
 /**
  * Panel des actions pour la categorie database
@@ -59,8 +59,8 @@ public class DatabaseActionPanel extends CommonDatabaseActionPanel {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		DatabaseProcessor databaseProcessor = new DatabaseProcessor(
-				DbDownLoaderController.instance.getDbDetail(), getOption());
+		DatabaseProcessor databaseProcessor = new DatabaseProcessor(DbDownLoaderController.instance.getDbDetail(),
+				getOption());
 		try {
 			if (e.getSource() == process) {
 				CommonLogger.instance.clear();
