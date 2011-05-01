@@ -31,41 +31,34 @@ public class MediaProcessor extends AbstractProcessor {
 		DATABASE, REFERENCE_DATABASE, ROMS
 	}
 
-	public MediaProcessor(final DatabaseDetail databaseDetail,
-			final IDatabaseOption databaseOption) {
+	public MediaProcessor(final DatabaseDetail databaseDetail, final IDatabaseOption databaseOption) {
 		super(databaseDetail, databaseOption);
 
 	}
 
-	public void processMedia(String relativePath) throws HCMDatabaseException,
-			IOException {
+	public void processMedia(String relativePath) throws HCMDatabaseException, IOException {
 		CommonLogger logger = CommonLogger.instance;
 		// Database or roms
 		List<ProcessingOption> options = new ArrayList<ProcessingOption>();
 		options.add(ProcessingOption.DATABASE);
 		options.add(ProcessingOption.REFERENCE_DATABASE);
 		options.add(ProcessingOption.ROMS);
-		ProcessingOption processingOption = (ProcessingOption) JOptionPane
-				.showInputDialog(null, "Whic list of roms do you want check ? "
-						+ options.size(), "Option",
-						JOptionPane.WARNING_MESSAGE, null, options.toArray(),
-						options.get(0));
+		ProcessingOption processingOption = (ProcessingOption) JOptionPane.showInputDialog(null,
+				"Whic list of roms do you want check ? " + options.size(), "Option", JOptionPane.WARNING_MESSAGE, null,
+				options.toArray(), options.get(0));
 
 		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
 
 		Map<String, String> games = null;
 		if (processingOption == ProcessingOption.DATABASE) {
-			games = loadDatabase(databaseDetail.userDatabaseDir
-					+ File.separator + MainClass.mainFrame.getSystemSelected()
-					+ ".xml");
+			games = loadDatabase(databaseDetail.userDatabaseDir + File.separator
+					+ MainClass.mainFrame.getSystemSelected() + ".xml");
 		} else if (processingOption == ProcessingOption.REFERENCE_DATABASE) {
-			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath());
+			games = loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(MainClass.mainFrame.getSystemSelected()));
 
 		} else if (processingOption == ProcessingOption.ROMS) {
 			// Step 4 : Parse roms
-			games = listRecursiveFilesWithFilter(
-					new File(getIni().getRomPath()), false, getIni()
-							.getRomExtension());
+			games = listRecursiveFilesWithFilter(new File(getIni().getRomPath()), false, getIni().getRomExtension());
 		}
 
 		// Medias
@@ -75,12 +68,9 @@ public class MediaProcessor extends AbstractProcessor {
 		Map<String, String> medias = new HashMap<String, String>();
 		for (File file : files) {
 			String extension = FileUtilities.getExtension(file);
-			if (extension.equalsIgnoreCase(".flv")
-					|| extension.equalsIgnoreCase(".avi")
-					|| extension.equalsIgnoreCase(".png")
-					|| extension.equalsIgnoreCase(".swf")) {
-				medias.put(FileUtilities.getNameWithoutExtension(file),
-						FileUtilities.getExtension(file));
+			if (extension.equalsIgnoreCase(".flv") || extension.equalsIgnoreCase(".avi")
+					|| extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".swf")) {
+				medias.put(FileUtilities.getNameWithoutExtension(file), FileUtilities.getExtension(file));
 			}
 		}
 
@@ -112,21 +102,18 @@ public class MediaProcessor extends AbstractProcessor {
 					for (String media : medias.keySet()) {
 						String mediaWithoutRegion = media.split("\\(")[0];
 						if (mediaWithoutRegion.equals(gameWithoutRegion)) {
-							logger.trace("A media from another region have been for game "
-									+ gameSearched + ". A copy have been made.");
+							logger.trace("A media from another region have been for game " + gameSearched
+									+ ". A copy have been made.");
 							found = true;
 							extension = medias.get(media);
 							if (games.get(media) == null) {
 								// We made a copy
 								// Move media
-								FileUtilities.moveFile(mediaDir, mediaDir,
-										media + extension, gameSearched
-												+ extension);
+								FileUtilities.moveFile(mediaDir, mediaDir, media + extension, gameSearched + extension);
 								removed.add(media);
 
 							} else {
-								FileUtilities.copyFile(mediaDir, media
-										+ extension, gameSearched + extension);
+								FileUtilities.copyFile(mediaDir, media + extension, gameSearched + extension);
 
 							}
 						}
@@ -141,8 +128,7 @@ public class MediaProcessor extends AbstractProcessor {
 				}
 
 				// Propose matching medias
-				if (!found && continueDeep
-						&& databaseOption.isDeepMatchSelected()) {
+				if (!found && continueDeep && databaseOption.isDeepMatchSelected()) {
 
 					List<DistanceString> bests;
 					if (databaseOption.isOnlyUnused()) {
@@ -160,12 +146,11 @@ public class MediaProcessor extends AbstractProcessor {
 					}
 
 					// Dialog
-					String message = "Matching medias have been found. \nOriginal normalized name : "
-							+ gameSearched
+					String message = "Matching medias have been found. \nOriginal normalized name : " + gameSearched
 							+ "\nDo you want to accept and rename this media ?";
 
-					ChoiceDialog d = new ChoiceDialog(null, "Confirm dialog "
-							+ i + "/" + games.size(), message, bests.toArray());
+					ChoiceDialog d = new ChoiceDialog(null, "Confirm dialog " + i + "/" + games.size(), message,
+							bests.toArray());
 					Object choix = d.getSelection();
 
 					if (d.isCancelled()) {
@@ -178,9 +163,8 @@ public class MediaProcessor extends AbstractProcessor {
 							if (ds.info == null || !ds.info.equals("used")) {
 								String extension = medias.get(ds.string);
 								// Move media
-								FileUtilities.moveFile(mediaDir, mediaDir,
-										ds.string + extension, gameSearched
-												+ extension);
+								FileUtilities.moveFile(mediaDir, mediaDir, ds.string + extension, gameSearched
+										+ extension);
 								// update media available
 								medias.remove(ds.string);
 								unused.remove(ds.string);
@@ -189,12 +173,10 @@ public class MediaProcessor extends AbstractProcessor {
 							} else {
 								String extension = medias.get(ds.string);
 								// Move media
-								FileUtilities.copyFile(mediaDir, ds.string
-										+ extension, gameSearched + extension);
+								FileUtilities.copyFile(mediaDir, ds.string + extension, gameSearched + extension);
 								medias.put(gameSearched, extension);
 							}
-							logger.trace("Media/video :" + gameSearched
-									+ " manually found.");
+							logger.trace("Media/video :" + gameSearched + " manually found.");
 							menuMediaNotFound--;
 						}
 					}
@@ -205,11 +187,10 @@ public class MediaProcessor extends AbstractProcessor {
 		}
 
 		int menuMediaFound = games.size() - menuMediaNotFound;
-		logger.info("\nTotal of " + menuMediaFound + "/" + games.size()
-				+ " found (" + menuMediaNotFound + "medias/video missing)");
+		logger.info("\nTotal of " + menuMediaFound + "/" + games.size() + " found (" + menuMediaNotFound
+				+ "medias/video missing)");
 
-		int choix = JOptionPane.showConfirmDialog(null,
-				"Do you want to manually check unused medias ?", "",
+		int choix = JOptionPane.showConfirmDialog(null, "Do you want to manually check unused medias ?", "",
 				JOptionPane.YES_NO_OPTION);
 		if (choix == 0) {
 			reverseProcessMedia(relativePath, medias, games);
@@ -217,8 +198,7 @@ public class MediaProcessor extends AbstractProcessor {
 
 	}
 
-	public final void reverseProcessMedia(String relativePath,
-			Map<String, String> medias, Map<String, String> games)
+	public final void reverseProcessMedia(String relativePath, Map<String, String> medias, Map<String, String> games)
 			throws FileNotFoundException, HCMDatabaseException {
 
 		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
@@ -239,9 +219,8 @@ public class MediaProcessor extends AbstractProcessor {
 			// Show non used videos
 			String message = unused.size() + " unused medias :\n\n";
 
-			JOptionPane.showInputDialog(null, message, unused.size()
-					+ " unused medias ", JOptionPane.PLAIN_MESSAGE, null,
-					unused.toArray(), unused.get(0));
+			JOptionPane.showInputDialog(null, message, unused.size() + " unused medias ", JOptionPane.PLAIN_MESSAGE,
+					null, unused.toArray(), unused.get(0));
 
 			// Parse all games
 			int i = 0;
@@ -251,8 +230,7 @@ public class MediaProcessor extends AbstractProcessor {
 				if (games.get(unusedMedia) == null) {
 					menuMediaNotFound++;
 
-					CommonLogger.instance.trace("Media :" + unusedMedia
-							+ " not found.");
+					CommonLogger.instance.trace("Media :" + unusedMedia + " not found.");
 
 					// Propose matching medias
 					if (continueDeep) {
@@ -276,13 +254,11 @@ public class MediaProcessor extends AbstractProcessor {
 						}
 
 						// Dialog
-						message = "Matching games have been found. \nOriginal normalized media name : '"
-								+ unusedMedia
+						message = "Matching games have been found. \nOriginal normalized media name : '" + unusedMedia
 								+ "' Do you want to accept and rename this media ?";
 
-						ChoiceDialog d = new ChoiceDialog(null,
-								"Confirm dialog " + i + "/" + games.size(),
-								message, bests.toArray());
+						ChoiceDialog d = new ChoiceDialog(null, "Confirm dialog " + i + "/" + games.size(), message,
+								bests.toArray());
 						Object choix = d.getSelection();
 
 						if (d.isCancelled()) {
@@ -292,23 +268,19 @@ public class MediaProcessor extends AbstractProcessor {
 							String extension = medias.get(unusedMedia);
 							DistanceString ds = (DistanceString) choix;
 							if (d.isRemove()) {
-								FileUtilities.deleteFile(mediaDir, unusedMedia
-										+ extension);
+								FileUtilities.deleteFile(mediaDir, unusedMedia + extension);
 							}
 							if (d.isOk()) {
-								if (ds.info == null
-										|| !ds.info.equals("have media")) {
+								if (ds.info == null || !ds.info.equals("have media")) {
 
 									// Move media
-									FileUtilities.moveFile(mediaDir, mediaDir,
-											unusedMedia + extension, ds.string
-													+ extension);
+									FileUtilities.moveFile(mediaDir, mediaDir, unusedMedia + extension, ds.string
+											+ extension);
 									// update media available
 									medias.remove(unusedMedia);
 									medias.put(ds.string, extension);
 
-									CommonLogger.instance.trace("Media/video :"
-											+ ds.string + " manually found.");
+									CommonLogger.instance.trace("Media/video :" + ds.string + " manually found.");
 									menuMediaNotFound--;
 								}
 							}
@@ -319,18 +291,16 @@ public class MediaProcessor extends AbstractProcessor {
 			}
 		}
 
-		CommonLogger.instance.info("\nTotal of " + menuMediaNotFound
-				+ "unused.");
+		CommonLogger.instance.info("\nTotal of " + menuMediaNotFound + "unused.");
 
 	}
 
-	public final void purgeMedia(String relativePath)
-			throws FileNotFoundException, HCMDatabaseException {
+	public final void purgeMedia(String relativePath) throws FileNotFoundException, HCMDatabaseException {
 
 		String mediaDir = databaseDetail.mediaDir + "/" + relativePath;
 		Map<String, String> games = loadDatabase(
 
-		DatabaseUtilities.getDownloadedDatabasePath());
+		DatabaseUtilities.getDownloadedDatabasePath(MainClass.mainFrame.getSystemSelected()));
 
 		// Medias
 		File dir = new File(mediaDir);
@@ -339,8 +309,7 @@ public class MediaProcessor extends AbstractProcessor {
 		for (File file : files) {
 			String extension = FileUtilities.getExtension(file);
 			if (extension.equals(".flv") || extension.equals(".png")) {
-				medias.put(FileUtilities.getNameWithoutExtension(file),
-						FileUtilities.getExtension(file));
+				medias.put(FileUtilities.getNameWithoutExtension(file), FileUtilities.getExtension(file));
 			}
 		}
 
@@ -353,24 +322,18 @@ public class MediaProcessor extends AbstractProcessor {
 		}
 
 		// Show non used videos
-		JOptionPane.showInputDialog(null, "Your are going to suppress "
-				+ unused.size() + " unused medias. ", "Warning",
-				JOptionPane.WARNING_MESSAGE, null, unused.toArray(),
-				unused.get(0));
+		JOptionPane.showInputDialog(null, "Your are going to suppress " + unused.size() + " unused medias. ",
+				"Warning", JOptionPane.WARNING_MESSAGE, null, unused.toArray(), unused.get(0));
 
-		int choix = JOptionPane.showConfirmDialog(null,
-				"Are you sure you want to delete these " + unused.size()
-						+ " unused medias. ", "Warning",
-				JOptionPane.YES_NO_OPTION);
+		int choix = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete these " + unused.size()
+				+ " unused medias. ", "Warning", JOptionPane.YES_NO_OPTION);
 
 		if (choix == 0) {
 			for (String string : unused) {
-				File toDelete = new File(mediaDir + "/" + string
-						+ medias.get(string));
+				File toDelete = new File(mediaDir + "/" + string + medias.get(string));
 				toDelete.delete();
 			}
-			CommonLogger.instance.info("\nTotal of " + unused.size()
-					+ " unused medias deleted.");
+			CommonLogger.instance.info("\nTotal of " + unused.size() + " unused medias deleted.");
 		}
 
 	}

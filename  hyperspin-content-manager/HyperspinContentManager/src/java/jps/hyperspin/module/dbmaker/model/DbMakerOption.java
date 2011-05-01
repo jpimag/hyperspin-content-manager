@@ -21,14 +21,6 @@ public class DbMakerOption extends CommonOption {
 		NO_INTRO, REDUMP_ORG
 	}
 
-	public enum Region {
-		NONE, EUROPE
-	}
-
-	public enum Country {
-		NONE, FRANCE,
-	}
-
 	public boolean noClone;
 
 	public boolean removeReplacedRoms;
@@ -39,9 +31,9 @@ public class DbMakerOption extends CommonOption {
 
 	public NamingConventions namingConventions;
 
-	public Region region;
+	public DbMakerRegionEnum region;
 
-	public Country country;
+	public DbMakerRegionEnum country;
 
 	/**
 	 * load a CommonOption instance from disk. Create a new one if no instance

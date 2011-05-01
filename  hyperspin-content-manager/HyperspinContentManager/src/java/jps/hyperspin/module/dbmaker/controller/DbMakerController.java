@@ -3,11 +3,12 @@ package jps.hyperspin.module.dbmaker.controller;
 import javax.swing.ButtonGroup;
 
 import jps.hyperspin.MainClass;
+import jps.hyperspin.common.view.BasicProgressDialog;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
-import jps.hyperspin.module.dbmaker.model.DbMakerOption.Country;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption.NamingConventions;
-import jps.hyperspin.module.dbmaker.model.DbMakerOption.Region;
+import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
 import jps.hyperspin.module.dbmaker.view.DbMakerOptionPanel;
+import jps.hyperspin.module.dbmaker.worker.DeltaGeneratorWorker;
 
 public class DbMakerController {
 
@@ -35,6 +36,7 @@ public class DbMakerController {
 	}
 
 	public void process() {
+		String system = MainClass.mainFrame.getSystemSelected();
 
 		// Convert options choosen to DbMakerOption instance
 		DbMakerOption option = panelToModel();
@@ -42,7 +44,11 @@ public class DbMakerController {
 		// Save the model into a file
 		option.save();
 
-		// Process
+		// Process delta generator
+		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option);
+		new BasicProgressDialog(worker);
+
+		// Make database
 		// TODO
 
 	}
@@ -56,10 +62,10 @@ public class DbMakerController {
 		group.add(getOptionPanel().getRegionPreferencePanel().getNoIntro());
 		group.add(getOptionPanel().getRegionPreferencePanel().getRedumpOrg());
 
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(Region.EUROPE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(Region.NONE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(Country.FRANCE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(Country.NONE);
+		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.EUROPE);
+		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.FRANCE);
+		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.NONE);
 
 		// Load preference into DbMakerOption instance
 
@@ -86,9 +92,10 @@ public class DbMakerController {
 		option.useDeltaFiles = getOptionPanel().getUseDeltaFiles().isSelected();
 		option.useRegionPreference = getOptionPanel().getUseRegionPreference().isSelected();
 		if (option.useRegionPreference) {
-			option.country = (Country) getOptionPanel().getRegionPreferencePanel().getPreferredCountry()
+			option.country = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredCountry()
 					.getSelectedItem();
-			option.region = (Region) getOptionPanel().getRegionPreferencePanel().getPreferredRegion().getSelectedItem();
+			option.region = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredRegion()
+					.getSelectedItem();
 
 			if (getOptionPanel().getRegionPreferencePanel().getNoIntro().isSelected()) {
 				option.namingConventions = NamingConventions.NO_INTRO;
