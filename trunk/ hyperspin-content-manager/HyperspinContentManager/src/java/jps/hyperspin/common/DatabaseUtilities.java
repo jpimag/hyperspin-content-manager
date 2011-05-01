@@ -23,14 +23,11 @@ public class DatabaseUtilities {
 	 * @throws HCMDatabaseException
 	 * @throws FileNotFoundException
 	 */
-	public static MenuType loadDatabase(String databaseFullPath)
-			throws HCMDatabaseException, FileNotFoundException {
+	public static MenuType loadDatabase(String databaseFullPath) throws HCMDatabaseException, FileNotFoundException {
 		File database = new File(databaseFullPath);
-		CommonLogger.instance.info("Database to be parsed : "
-				+ database.getName());
+		CommonLogger.instance.info("Database to be parsed : " + database.getName());
 		FileReader reader = new FileReader(database);
-		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(
-				MenuType.class, reader);
+		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
 		return menu;
 	}
 
@@ -42,8 +39,7 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getDownloadedDatabaseDir(String system) {
-		String path = System.getProperty("user.dir") + File.separator
-				+ "database";
+		String path = System.getProperty("user.dir") + File.separator + "database";
 		path += File.separator + system;
 
 		return path;
@@ -56,8 +52,7 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getDownloadedDatabasePath(String system) {
-		return getDownloadedDatabaseDir(system) + File.separator + system
-				+ ".xml";
+		return getDownloadedDatabaseDir(system) + File.separator + system + ".xml";
 	}
 
 	/**
@@ -66,42 +61,8 @@ public class DatabaseUtilities {
 	 * @param genre
 	 * @return
 	 */
-	public static String getDownloadedGenreDatabasePath(String system,
-			String genre) {
-		return getDownloadedDatabaseDir(system) + File.separator + genre
-				+ ".xml";
-	}
-
-	/**
-	 * Get the main directory path of the reference directory of the selected
-	 * system.
-	 * 
-	 * @param system
-	 * 
-	 * @return
-	 */
-	public static String getDownloadedDatabaseDir() {
-		return getDownloadedDatabaseDir(MainClass.mainFrame.getSystemSelected());
-	}
-
-	/**
-	 * Get the main directory path of the reference directory of a system.
-	 * 
-	 * @return
-	 */
-	public static String getUserDatabasePath() {
-		return getUserDatabasePath(MainClass.mainFrame.getSystemSelected());
-	}
-
-	/**
-	 * Get the main database full path of the reference directory of the
-	 * selected system.
-	 * 
-	 * @return
-	 */
-	public static String getDownloadedDatabasePath() {
-		return getDownloadedDatabasePath(MainClass.mainFrame
-				.getSystemSelected());
+	public static String getDownloadedGenreDatabasePath(String system, String genre) {
+		return getDownloadedDatabaseDir(system) + File.separator + genre + ".xml";
 	}
 
 	/**
@@ -110,8 +71,7 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getDownloadedGenreDatabasePath(String genre) {
-		return getDownloadedGenreDatabasePath(MainClass.mainFrame
-				.getSystemSelected());
+		return getDownloadedGenreDatabasePath(MainClass.mainFrame.getSystemSelected());
 	}
 
 	/**
@@ -121,8 +81,44 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getUserDatabasePath(String system) {
-		String path = MainClass.HYPERSPIN_PATH + File.separator + "Databases"
-				+ File.separator + system + File.separator + system + ".xml";
+		String path = MainClass.HYPERSPIN_PATH + File.separator + "Databases" + File.separator + system
+				+ File.separator + system + ".xml";
+		return path;
+	}
+
+	/**
+	 * Get the directory of generated delta files.
+	 * 
+	 * @param system
+	 * 
+	 * @return
+	 */
+	public static String getGeneratedDeltaDir(String system) {
+		String path = getDeltaDir(system) + File.separator + "generated";
+		return path;
+	}
+
+	/**
+	 * Get the main directory path of the reference directory of a system.
+	 * 
+	 * @param system
+	 * 
+	 * @return
+	 */
+	public static String getGeneratedDeltaPath(String system, String type) {
+		String path = getGeneratedDeltaDir(system) + File.separator + "generated_" + type + ".delta";
+		return path;
+	}
+
+	/**
+	 * Get the directory of delta files.
+	 * 
+	 * @param system
+	 * 
+	 * @return
+	 */
+	public static String getDeltaDir(String system) {
+		String path = getDownloadedDatabaseDir(system) + File.separator + "delta";
 		return path;
 	}
 

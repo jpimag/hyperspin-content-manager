@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.main.controller.CommonLogger;
 
@@ -67,7 +68,8 @@ public abstract class CommonOption implements Serializable {
 	 * @return
 	 */
 	private static String getSaveFilePath(Class<? extends CommonOption> classe) {
-		return DatabaseUtilities.getDownloadedDatabaseDir() + File.separator + classe.getSimpleName() + ".ser";
+		return DatabaseUtilities.getDownloadedDatabaseDir(MainClass.mainFrame.getSystemSelected()) + File.separator
+				+ classe.getSimpleName() + ".ser";
 
 	}
 }

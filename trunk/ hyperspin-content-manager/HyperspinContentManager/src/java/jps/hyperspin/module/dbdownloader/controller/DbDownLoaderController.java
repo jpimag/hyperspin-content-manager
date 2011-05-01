@@ -48,7 +48,7 @@ public class DbDownLoaderController {
 			System.out.println("Ini file combo box change");
 			// Xml
 			String selected = system;
-			detailPanel.getUserDatabaseDirField().setText(DatabaseUtilities.getUserDatabasePath());
+			detailPanel.getUserDatabaseDirField().setText(DatabaseUtilities.getUserDatabasePath(system));
 			detailPanel.getMediaDirField().setText(
 					MainClass.HYPERSPIN_PATH + File.separator + "Media" + File.separator + selected);
 

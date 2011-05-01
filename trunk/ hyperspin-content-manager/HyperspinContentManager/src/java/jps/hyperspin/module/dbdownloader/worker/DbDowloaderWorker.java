@@ -47,18 +47,14 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 				// Main database
 				// -------------
 				map.put(MainClass.mainFrame.getSystemSelected(),
-						getLastAvailableDb(MainClass.mainFrame
-								.getSystemSelected()));
+						getLastAvailableDb(MainClass.mainFrame.getSystemSelected()));
 				setProgress(10);
 
 				// Genre databases
 				// ---------------
-				URL url = new URL(
-						getLastAvailableDbUrls(MainClass.mainFrame
-								.getSystemSelected()).urlGenre);
+				URL url = new URL(getLastAvailableDbUrls(MainClass.mainFrame.getSystemSelected()).urlGenre);
 				urlConnGenre = (HttpURLConnection) url.openConnection();
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						urlConnGenre.getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(urlConnGenre.getInputStream()));
 				String sLine;
 				String fileContent = "";
 				while ((sLine = in.readLine()) != null) {
@@ -73,10 +69,8 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 					urlGenre = urlGenre.replaceAll("%20", " ");
 					url = new URL(HYPERLIST_URL + urlGenre);
 					urlConnTmp = (HttpURLConnection) url.openConnection();
-					BufferedReader inGenre = new BufferedReader(
-							new InputStreamReader(urlConnTmp.getInputStream()));
-					MenuType genre = (MenuType) XmlBinding.getInstance()
-							.xml2java(MenuType.class, inGenre);
+					BufferedReader inGenre = new BufferedReader(new InputStreamReader(urlConnTmp.getInputStream()));
+					MenuType genre = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, inGenre);
 					String[] tab = urlGenre.split("=");
 					map.put(tab[tab.length - 1], genre);
 					urlConnTmp.disconnect();
@@ -86,8 +80,7 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 
 				// Delete all existing files
 				// ---------------
-				FileUtilities.deleteAllFiles(
-						DatabaseUtilities.getDownloadedDatabaseDir(), "xml");
+				FileUtilities.deleteAllFiles(DatabaseUtilities.getDownloadedDatabaseDir(system), "xml");
 				setProgress(60);
 
 				// Write databases from HyperList site
@@ -95,8 +88,7 @@ public class DbDowloaderWorker extends AbstractDbDownloaderWorker {
 				int i = 2;
 				for (String fileName : map.keySet()) {
 					DatabaseUtilities.writeDatabase(map.get(fileName),
-							DatabaseUtilities.getDownloadedDatabaseDir(),
-							fileName + ".xml");
+							DatabaseUtilities.getDownloadedDatabaseDir(system), fileName + ".xml");
 					i++;
 					computeProgressFromAchievedStep(i, options.length, 99);
 				}

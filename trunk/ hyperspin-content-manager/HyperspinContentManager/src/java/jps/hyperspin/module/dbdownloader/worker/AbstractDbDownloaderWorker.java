@@ -32,7 +32,6 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @param progressBarDialog
 	 */
 	public AbstractDbDownloaderWorker() {
 		super();
@@ -53,8 +52,7 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 			urlConn = (HttpURLConnection) url.openConnection();
 
 			// Lire la reponse
-			in = new BufferedReader(new InputStreamReader(
-					urlConn.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 			boolean found = false;
 			String sLine;
 			// On recherche l'URL du fichier DB
@@ -65,17 +63,13 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 							while (!found && (sLine = in.readLine()) != null) {
 								if (sLine.contains("Download XML")) {
 									databaseUrls.urlDb = sLine.split("href='")[1];
-									databaseUrls.urlDb = databaseUrls.urlDb
-											.split("'")[0];
-									databaseUrls.urlDb = HYPERLIST_URL
-											+ databaseUrls.urlDb;
+									databaseUrls.urlDb = databaseUrls.urlDb.split("'")[0];
+									databaseUrls.urlDb = HYPERLIST_URL + databaseUrls.urlDb;
 								}
 
 								if (sLine.contains("Download Genre XML")) {
-									databaseUrls.urlGenre = sLine
-											.split("href='")[2];
-									databaseUrls.urlGenre = databaseUrls.urlGenre
-											.split("'")[0];
+									databaseUrls.urlGenre = sLine.split("href='")[2];
+									databaseUrls.urlGenre = databaseUrls.urlGenre.split("'")[0];
 									databaseUrls.urlGenre = HYPERLIST_URL
 
 									+ databaseUrls.urlGenre;
@@ -107,8 +101,7 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * Retourne la derniere version de la database principale du systeme
 	 * selectionné dans le tableau HyperList sur le site officiel d'Hyperspin.
 	 */
-	public MenuType getLastAvailableDb(String system)
-			throws HCMBindingException, HCMDatabaseException {
+	public MenuType getLastAvailableDb(String system) throws HCMBindingException, HCMDatabaseException {
 		HttpURLConnection urlConn = null;
 		MenuType main = null;
 		try {
@@ -119,11 +112,9 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 			URL url = new URL(dbUrl.urlDb);
 			urlConn = (HttpURLConnection) url.openConnection();
 
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					urlConn.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 
-			main = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class,
-					in);
+			main = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, in);
 
 		} catch (MalformedURLException e) {
 			CommonLogger.instance.error(e.getMessage());
