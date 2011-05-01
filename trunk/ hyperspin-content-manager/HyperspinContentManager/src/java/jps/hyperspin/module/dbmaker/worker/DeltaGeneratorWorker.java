@@ -7,11 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.RomUtilities;
 import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.worker.CommonWorker;
+import jps.hyperspin.exception.HCMDatabaseException;
+import jps.hyperspin.main.controller.MainController;
+import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
+import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConvention;
 
 /**
  * 
@@ -59,18 +64,41 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		}
 	}
 
-	private Map<String, Delta> computeDelta(DbMakerRegionEnum type, MenuType database) {
+	private Map<String, Delta> computeDelta(DbMakerRegionEnum type, MenuType database) throws HCMDatabaseException {
 		Map<String, Delta> deltas = new HashMap<String, DeltaGeneratorWorker.Delta>();
-		switch (option.namingConventions) {
-		case NO_INTRO:
-			// TODO
-			break;
+		DatabaseDetail detail = MainController.instance.getDbDetail();
+		// The naming convention class
+		AbstractNamingConvention convention = option.namingConventions.getNamingConvention();
 
-		case REDUMP_ORG:
-			// TODO
-			break;
+		// Get the rom list
+		Map<String, String> romMap = RomUtilities.listRoms(system, detail);
+		// Candidate to replacement
+		Map<String, String> candidtateRomMap = new HashMap<String, String>(romMap);
+		// Matching type roms
+		Map<String, String> matchingRomMap = new HashMap<String, String>();
+
+		// Browse all roms
+		for (String rom : romMap.keySet()) {
+			if (convention.isBelongingToType(rom, type)) {
+				candidtateRomMap.remove(rom);
+				matchingRomMap.put(rom, romMap.get(rom));
+			}
+
 		}
 
+		// We browse all matching roms to find a good candidate for
+		// replacement.
+		for (String rom : matchingRomMap.keySet()) {
+			for (String candidate : candidtateRomMap.keySet()) {
+				if (convention.isCandidate(rom, candidate, type)) {
+					Delta delta = new Delta();
+					delta.name = romMap.get(candidate);
+					delta.replacementName = romMap.get(rom);
+					deltas.put(delta.replacementName, delta);
+					break;
+				}
+			}
+		}
 		return deltas;
 	}
 
