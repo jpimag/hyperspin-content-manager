@@ -5,6 +5,9 @@ import java.io.File;
 import jps.hyperspin.MainClass;
 import jps.hyperspin.main.model.Systems;
 import jps.hyperspin.main.model.VersionStatut;
+import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
+import jps.hyperspin.module.dbdownloader.view.DatabaseDetailPanel;
+import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 
 public class MainController {
 
@@ -48,6 +51,18 @@ public class MainController {
 		}
 
 		return Systems.instance.list().size();
+	}
+
+	public DatabaseDetail getDbDetail() {
+		DatabaseDetailPanel detailPanel = MainClass.mainFrame.getMainTabbedPane().getDbDownloaderTab()
+				.getDatabaseDetailPanel();
+		DatabaseDetail detail = new DatabaseDetail();
+		detail.mediaDir = detailPanel.getMediaDirField().getText();
+		detail.userDatabaseDir = detailPanel.getUserDatabaseDirField().getText();
+		detail.systemIniProperties = new SystemIniProperties(MainClass.HYPERSPIN_PATH,
+				MainClass.mainFrame.getSystemSelected());
+		return detail;
+
 	}
 
 }

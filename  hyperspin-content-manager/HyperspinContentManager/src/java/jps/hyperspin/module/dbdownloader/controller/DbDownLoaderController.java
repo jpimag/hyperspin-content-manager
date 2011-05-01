@@ -8,7 +8,6 @@ import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.view.BasicProgressDialog;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.main.model.VersionStatut;
-import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbdownloader.view.DatabaseDetailPanel;
 import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
@@ -17,18 +16,6 @@ import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
 public class DbDownLoaderController {
 
 	public static DbDownLoaderController instance = new DbDownLoaderController();
-
-	public DatabaseDetail getDbDetail() {
-		DatabaseDetailPanel detailPanel = MainClass.mainFrame.getMainTabbedPane().getDbDownloaderTab()
-				.getDatabaseDetailPanel();
-		DatabaseDetail detail = new DatabaseDetail();
-		detail.mediaDir = detailPanel.getMediaDirField().getText();
-		detail.userDatabaseDir = detailPanel.getUserDatabaseDirField().getText();
-		detail.systemIniProperties = new SystemIniProperties(MainClass.HYPERSPIN_PATH,
-				MainClass.mainFrame.getSystemSelected());
-		return detail;
-
-	}
 
 	/**
 	 * 

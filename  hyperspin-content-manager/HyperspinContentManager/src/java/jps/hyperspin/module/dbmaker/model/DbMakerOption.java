@@ -1,6 +1,9 @@
 package jps.hyperspin.module.dbmaker.model;
 
 import jps.hyperspin.common.model.CommonOption;
+import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConvention;
+import jps.hyperspin.module.dbmaker.worker.namingconventions.NoIntro;
+import jps.hyperspin.module.dbmaker.worker.namingconventions.RedumpOrg;
 
 /**
  * 
@@ -18,7 +21,21 @@ public class DbMakerOption extends CommonOption {
 	}
 
 	public enum NamingConventions {
-		NO_INTRO, REDUMP_ORG
+		NO_INTRO, REDUMP_ORG;
+
+		/**
+		 * 
+		 * @return the NamingConvention class.
+		 */
+		public AbstractNamingConvention getNamingConvention() {
+			switch (this) {
+			case NO_INTRO:
+				return new NoIntro();
+			case REDUMP_ORG:
+				return new RedumpOrg();
+			}
+			return null;
+		}
 	}
 
 	public boolean noClone;
