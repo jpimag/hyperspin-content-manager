@@ -67,7 +67,7 @@ public class RomUtilities {
 	 * @param s
 	 * @return
 	 */
-	private static String normalize(String s) {
+	public static String normalize(String s) {
 		return s.toLowerCase();
 	}
 }
