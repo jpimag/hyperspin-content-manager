@@ -1,9 +1,14 @@
 package jps.hyperspin.module.dbmaker.controller;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
+import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.view.BasicProgressDialog;
+import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption.NamingConventions;
 import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
@@ -38,6 +43,18 @@ public class DbMakerController {
 	public void process() {
 		String system = MainClass.mainFrame.getSystemSelected();
 
+		// First chec that database reference exist in Hyperspin Content Manager
+		// directory
+		MenuType database;
+		try {
+			database = DatabaseUtilities.loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(system));
+		} catch (Exception e) {
+			String msg = Message.getMessage("dbmaker.error.downloadeddatabase.notfound.msg");
+			JOptionPane.showMessageDialog(null, msg);
+			CommonLogger.instance.error(msg);
+			throw new IllegalArgumentException(e);
+		}
+
 		// Convert options choosen to DbMakerOption instance
 		DbMakerOption option = panelToModel();
 
@@ -45,7 +62,7 @@ public class DbMakerController {
 		option.save();
 
 		// Process delta generator
-		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option);
+		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option, database);
 		new BasicProgressDialog(worker);
 
 		// Make database
@@ -62,8 +79,10 @@ public class DbMakerController {
 		group.add(getOptionPanel().getRegionPreferencePanel().getNoIntro());
 		group.add(getOptionPanel().getRegionPreferencePanel().getRedumpOrg());
 
+		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().removeAllItems();
 		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.EUROPE);
 		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().removeAllItems();
 		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.FRANCE);
 		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.NONE);
 

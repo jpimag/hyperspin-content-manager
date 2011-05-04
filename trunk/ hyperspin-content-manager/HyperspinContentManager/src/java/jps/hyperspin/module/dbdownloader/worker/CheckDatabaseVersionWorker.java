@@ -31,43 +31,33 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 	 */
 	@Override
 	protected void executeInternal() throws Exception {
-		try {
-			setProgress(1);
 
-			if (system != null) {
+		if (system != null) {
 
-				// User Database version
-				try {
-					userDatabase = DatabaseUtilities
-							.loadDatabase(DatabaseUtilities
-									.getUserDatabasePath(system));
+			// User Database version
+			try {
+				userDatabase = DatabaseUtilities.loadDatabase(DatabaseUtilities.getUserDatabasePath(system));
 
-				} catch (FileNotFoundException e) {
-					userDatabase = null;
-				}
-				setProgress(25);
-
-				// Downloaded Database version
-				try {
-					downloadedDatabase = DatabaseUtilities
-							.loadDatabase(DatabaseUtilities
-									.getDownloadedDatabasePath(system));
-
-				} catch (FileNotFoundException e) {
-					downloadedDatabase = null;
-				}
-				setProgress(50);
-
-				// Check DB from hyperlist web site
-				hyperlistDatabase = getLastAvailableDb(system);
-
-				// Notify system list panel
-				MainController.instance.changeSystemStatut(system,
-						getVersionStatut());
+			} catch (FileNotFoundException e) {
+				userDatabase = null;
 			}
-		} finally {
-			setProgress(100);
+			setProgress(25);
 
+			// Downloaded Database version
+			try {
+				downloadedDatabase = DatabaseUtilities
+						.loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(system));
+
+			} catch (FileNotFoundException e) {
+				downloadedDatabase = null;
+			}
+			setProgress(50);
+
+			// Check DB from hyperlist web site
+			hyperlistDatabase = getLastAvailableDb(system);
+
+			// Notify system list panel
+			MainController.instance.changeSystemStatut(system, getVersionStatut());
 		}
 
 	}
@@ -83,12 +73,8 @@ public class CheckDatabaseVersionWorker extends AbstractDbDownloaderWorker {
 						.equals(hyperlistDatabase.getHeader().getListversion())) {
 			return VersionStatut.OUT_DATED_DOWNLOADED_DB;
 
-		} else if (userDatabase == null
-				|| userDatabase.getHeader() == null
-				|| !userDatabase
-						.getHeader()
-						.getListversion()
-						.equals(downloadedDatabase.getHeader().getListversion())) {
+		} else if (userDatabase == null || userDatabase.getHeader() == null
+				|| !userDatabase.getHeader().getListversion().equals(downloadedDatabase.getHeader().getListversion())) {
 			return VersionStatut.OUT_DATED_USER_DB;
 		} else {
 			return VersionStatut.UP_TO_DATE;

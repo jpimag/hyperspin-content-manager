@@ -5,11 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import jps.hyperspin.MainClass;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 public class DatabaseUtilities {
@@ -25,10 +28,23 @@ public class DatabaseUtilities {
 	 */
 	public static MenuType loadDatabase(String databaseFullPath) throws HCMDatabaseException, FileNotFoundException {
 		File database = new File(databaseFullPath);
-		CommonLogger.instance.info("Database to be parsed : " + database.getName());
+		CommonLogger.instance.info("Database to be parsed : " + databaseFullPath);
 		FileReader reader = new FileReader(database);
 		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
 		return menu;
+	}
+
+	/**
+	 * 
+	 * @param database
+	 * @return
+	 */
+	public static Map<String, GameType> getAsMap(MenuType database) {
+		Map<String, GameType> result = new HashMap<String, GameType>();
+		for (GameType game : database.getGame()) {
+			result.put(game.getName(), game);
+		}
+		return result;
 	}
 
 	/**

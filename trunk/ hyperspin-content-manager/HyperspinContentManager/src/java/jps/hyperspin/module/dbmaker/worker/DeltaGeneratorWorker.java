@@ -17,6 +17,7 @@ import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
@@ -31,6 +32,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 
 	private String system;
 	private DbMakerOption option;
+	private MenuType database;
 
 	public class Delta {
 		public String name;
@@ -42,10 +44,11 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		public List<String> unknowns;
 	}
 
-	public DeltaGeneratorWorker(String system, DbMakerOption option) {
+	public DeltaGeneratorWorker(String system, DbMakerOption option, MenuType mainDownloadedDatabase) {
 		super();
 		this.system = system;
 		this.option = option;
+		this.database = mainDownloadedDatabase;
 	}
 
 	@Override
@@ -53,21 +56,21 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// Delete existing region and country delta files
 		FileUtilities.deleteAllFiles(DatabaseUtilities.getGeneratedDeltaDir(system), "delta");
 		// Load main database
-		MenuType database = DatabaseUtilities.loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(system));
-
+		Map<String, GameType> games = DatabaseUtilities.getAsMap(database);
 		if (option.useRegionPreference) {
 			if (option.region != DbMakerRegionEnum.NONE) {
 				// Find region matching roms
-				DeltaResult regionResult = computeDelta(option.country, database);
+				DeltaResult regionResult = computeDelta(option.country, games);
 
 				// Save delta region file
 				writeDeltaFile(regionResult.deltas, option.region.toString());
 				writeUnknwonRegionFile(regionResult.unknowns, option.region.toString());
 
 			}
+			setProgress(50);
 			if (option.country != DbMakerRegionEnum.NONE) {
 				// Find country roms
-				DeltaResult countryResult = computeDelta(option.region, database);
+				DeltaResult countryResult = computeDelta(option.region, games);
 
 				// Save delta country file
 				writeDeltaFile(countryResult.deltas, option.country.toString());
@@ -76,7 +79,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		}
 	}
 
-	private DeltaResult computeDelta(DbMakerRegionEnum type, MenuType database) throws HCMDatabaseException,
+	private DeltaResult computeDelta(DbMakerRegionEnum type, Map<String, GameType> games) throws HCMDatabaseException,
 			IOException {
 		DatabaseDetail detail = MainController.instance.getDbDetail();
 		// Result
@@ -92,24 +95,29 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// Get the rom list
 		Map<String, String> romMap = RomUtilities.listRoms(system, detail);
 		// Candidate to replace
+		// ---------------------
+		// Candidate are all roms not belonging to region in database.
 		Map<String, String> candidtateRomMap = new HashMap<String, String>(romMap);
 		// Matching type roms
+		// -------------------
+		// Matching roms are all roms belonging region not in database
 		Map<String, String> matchingRomMap = new HashMap<String, String>();
 
-		// Browse all roms
+		// Browse all roms to deterlinate "candidate" and "matching"
 		for (String rom : romMap.keySet()) {
 			if (convention.isBelongingToType(rom, type)) {
 				candidtateRomMap.remove(rom);
-				matchingRomMap.put(rom, romMap.get(rom));
+				if (!games.containsKey(rom)) {
+					// The game is not in db
+					matchingRomMap.put(rom, romMap.get(rom));
+				}
 			}
-
 		}
 
 		// We browse all matching roms to find a good candidate for
 		// replacement.
 		for (String rom : matchingRomMap.keySet()) {
 			for (String candidate : candidtateRomMap.keySet()) {
-				// TODO is it already in db ?
 
 				// Is there a correct candidate
 				if (convention.isCandidate(rom, candidate, type)) {

@@ -88,7 +88,7 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints9.anchor = GridBagConstraints.WEST;
 		gridBagConstraints9.gridy = 1;
 		removeReplacedRomsLabel = new JLabel();
-		removeReplacedRomsLabel.setText(Message.getMessage("dbmaker.options.removereplaced.label"));
+		removeReplacedRomsLabel.setText(Message.getMessage("dbmaker.options.movereplacedroms.label"));
 		GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 		gridBagConstraints8.gridx = 0;
 		gridBagConstraints8.gridy = 1;
