@@ -32,10 +32,13 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 	@Override
 	protected final Void doInBackground() throws Exception {
 		try {
+			setProgress(1);
 			executeInternal();
 		} catch (Exception e) {
 			// TODO add error dialog
 			CommonLogger.instance.info("Erreur : " + e);
+		} finally {
+			setProgress(100);
 		}
 		return null;
 	}
@@ -64,8 +67,7 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 	 * 
 	 * @return
 	 */
-	protected int computeProgressFromAchievedStep(int currentStep, int nbstep,
-			int until) {
+	protected int computeProgressFromAchievedStep(int currentStep, int nbstep, int until) {
 		double percent = (double) currentStep / (double) nbstep;
 		double progress = getProgress() + (percent * (until - getProgress()));
 		System.out.println(progress);

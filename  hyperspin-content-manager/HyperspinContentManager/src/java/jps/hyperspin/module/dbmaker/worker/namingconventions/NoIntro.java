@@ -14,6 +14,8 @@ import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
  */
 public class NoIntro extends AbstractNamingConvention {
 
+	private final static String REGION_SECTION_PATTERN = "\\((\\w|\\s|,)*\\)";
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -31,7 +33,11 @@ public class NoIntro extends AbstractNamingConvention {
 	 */
 	@Override
 	public boolean isCandidate(String rom, String canditate, DbMakerRegionEnum type) {
-		// TODO
+		String candidateWithoutRegion = extractRegion(canditate);
+		String romWithoutRegion = extractRegion(rom);
+		if (candidateWithoutRegion.equals(romWithoutRegion)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -52,7 +58,7 @@ public class NoIntro extends AbstractNamingConvention {
 	 */
 	private Set<String> getRegions(String rom) {
 		Set<String> regions = new HashSet<String>();
-		Matcher matcher = Pattern.compile("\\((\\w|\\s|,)*\\)").matcher(rom);
+		Matcher matcher = Pattern.compile(REGION_SECTION_PATTERN).matcher(rom);
 		if (matcher.find()) {
 			String regionSection = matcher.group();
 			regionSection = regionSection.substring(1, regionSection.length() - 1);
@@ -65,6 +71,22 @@ public class NoIntro extends AbstractNamingConvention {
 	}
 
 	/**
+	 * Extract the region section.
+	 * 
+	 * @param rom
+	 * @return
+	 */
+	private String extractRegion(String rom) {
+		String result = rom;
+		Matcher matcher = Pattern.compile(REGION_SECTION_PATTERN).matcher(rom);
+		if (matcher.find()) {
+			String regionSection = matcher.group();
+			result = rom.replace(regionSection, "");
+		}
+		return result;
+	}
+
+	/**
 	 * @param args
 	 *            main args
 	 */
@@ -74,5 +96,7 @@ public class NoIntro extends AbstractNamingConvention {
 		for (String string : s) {
 			System.out.println(string);
 		}
+
+		System.out.println(n.extractRegion("Princess Tomato in Salad Kingdom (USA, World)(Unl)"));
 	}
 }
