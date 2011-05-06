@@ -59,6 +59,7 @@ public class PanelLogger extends JPanel {
 	private JTextArea getJTextArea() {
 		if (jTextArea == null) {
 			jTextArea = new JTextArea();
+			jTextArea.setLineWrap(true);
 		}
 		return jTextArea;
 	}
@@ -87,8 +88,7 @@ public class PanelLogger extends JPanel {
 
 	public void append(String s, LoggerLevel level) {
 		if (level.getIndex() >= level.getIndex()) {
-			getJTextArea().setText(
-					getJTextArea().getText().concat("\n" + s + "\n"));
+			getJTextArea().setText(getJTextArea().getText().concat("\n" + s + "\n"));
 		}
 	}
 
