@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,14 +35,28 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	private DbMakerOption option;
 	private MenuType database;
 
-	public class Delta {
+	public class Delta implements Comparable<Delta> {
 		public String name;
 		public String replacementName;
+
+		/* (non-Javadoc)
+		 * @see java.lang.Comparable#compareTo(java.lang.Object)
+		 */
+		@Override
+		public int compareTo(Delta o) {
+			return this.name.compareTo(o.name);
+		}
+
 	}
 
 	public class DeltaResult {
-		public List<Delta> deltas;
-		public List<String> unknowns;
+		// Rom replaced
+		public List<Delta> deltas = new ArrayList<DeltaGeneratorWorker.Delta>();
+		// Matching region roms not use
+		public List<String> unknowns = new ArrayList<String>();
+		// No matching region keep in database
+		public List<String> originalKept = new ArrayList<String>();
+
 	}
 
 	public DeltaGeneratorWorker(String system, DbMakerOption option, MenuType mainDownloadedDatabase) {
@@ -53,28 +68,54 @@ public class DeltaGeneratorWorker extends CommonWorker {
 
 	@Override
 	protected void executeInternal() throws Exception {
+		// Original rom kept which not belongs to preferred region
+		List<String> originalKept = null;
+
 		// Delete existing region and country delta files
-		FileUtilities.deleteAllFiles(DatabaseUtilities.getGeneratedDeltaDir(system), "delta");
+		FileUtilities.deleteAllFiles(DatabaseUtilities.getGeneratedDeltaDir(system));
 		// Load main database
 		Map<String, GameType> games = DatabaseUtilities.getAsMap(database);
 		if (option.useRegionPreference) {
 			if (option.region != DbMakerRegionEnum.NONE) {
 				// Find region matching roms
-				DeltaResult regionResult = computeDelta(option.country, games);
+				DeltaResult regionResult = computeDelta(option.region, games);
 
 				// Save delta region file
 				writeDeltaFile(regionResult.deltas, option.region.toString());
 				writeUnknwonRegionFile(regionResult.unknowns, option.region.toString());
 
+				// OriginalKept
+				originalKept = regionResult.originalKept;
+
 			}
 			setProgress(50);
 			if (option.country != DbMakerRegionEnum.NONE) {
 				// Find country roms
-				DeltaResult countryResult = computeDelta(option.region, games);
+				DeltaResult countryResult = computeDelta(option.country, games);
 
 				// Save delta country file
 				writeDeltaFile(countryResult.deltas, option.country.toString());
 				writeUnknwonRegionFile(countryResult.unknowns, option.country.toString());
+
+				// Original kept
+				if (originalKept == null) {
+					originalKept = countryResult.originalKept;
+				} else {
+					// We kept only those not file neither in region nor country
+					Iterator<String> it = originalKept.iterator();
+					while (it.hasNext()) {
+						if (!countryResult.originalKept.contains(it.next())) {
+							it.remove();
+						}
+					}
+				}
+			}
+			if (originalKept != null) {
+				CommonLogger.instance.info(originalKept.size()
+						+ " rom remaning in the database wich are not from preferred region");
+				// Write original kept file
+				writeOriginalKeptRegionFile(originalKept, option.country.toString());
+
 			}
 		}
 	}
@@ -84,8 +125,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		DatabaseDetail detail = MainController.instance.getDbDetail();
 		// Result
 		DeltaResult result = new DeltaResult();
-		result.deltas = new ArrayList<Delta>();
-		result.unknowns = new ArrayList<String>();
+		result.originalKept.addAll(games.keySet());
 		// Stat
 		int nbReplacement = 0;
 
@@ -110,6 +150,9 @@ public class DeltaGeneratorWorker extends CommonWorker {
 				if (!games.containsKey(rom)) {
 					// The game is not in db
 					matchingRomMap.put(rom, romMap.get(rom));
+				} else {
+					// this original rom belongs to preferred region
+					result.originalKept.remove(rom);
 				}
 			}
 		}
@@ -117,6 +160,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// We browse all matching roms to find a good candidate for
 		// replacement.
 		for (String rom : matchingRomMap.keySet()) {
+			boolean found = false;
 			for (String candidate : candidtateRomMap.keySet()) {
 
 				// Is there a correct candidate
@@ -127,10 +171,17 @@ public class DeltaGeneratorWorker extends CommonWorker {
 					result.deltas.add(delta);
 					candidtateRomMap.remove(candidate);
 					nbReplacement++;
+					found = true;
+					result.originalKept.remove(candidate);
 					break;
 				}
 			}
+			// No candidate found
+			if (!found) {
+				result.unknowns.add(rom);
+			}
 		}
+
 		CommonLogger.instance.info(matchingRomMap.size() + " rom found for type " + type.name());
 		CommonLogger.instance.info(nbReplacement + " rom replaced for type " + type.name() + "\n");
 		return result;
@@ -142,7 +193,10 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	 * @param datas
 	 * @param type
 	 */
-	private void writeDeltaFile(Collection<Delta> deltas, String region) throws IOException {
+	private void writeDeltaFile(List<Delta> deltas, String region) throws IOException {
+		Collections.sort(deltas);
+		File file = new File(DatabaseUtilities.getGeneratedDeltaDir(system));
+		file.mkdirs();
 		FileWriter writer = new FileWriter(DatabaseUtilities.getGeneratedDeltaPath(system, region));
 		for (Delta delta : deltas) {
 			writer.write(delta.name + "->" + delta.replacementName + "\n");
@@ -156,10 +210,31 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	 * @param datas
 	 * @param type
 	 */
-	private void writeUnknwonRegionFile(Collection<String> unknowns, String region) throws IOException {
-		String unknwonFilePath = DatabaseUtilities.getDeltaDir(system) + File.separator + region + ".unknown";
-		FileWriter writer = new FileWriter(unknwonFilePath, true);
+	private void writeUnknwonRegionFile(List<String> unknowns, String region) throws IOException {
+		Collections.sort(unknowns);
+		String unknwonFilePath = DatabaseUtilities.getGeneratedDeltaDir(system);
+		File file = new File(unknwonFilePath);
+		file.mkdirs();
+		FileWriter writer = new FileWriter(unknwonFilePath + File.separator + region + ".unknown");
 		for (String s : unknowns) {
+			writer.write(s + "\n");
+		}
+		writer.close();
+	}
+
+	/**
+	 * Write all rom kept from the original database which are not in region.
+	 * 
+	 * @param datas
+	 * @param type
+	 */
+	private void writeOriginalKeptRegionFile(List<String> originals, String region) throws IOException {
+		Collections.sort(originals);
+		String unknwonFilePath = DatabaseUtilities.getGeneratedDeltaDir(system);
+		File file = new File(unknwonFilePath);
+		file.mkdirs();
+		FileWriter writer = new FileWriter(unknwonFilePath + File.separator + region + ".originalKept");
+		for (String s : originals) {
 			writer.write(s + "\n");
 		}
 		writer.close();

@@ -31,8 +31,7 @@ public class FileUtilities {
 		}
 	}
 
-	public static void moveFile(String directorySource, String directoryDest,
-			String media, String game) {
+	public static void moveFile(String directorySource, String directoryDest, String media, String game) {
 		File file = new File(directorySource + File.separator + media);
 		file.renameTo(new File(directoryDest + File.separator + game));
 	}
@@ -45,15 +44,22 @@ public class FileUtilities {
 	public static void deleteAllFiles(String directorySource, String extension) {
 		File file = new File(directorySource);
 		if (file.exists() && file.isDirectory()) {
-			for (File child : file
-					.listFiles(new FileFilterExtension(extension))) {
+			for (File child : file.listFiles(new FileFilterExtension(extension))) {
 				child.delete();
 			}
 		}
 	}
 
-	public static void copyFile(String directory, String media, String game)
-			throws FileNotFoundException, IOException {
+	public static void deleteAllFiles(String directorySource) {
+		File file = new File(directorySource);
+		if (file.exists() && file.isDirectory()) {
+			for (File child : file.listFiles()) {
+				child.delete();
+			}
+		}
+	}
+
+	public static void copyFile(String directory, String media, String game) throws FileNotFoundException, IOException {
 
 		FileInputStream fis = new FileInputStream(directory + "/" + media);
 		FileOutputStream fos = new FileOutputStream(directory + "/" + game);

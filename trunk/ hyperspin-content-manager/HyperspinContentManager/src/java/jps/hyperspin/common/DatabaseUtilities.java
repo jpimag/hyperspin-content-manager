@@ -28,9 +28,10 @@ public class DatabaseUtilities {
 	 */
 	public static MenuType loadDatabase(String databaseFullPath) throws HCMDatabaseException, FileNotFoundException {
 		File database = new File(databaseFullPath);
-		CommonLogger.instance.info("Database to be parsed : " + databaseFullPath);
+		CommonLogger.instance.info("Database parsed : " + databaseFullPath);
 		FileReader reader = new FileReader(database);
 		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
+		CommonLogger.instance.info("Total number of roms : " + menu.getGame().size());
 		return menu;
 	}
 
@@ -122,7 +123,7 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getGeneratedDeltaPath(String system, String type) {
-		String path = getGeneratedDeltaDir(system) + File.separator + "generated_" + type + ".delta";
+		String path = getGeneratedDeltaDir(system) + File.separator + type + ".delta";
 		return path;
 	}
 
