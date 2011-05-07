@@ -137,13 +137,13 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// Candidate to replace
 		// ---------------------
 		// Candidate are all roms not belonging to region in database.
-		Map<String, String> candidtateRomMap = new HashMap<String, String>(romMap);
+		Map<String, GameType> candidtateRomMap = new HashMap<String, GameType>(games);
 		// Matching type roms
 		// -------------------
 		// Matching roms are all roms belonging region not in database
 		Map<String, String> matchingRomMap = new HashMap<String, String>();
 
-		// Browse all roms to deterlinate "candidate" and "matching"
+		// Browse all roms to determinate "candidate" and "matching"
 		for (String rom : romMap.keySet()) {
 			if (convention.isBelongingToType(rom, type)) {
 				candidtateRomMap.remove(rom);
@@ -166,7 +166,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 				// Is there a correct candidate
 				if (convention.isCandidate(rom, candidate, type)) {
 					Delta delta = new Delta();
-					delta.name = romMap.get(candidate);
+					delta.name = candidate;
 					delta.replacementName = romMap.get(rom);
 					result.deltas.add(delta);
 					candidtateRomMap.remove(candidate);
