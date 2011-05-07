@@ -33,8 +33,8 @@ public class NoIntro extends AbstractNamingConvention {
 	 */
 	@Override
 	public boolean isCandidate(String rom, String canditate, DbMakerRegionEnum type) {
-		String candidateWithoutRegion = extractRegion(canditate);
-		String romWithoutRegion = extractRegion(rom);
+		String candidateWithoutRegion = extractRegion(canditate).replaceAll(" ", "");
+		String romWithoutRegion = extractRegion(rom.replaceAll(" ", ""));
 		if (candidateWithoutRegion.equals(romWithoutRegion)) {
 			return true;
 		}
