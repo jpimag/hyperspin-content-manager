@@ -9,9 +9,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.module.dbmaker.controller.DbMakerController;
@@ -26,10 +24,6 @@ public class DbMakerOptionPanel extends JPanel {
 	private JCheckBox useRegionPreference = null;
 	private JLabel useRegionPreferenceLael = null;
 	private RegionPreferencePanel regionPreferencePanel = null;
-	private JCheckBox useDeltaFiles = null;
-	private JLabel useDeltaFilesLabel = null;
-	private JScrollPane jScrollPane = null;
-	private JList deltaFilesList = null;
 	private JButton processButton = null;
 
 	/**
@@ -59,15 +53,6 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints2.weighty = 1.0;
 		gridBagConstraints2.anchor = GridBagConstraints.WEST;
 		gridBagConstraints2.gridx = 1;
-		GridBagConstraints gridBagConstraints14 = new GridBagConstraints();
-		gridBagConstraints14.gridx = 1;
-		gridBagConstraints14.anchor = GridBagConstraints.WEST;
-		gridBagConstraints14.gridy = 4;
-		useDeltaFilesLabel = new JLabel();
-		useDeltaFilesLabel.setText(Message.getMessage("dbmaker.options.deltafiles.label"));
-		GridBagConstraints gridBagConstraints13 = new GridBagConstraints();
-		gridBagConstraints13.gridx = 0;
-		gridBagConstraints13.gridy = 4;
 		GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
 		gridBagConstraints12.gridx = 1;
 		gridBagConstraints12.gridwidth = 8;
@@ -112,9 +97,6 @@ public class DbMakerOptionPanel extends JPanel {
 		this.add(getUseRegionPreference(), gridBagConstraints10);
 		this.add(useRegionPreferenceLael, gridBagConstraints11);
 		this.add(getRegionPreferencePanel(), gridBagConstraints12);
-		this.add(getUseDeltaFiles(), gridBagConstraints13);
-		this.add(useDeltaFilesLabel, gridBagConstraints14);
-		this.add(getJScrollPane(), gridBagConstraints2);
 		this.add(getProcessButton(), gridBagConstraints3);
 	}
 
@@ -178,58 +160,6 @@ public class DbMakerOptionPanel extends JPanel {
 			regionPreferencePanel.setBackground(Color.white);
 		}
 		return regionPreferencePanel;
-	}
-
-	/**
-	 * This method initializes useDeltaFiles
-	 * 
-	 * @return javax.swing.JCheckBox
-	 */
-	public JCheckBox getUseDeltaFiles() {
-		if (useDeltaFiles == null) {
-			useDeltaFiles = new JCheckBox();
-			useDeltaFiles.setBackground(Color.white);
-			useDeltaFiles.addChangeListener(new javax.swing.event.ChangeListener() {
-				public void stateChanged(javax.swing.event.ChangeEvent e) {
-					System.out.println("stateChanged()"); // TODO Auto-generated
-															// Event stub
-															// stateChanged()
-					DbMakerController.instance.toggleDeltaFile(useDeltaFiles.isSelected());
-
-				}
-			});
-		}
-		return useDeltaFiles;
-	}
-
-	/**
-	 * This method initializes jScrollPane
-	 * 
-	 * @return javax.swing.JScrollPane
-	 */
-	private JScrollPane getJScrollPane() {
-		if (jScrollPane == null) {
-			jScrollPane = new JScrollPane();
-			jScrollPane.setPreferredSize(new Dimension(200, 100));
-			jScrollPane.setSize(jScrollPane.getPreferredSize());
-			jScrollPane.setMaximumSize(jScrollPane.getPreferredSize());
-			jScrollPane.setMinimumSize(jScrollPane.getPreferredSize());
-			jScrollPane.setViewportView(getDeltaFilesList());
-		}
-		return jScrollPane;
-	}
-
-	/**
-	 * This method initializes deltaFilesList
-	 * 
-	 * @return javax.swing.JList
-	 */
-	public JList getDeltaFilesList() {
-		if (deltaFilesList == null) {
-			deltaFilesList = new JList();
-			deltaFilesList.setEnabled(false);
-		}
-		return deltaFilesList;
 	}
 
 	/**

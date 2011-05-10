@@ -31,15 +31,6 @@ public class DbMakerController {
 		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().setEnabled(selected);
 	}
 
-	/**
-	 * Called when delteFile combobox is toggled.
-	 * 
-	 * @param selected
-	 */
-	public void toggleDeltaFile(boolean selected) {
-		getOptionPanel().getDeltaFilesList().setEnabled(selected);
-	}
-
 	public void process() {
 		String system = MainClass.mainFrame.getSystemSelected();
 
@@ -108,7 +99,6 @@ public class DbMakerController {
 		DbMakerOption option = new DbMakerOption();
 		option.noClone = getOptionPanel().getNoClones().isSelected();
 		option.removeReplacedRoms = getOptionPanel().getRemoveReplacedRoms().isSelected();
-		option.useDeltaFiles = getOptionPanel().getUseDeltaFiles().isSelected();
 		option.useRegionPreference = getOptionPanel().getUseRegionPreference().isSelected();
 		if (option.useRegionPreference) {
 			option.country = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredCountry()
@@ -133,7 +123,6 @@ public class DbMakerController {
 	private void modelToPanel(DbMakerOption option) {
 		getOptionPanel().getNoClones().setSelected(option.noClone);
 		getOptionPanel().getRemoveReplacedRoms().setSelected(option.removeReplacedRoms);
-		getOptionPanel().getUseDeltaFiles().setSelected(option.useDeltaFiles);
 		getOptionPanel().getUseRegionPreference().setSelected(option.useRegionPreference);
 		if (option.useRegionPreference) {
 			getOptionPanel().getRegionPreferencePanel().getPreferredRegion().setSelectedItem(option.region);

@@ -104,26 +104,25 @@ public class DatabaseUtilities {
 	}
 
 	/**
-	 * Get the directory of generated delta files.
 	 * 
 	 * @param system
 	 * 
 	 * @return
 	 */
-	public static String getGeneratedDeltaDir(String system) {
-		String path = getDeltaDir(system) + File.separator + "generated";
+	public static String getLogsDeltaPath(String system, String type) {
+		String path = getLogsDir(system) + File.separator + type + ".delta";
 		return path;
 	}
 
 	/**
-	 * Get the main directory path of the reference directory of a system.
 	 * 
 	 * @param system
 	 * 
 	 * @return
 	 */
-	public static String getGeneratedDeltaPath(String system, String type) {
-		String path = getGeneratedDeltaDir(system) + File.separator + type + ".delta";
+	public static String getTraductionPath(String system, String type) {
+		String path = getDownloadedDatabaseDir(system) + File.separator + "traduction" + File.separator + type
+				+ ".traduction";
 		return path;
 	}
 
@@ -134,8 +133,8 @@ public class DatabaseUtilities {
 	 * 
 	 * @return
 	 */
-	public static String getDeltaDir(String system) {
-		String path = getDownloadedDatabaseDir(system) + File.separator + "delta";
+	public static String getLogsDir(String system) {
+		String path = getDownloadedDatabaseDir(system) + File.separator + "logs";
 		return path;
 	}
 
