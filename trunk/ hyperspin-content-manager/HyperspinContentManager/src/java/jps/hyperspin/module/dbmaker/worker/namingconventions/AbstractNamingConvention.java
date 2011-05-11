@@ -26,4 +26,13 @@ public abstract class AbstractNamingConvention {
 	 */
 	public abstract boolean isCandidate(String rom, String canditate, DbMakerRegionEnum type);
 
+	protected String clean(String s) {
+		String[] removeCharsTab = new String[] { " ", "'", "-", "_", "\\." };
+		String result = s;
+		for (String string : removeCharsTab) {
+			result = result.replaceAll(string, "");
+		}
+		return result.trim().toLowerCase();
+	}
+
 }

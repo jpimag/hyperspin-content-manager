@@ -23,6 +23,16 @@ public class RedumpOrg extends AbstractNamingConvention {
 	private final static String SECTION_PATTERN = "\\((\\w|\\s|,)*\\)";
 
 	/**
+	 * 
+	 */
+	private final static String VERSION_SECTION_PATTERN = "\\(v\\d\\.\\d\\)";
+
+	/**
+	 * 
+	 */
+	private final static String DISC_SECTION_PATTERN = "(\\s)*disc(\\s)*";
+
+	/**
 	 * List off languages use in redumpOrg convention.
 	 */
 	private static List<String> languages = new ArrayList<String>();
@@ -55,10 +65,10 @@ public class RedumpOrg extends AbstractNamingConvention {
 	 */
 	@Override
 	public boolean isCandidate(String rom, String canditate, DbMakerRegionEnum type) {
-		String candidateTrim = removeLanguage(removeRegion(canditate)).replaceAll(" ", "");
-		String romTrim = removeLanguage(removeRegion(rom)).replaceAll(" ", "");
+		String c = cleanSections(canditate);
+		String r = cleanSections(rom);
 
-		if (candidateTrim.equals(romTrim)) {
+		if (clean(c).equals(clean(r))) {
 			return true;
 		}
 		return false;
@@ -94,6 +104,37 @@ public class RedumpOrg extends AbstractNamingConvention {
 	}
 
 	/**
+	 * 
+	 * @param rom
+	 * @return
+	 */
+	private String cleanSections(String rom) {
+		String result = rom;
+		result = removeRegion(result);
+		result = removeLanguage(result);
+		result = removeVersion(result);
+		result = removeDisc(result);
+		return result;
+	}
+
+	/**
+	 * Extract the disc section because the word 'disc' is not always used
+	 * accordig regions.
+	 * 
+	 * @param rom
+	 * @return
+	 */
+	private String removeDisc(String rom) {
+		String result = rom;
+		Matcher matcher = Pattern.compile(DISC_SECTION_PATTERN, Pattern.CASE_INSENSITIVE).matcher(rom);
+		while (matcher.find()) {
+			String section = matcher.group();
+			result = result.replace(section, "");
+		}
+		return result;
+	}
+
+	/**
 	 * Extract the region section.
 	 * 
 	 * @param rom
@@ -105,6 +146,22 @@ public class RedumpOrg extends AbstractNamingConvention {
 		if (matcher.find()) {
 			String regionSection = matcher.group();
 			result = rom.replace(regionSection, "");
+		}
+		return result;
+	}
+
+	/**
+	 * Extract the version section.
+	 * 
+	 * @param rom
+	 * @return
+	 */
+	private String removeVersion(String rom) {
+		String result = rom;
+		Matcher matcher = Pattern.compile(VERSION_SECTION_PATTERN).matcher(rom);
+		if (matcher.find()) {
+			String section = matcher.group();
+			result = rom.replace(section, "");
 		}
 		return result;
 	}
@@ -157,5 +214,12 @@ public class RedumpOrg extends AbstractNamingConvention {
 				.replaceAll("\\s*\\(", "\\("));
 		System.out.println(n.removeRegion("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1)")
 				.replaceAll("\\s*\\(", "\\("));
+		System.out.println(n
+				.removeVersion("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1) (v1.0)")
+				.replaceAll("\\s*\\(", "\\("));
+
+		System.out.println(n.clean(n.cleanSections("Command & Conquer - Red Alert (USA) (Disc 1) (Allies)")));
+		System.out.println(n.clean(n.cleanSections("Command & Conquer - Red Alert (Europe) (Disc 1) (Allies Disc)")));
+
 	}
 }
