@@ -24,6 +24,7 @@ import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
+import jps.hyperspin.module.dbmaker.model.MenuTypeWrapper;
 import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
 
 /**
