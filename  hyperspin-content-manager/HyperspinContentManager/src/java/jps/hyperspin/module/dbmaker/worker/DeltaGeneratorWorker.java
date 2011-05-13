@@ -23,6 +23,7 @@ import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
+import jps.hyperspin.module.dbmaker.model.Delta;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConvention;
 
 /**
@@ -36,29 +37,9 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	private DbMakerOption option;
 	private MenuType database;
 
-	public static class Delta implements Comparable<Delta> {
-		public String name;
-		public String replacementName;
-
-		public Delta(String name, String replacementName) {
-			super();
-			this.name = name;
-			this.replacementName = replacementName;
-		}
-
-		/* (non-Javadoc)
-		 * @see java.lang.Comparable#compareTo(java.lang.Object)
-		 */
-		@Override
-		public int compareTo(Delta o) {
-			return this.name.compareTo(o.name);
-		}
-
-	}
-
 	public class DeltaResult {
 		// Rom replaced
-		public List<Delta> deltas = new ArrayList<DeltaGeneratorWorker.Delta>();
+		public List<Delta> deltas = new ArrayList<Delta>();
 		// Matching region roms not use
 		public List<String> unknowns = new ArrayList<String>();
 		// No matching region keep in database
@@ -175,7 +156,8 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// Custom traductions file
 		Map<String, Delta> traductionsMap = null;
 		try {
-			traductionsMap = DeltaFileUtilities.loadDeltaFileIndexedByReplacementName(DatabaseUtilities.getTraductionPath(system, type.name()));
+			traductionsMap = DeltaFileUtilities.loadDeltaFileIndexedByReplacementName(DatabaseUtilities
+					.getTraductionPath(system, type.name()));
 		} catch (IOException e) {
 			CommonLogger.instance.info("No traduction file for the region : " + type.name());
 		}

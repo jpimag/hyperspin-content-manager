@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.DeltaFileUtilities;
@@ -18,8 +19,8 @@ import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
+import jps.hyperspin.module.dbmaker.model.Delta;
 import jps.hyperspin.module.dbmaker.model.MenuTypeWrapper;
-import jps.hyperspin.module.dbmaker.worker.DeltaGeneratorWorker.Delta;
 
 /**
  * 
@@ -33,6 +34,7 @@ public class DbMakerWorker extends CommonWorker {
 
 	private Map<String, Delta> countryDelta;
 	private Map<String, Delta> regionDelta;
+	private Set<Delta> replacedGames;
 
 	public DbMakerWorker(String system, DbMakerOption option) {
 		super();
@@ -95,7 +97,7 @@ public class DbMakerWorker extends CommonWorker {
 		// Write files
 		// TODO
 
-		// Move replace roms
+		// Move replaced roms
 		// TODO
 
 	}
@@ -136,6 +138,7 @@ public class DbMakerWorker extends CommonWorker {
 		game.setName(delta.replacementName);
 		game.setCrc("");
 		game.setDescription(game.getName());
+		replacedGames.add(delta);
 	}
 
 }
