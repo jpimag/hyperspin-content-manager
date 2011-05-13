@@ -34,8 +34,7 @@ import jps.hyperspin.module.dbmaker.presentation.IDatabaseOption;
  */
 public class DatabaseProcessor extends AbstractProcessor {
 
-	public DatabaseProcessor(DatabaseDetail databaseDetail,
-			IDatabaseOption databaseOption) {
+	public DatabaseProcessor(DatabaseDetail databaseDetail, IDatabaseOption databaseOption) {
 		super(databaseDetail, databaseOption);
 	}
 
@@ -56,61 +55,50 @@ public class DatabaseProcessor extends AbstractProcessor {
 	 * @throws HCMDatabaseException
 	 *             exception
 	 */
-	public final void processDatabase() throws HCMDatabaseException,
-			IOException {
+	public final void processDatabase() throws HCMDatabaseException, IOException {
 		CommonLogger logger = CommonLogger.instance;
 		// Pre process option
 		List<PreProcessingOption> preOptions = new ArrayList<PreProcessingOption>();
 		preOptions.add(PreProcessingOption.NONE);
 		preOptions.add(PreProcessingOption.FORCE_EUROPE_IF_EXIST);
-		PreProcessingOption preOption = (PreProcessingOption) JOptionPane
-				.showInputDialog(null, "What database pre process choose ? "
-						+ preOptions.size(), "Option",
-						JOptionPane.WARNING_MESSAGE, null,
-						preOptions.toArray(), preOptions.get(0));
+		PreProcessingOption preOption = (PreProcessingOption) JOptionPane.showInputDialog(null,
+				"What database pre process choose ? " + preOptions.size(), "Option", JOptionPane.WARNING_MESSAGE, null,
+				preOptions.toArray(), preOptions.get(0));
 
 		// option
 		List<ProcessingOption> processingOptions = new ArrayList<ProcessingOption>();
 		processingOptions.add(ProcessingOption.ALL);
 		processingOptions.add(ProcessingOption.REMOVE_DUPLICATE_REGION);
 		processingOptions.add(ProcessingOption.REMOVE_CLONES);
-		ProcessingOption processingOption = (ProcessingOption) JOptionPane
-				.showInputDialog(null,
-						"What policy of database generation do you choose ? "
-								+ processingOptions.size(), "Option",
-						JOptionPane.WARNING_MESSAGE, null,
-						processingOptions.toArray(), processingOptions.get(0));
+		ProcessingOption processingOption = (ProcessingOption) JOptionPane.showInputDialog(null,
+				"What policy of database generation do you choose ? " + processingOptions.size(), "Option",
+				JOptionPane.WARNING_MESSAGE, null, processingOptions.toArray(), processingOptions.get(0));
 
 		// Step 4 : Parse roms
-		Map<String, String> romList = listRecursiveFilesWithFilter(new File(
-				getIni().getRomPath()), false, getIni().getRomExtension());
+		Map<String, String> romList = listRecursiveFilesWithFilter(new File(getIni().getRomPath()), false, getIni()
+				.getRomExtension());
 		logger.info("Roms list performed. (" + romList.size() + " files)");
 
 		// Step 5 : Load all databases
 		List<MenuTypeWrapper> menus = new ArrayList<MenuTypeWrapper>();
-		MenuTypeWrapper genreMenu = new MenuTypeWrapper(new MenuType(),
-				"Genre.xml");
+		MenuTypeWrapper genreMenu = new MenuTypeWrapper(new MenuType(), "Genre.xml");
 		menus.add(genreMenu);
 
 		// Parse database
 		Map<String, String> databaseGame = null;
-		File dir = new File(
-				DatabaseUtilities.getDownloadedDatabaseDir(MainClass.mainFrame
-						.getSystemSelected()));
+		File dir = new File(DatabaseUtilities.getDownloadedDatabaseDir(MainClass.mainFrame.getSystemSelected()));
 		File[] databases = dir.listFiles(new FileFilterExtension("xml"));
 		for (File file : databases) {
 
 			logger.info("Database to be parsed : " + file.getName());
 			FileReader reader = new FileReader(file);
-			MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(
-					MenuType.class, reader);
+			MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
 			normalizeMenu(menu);
 			MenuTypeWrapper wrapper = new MenuTypeWrapper(menu, file.getName());
 			menus.add(wrapper);
 			logger.info(menu.getGame().size() + " games");
 
-			if (!file.getName().startsWith(
-					MainClass.mainFrame.getSystemSelected())) {
+			if (!file.getName().startsWith(MainClass.mainFrame.getSystemSelected())) {
 				// Add the category to genre
 				GameType category = new GameType();
 				category.setName(FileUtilities.getNameWithoutExtension(file));
@@ -136,10 +124,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 						// Game to test
 						String initialRomNormalized = normalize(game.getName());
-						String initialRomShortName = initialRomNormalized
-								.split("\\(")[0];
-						String revision = initialRomNormalized
-								.substring(initialRomShortName.length());
+						String initialRomShortName = initialRomNormalized.split("\\(")[0];
+						String revision = initialRomNormalized.substring(initialRomShortName.length());
 
 						// Filter revision
 						// some games have some name under dirrerent revision
@@ -148,8 +134,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 						String[] revisionArray = revision.split("\\)");
 						for (String string : revisionArray) {
 							String s = normalize(string);
-							if (!s.contains("usa") && !s.contains("japan")
-									&& !s.contains("unl") && !s.contains("rev")
+							if (!s.contains("usa") && !s.contains("japan") && !s.contains("unl") && !s.contains("rev")
 									&& !s.contains("en")) {
 								ok = false;
 							}
@@ -161,18 +146,14 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 							for (String rom : romList.keySet()) {
 								String romNormalized = normalize(rom);
-								String romShortName = romNormalized
-										.split("\\(")[0];
-								String romRevision = romNormalized
-										.substring(romShortName.length());
-								if (romShortName.equals(initialRomShortName)
-										&& romRevision.contains("europe")) {
+								String romShortName = romNormalized.split("\\(")[0];
+								String romRevision = romNormalized.substring(romShortName.length());
+								if (romShortName.equals(initialRomShortName) && romRevision.contains("europe")) {
 									// Check that game does not exist already in
 									// db
 									if (databaseGame.get(rom) == null) {
 										databaseGame.put(romNormalized, rom);
-										databaseGame
-												.remove(initialRomNormalized);
+										databaseGame.remove(initialRomNormalized);
 										game.setName(rom);
 										game.setDescription(rom);
 										nbForcedEurope++;
@@ -187,18 +168,14 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 							for (String rom : romList.keySet()) {
 								String romNormalized = normalize(rom);
-								String romShortName = romNormalized
-										.split("\\(")[0];
-								String romRevision = romNormalized
-										.substring(romShortName.length());
-								if (romShortName.equals(initialRomShortName)
-										&& romRevision.contains("france")) {
+								String romShortName = romNormalized.split("\\(")[0];
+								String romRevision = romNormalized.substring(romShortName.length());
+								if (romShortName.equals(initialRomShortName) && romRevision.contains("france")) {
 									// Check that game does not exist already in
 									// db
 									if (databaseGame.get(rom) == null) {
 										databaseGame.put(romNormalized, rom);
-										databaseGame
-												.remove(initialRomNormalized);
+										databaseGame.remove(initialRomNormalized);
 										game.setName(rom);
 										game.setDescription(rom);
 										nbForcedFrance++;
@@ -220,8 +197,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 		MenuTypeWrapper mainMenu = null;
 		for (MenuTypeWrapper menu : menus) {
 
-			if (menu.getFileName().startsWith(
-					MainClass.mainFrame.getSystemSelected())) {
+			if (menu.getFileName().startsWith(MainClass.mainFrame.getSystemSelected())) {
 				mainMenu = menu;
 				// Games map
 				totalGames = menu.getMenu().getGame().size();
@@ -242,22 +218,18 @@ public class DatabaseProcessor extends AbstractProcessor {
 				if (databaseOption.isDeepMatchSelected()) {
 
 					// Not found games copy
-					List<GameType> notFound = new ArrayList<GameType>(
-							menu.getNotFoundGame());
+					List<GameType> notFound = new ArrayList<GameType>(menu.getNotFoundGame());
 
 					int i = 0;
 					out: for (GameType game : notFound) {
 						i++;
-						List<DistanceString> bests = bestMatch(game.getName(),
-								romList);
+						List<DistanceString> bests = bestMatch(game.getName(), romList);
 
 						// Dialog
 						String message = "Matching roms have been found. \nOriginal normalized name : "
-								+ game.getName()
-								+ "\nDo you want to accept and rename this rom ?";
-						ChoiceDialog d = new ChoiceDialog(null,
-								"Confirm dialog " + i + "/" + notFound.size(),
-								message, bests.toArray());
+								+ game.getName() + "\nDo you want to accept and rename this rom ?";
+						ChoiceDialog d = new ChoiceDialog(null, "Confirm dialog " + i + "/" + notFound.size(), message,
+								bests.toArray());
 						Object choix = d.getSelection();
 
 						if (d.isCancelled()) {
@@ -268,9 +240,8 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 							// Write log
 							String rom = romList.get(ds.string);
-							FileUtilities.moveFile(getIni().getRomPath(),
-									getIni().getRomPath(), rom, game.getName()
-											+ "." + getIni().getRomExtension());
+							FileUtilities.moveFile(getIni().getRomPath(), getIni().getRomPath(), rom, game.getName()
+									+ "." + getIni().getRomExtension());
 							menu.getNotFoundGame().remove(game);
 							romList.remove(ds.string);
 
@@ -296,8 +267,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		}
 		for (MenuTypeWrapper menu : menus) {
-			if (!menu.getFileName().startsWith(
-					MainClass.mainFrame.getSystemSelected())
+			if (!menu.getFileName().startsWith(MainClass.mainFrame.getSystemSelected())
 					&& !menu.getFileName().equals("Genre.xml")) {
 				// Category file
 				List<GameType> notfoundGames = new ArrayList<GameType>();
@@ -315,9 +285,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 		// Write database file
 		for (MenuTypeWrapper menu : menus) {
 			if (menu.getMenu().getGame().size() > 0) {
-				FileWriter writer = new FileWriter(
-						databaseDetail.userDatabaseDir + File.separator
-								+ menu.getFileName());
+				FileWriter writer = new FileWriter(databaseDetail.userDatabaseDir + File.separator + menu.getFileName());
 				XmlBinding.getInstance().java2xml(menu.getMenu(), writer);
 				writer.close();
 				logger.info("Database File writed : " + menu.getFileName());
@@ -326,8 +294,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 		// stats
 		for (MenuTypeWrapper menu : menus) {
-			if (menu.getFileName().startsWith(
-					MainClass.mainFrame.getSystemSelected())) {
+			if (menu.getFileName().startsWith(MainClass.mainFrame.getSystemSelected())) {
 				// Stats
 				logStats(menu, totalGames, true, logger);
 			}
@@ -343,8 +310,7 @@ public class DatabaseProcessor extends AbstractProcessor {
 
 	}
 
-	private final void reject(ProcessingOption option, MenuTypeWrapper menu,
-			Logger logger) {
+	private final void reject(ProcessingOption option, MenuTypeWrapper menu, Logger logger) {
 		List<GameType> rejected = new ArrayList<GameType>();
 
 		if (option == ProcessingOption.REMOVE_DUPLICATE_REGION) {
@@ -363,14 +329,12 @@ public class DatabaseProcessor extends AbstractProcessor {
 			}
 
 		}
-		menu.setRejectedGame(rejected);
 		for (GameType game : rejected) {
 			menu.getMenu().getGame().remove(game);
 		}
 	}
 
-	protected final void logStats(MenuTypeWrapper menu, int totalGames,
-			boolean detailed, final Logger logger) {
+	protected final void logStats(MenuTypeWrapper menu, int totalGames, boolean detailed, final Logger logger) {
 		int menuRomNotFound = 0;
 		logger.info("-------------------------------");
 		logger.info("Database : " + menu.getFileName());
@@ -385,12 +349,9 @@ public class DatabaseProcessor extends AbstractProcessor {
 		// Stats
 		int menuRomFound = menu.getMenu().getGame().size();
 		int menuRom = menuRomFound + menuRomNotFound;
-		logger.info("\nTotal of " + menuRomFound + "/" + menuRom + " found ("
-				+ menuRomNotFound + " roms missing)");
-		logger.info("\nTotal of " + menuRomFound + "/" + menuRom + " found ("
-				+ menuRomNotFound + " roms missing)");
-		logger.info("\nTotal of " + (totalGames - menuRom)
-				+ " rejected because of region/rev duplicate or clones.");
+		logger.info("\nTotal of " + menuRomFound + "/" + menuRom + " found (" + menuRomNotFound + " roms missing)");
+		logger.info("\nTotal of " + menuRomFound + "/" + menuRom + " found (" + menuRomNotFound + " roms missing)");
+		logger.info("\nTotal of " + (totalGames - menuRom) + " rejected because of region/rev duplicate or clones.");
 
 	}
 }

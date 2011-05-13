@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jps.hyperspin.module.dbmaker.worker.DeltaGeneratorWorker.Delta;
+import jps.hyperspin.module.dbmaker.model.Delta;
 
 public class DeltaFileUtilities {
 	/**

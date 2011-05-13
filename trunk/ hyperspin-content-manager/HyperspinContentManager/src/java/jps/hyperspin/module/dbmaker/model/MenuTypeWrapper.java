@@ -1,5 +1,9 @@
 package jps.hyperspin.module.dbmaker.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 public class MenuTypeWrapper {
@@ -7,6 +11,7 @@ public class MenuTypeWrapper {
 	private MenuType menu;
 
 	private String fileName;
+	private List<GameType> notFoundGame = new ArrayList<GameType>();
 
 	public MenuTypeWrapper(MenuType menu, String fileName) {
 		super();
@@ -26,6 +31,13 @@ public class MenuTypeWrapper {
 	 */
 	public MenuType getMenu() {
 		return menu;
+	}
+
+	/**
+	 * @return the notFoundGame
+	 */
+	public List<GameType> getNotFoundGame() {
+		return notFoundGame;
 	}
 
 }
