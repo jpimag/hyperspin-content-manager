@@ -32,7 +32,24 @@ public class DeltaFileUtilities {
 	 * @param datas
 	 * @param type
 	 */
-	public static Map<String, Delta> loadDeltaFile(String path) throws IOException {
+	public static Map<String, Delta> loadDeltaFileIndexedByReplacementName(String path) throws IOException {
+		return loadDeltaFile(path, 1);
+	}
+
+	/**
+	 * Load a delta file
+	 * 
+	 * @param datas
+	 * @param type
+	 */
+	public static Map<String, Delta> loadDeltaFileIndexedByOriginalName(String path) throws IOException {
+		return loadDeltaFile(path, 0);
+	}
+
+	private static Map<String, Delta> loadDeltaFile(String path, int index) throws IOException {
+		if (path == null) {
+			return null;
+		}
 		Map<String, Delta> deltas = new HashMap<String, Delta>();
 		InputStream ips = new FileInputStream(path);
 		InputStreamReader ipsr = new InputStreamReader(ips);
@@ -41,7 +58,7 @@ public class DeltaFileUtilities {
 		while ((ligne = br.readLine()) != null) {
 			String[] a = ligne.split("->");
 			if (a != null && a.length == 2) {
-				deltas.put(a[1], new Delta(a[0], a[1]));
+				deltas.put(a[index], new Delta(a[0], a[1]));
 			}
 		}
 		br.close();

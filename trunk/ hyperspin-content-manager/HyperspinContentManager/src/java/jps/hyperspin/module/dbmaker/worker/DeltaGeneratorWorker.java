@@ -90,10 +90,9 @@ public class DeltaGeneratorWorker extends CommonWorker {
 				DeltaResult regionResult = computeDelta(option.region, games);
 
 				// Save delta region file
-				writeDeltaFile(regionResult.deltas, option.region.toString());
-				writeUnknwonRegionFile(regionResult.unknowns, option.region.toString());
-				writeTraductionUnknwonRegionFile(new ArrayList<String>(regionResult.traductionNotFound),
-						option.region.toString());
+				writeDeltaFile(regionResult.deltas, option.region);
+				writeUnknwonRegionFile(regionResult.unknowns, option.region);
+				writeTraductionUnknwonRegionFile(new ArrayList<String>(regionResult.traductionNotFound), option.region);
 
 				// OriginalKept
 				originalKept = regionResult.originalKept;
@@ -105,10 +104,10 @@ public class DeltaGeneratorWorker extends CommonWorker {
 				DeltaResult countryResult = computeDelta(option.country, games);
 
 				// Save delta country file
-				writeDeltaFile(countryResult.deltas, option.country.toString());
-				writeUnknwonRegionFile(countryResult.unknowns, option.country.toString());
+				writeDeltaFile(countryResult.deltas, option.country);
+				writeUnknwonRegionFile(countryResult.unknowns, option.country);
 				writeTraductionUnknwonRegionFile(new ArrayList<String>(countryResult.traductionNotFound),
-						option.country.toString());
+						option.country);
 
 				// Original kept
 				if (originalKept == null) {
@@ -176,7 +175,7 @@ public class DeltaGeneratorWorker extends CommonWorker {
 		// Custom traductions file
 		Map<String, Delta> traductionsMap = null;
 		try {
-			traductionsMap = DeltaFileUtilities.loadDeltaFile(DatabaseUtilities.getTraductionPath(system, type.name()));
+			traductionsMap = DeltaFileUtilities.loadDeltaFileIndexedByReplacementName(DatabaseUtilities.getTraductionPath(system, type.name()));
 		} catch (IOException e) {
 			CommonLogger.instance.info("No traduction file for the region : " + type.name());
 		}
@@ -235,11 +234,11 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	 * @param datas
 	 * @param type
 	 */
-	private void writeDeltaFile(List<Delta> deltas, String region) throws IOException {
+	private void writeDeltaFile(List<Delta> deltas, DbMakerRegionEnum region) throws IOException {
 		Collections.sort(deltas);
 		File file = new File(DatabaseUtilities.getLogsDir(system));
 		file.mkdirs();
-		FileWriter writer = new FileWriter(DatabaseUtilities.getLogsDeltaPath(system, region));
+		FileWriter writer = new FileWriter(DatabaseUtilities.getDeltaPath(system, region));
 		DeltaFileUtilities.writeDeltaFile(deltas, writer);
 	}
 
@@ -249,8 +248,8 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	 * @param datas
 	 * @param type
 	 */
-	private void writeUnknwonRegionFile(List<String> unknowns, String region) throws IOException {
-		writeRegionFile(unknowns, region + ".unknwon");
+	private void writeUnknwonRegionFile(List<String> unknowns, DbMakerRegionEnum region) throws IOException {
+		writeRegionFile(unknowns, region.name() + ".unknwon");
 	}
 
 	/**
@@ -269,8 +268,8 @@ public class DeltaGeneratorWorker extends CommonWorker {
 	 * @param datas
 	 * @param type
 	 */
-	private void writeTraductionUnknwonRegionFile(List<String> unknowns, String region) throws IOException {
-		writeRegionFile(unknowns, region + ".traduction.notfound");
+	private void writeTraductionUnknwonRegionFile(List<String> unknowns, DbMakerRegionEnum region) throws IOException {
+		writeRegionFile(unknowns, region.name() + ".traduction.notfound");
 	}
 
 	/**
