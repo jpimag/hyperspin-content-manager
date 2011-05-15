@@ -31,6 +31,15 @@ public class FileUtilities {
 		}
 	}
 
+	public static String getNameWithoutExtension(String f) {
+		int index = f.lastIndexOf(".");
+		if (index == -1) {
+			return f;
+		} else {
+			return f.substring(0, index);
+		}
+	}
+
 	public static void moveFile(String directorySource, String directoryDest, String media, String game) {
 		File file = new File(directorySource + File.separator + media);
 		file.renameTo(new File(directoryDest + File.separator + game));

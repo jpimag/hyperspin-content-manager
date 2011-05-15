@@ -47,15 +47,15 @@ public class DbDownLoaderController {
 				@Override
 				public void done() {
 					// Update fields
-					detailPanel.getDownloadedVersionField().setText(getVersion(downloadedDatabase));
-					detailPanel.getHyperlistVersionField().setText(getVersion(hyperlistDatabase));
-					detailPanel.getUserVersionField().setText(getVersion(userDatabase));
+					detailPanel.getDownloadedVersionField().setText(getVersion(getProcessor().downloadedDatabase));
+					detailPanel.getHyperlistVersionField().setText(getVersion(getProcessor().hyperlistDatabase));
+					detailPanel.getUserVersionField().setText(getVersion(getProcessor().userDatabase));
 
 					// Enable update button
 					detailPanel.getDownloadButton().setEnabled(true);
 					String msg;
 					// Set Tip Message according to versions
-					VersionStatut statut = getVersionStatut();
+					VersionStatut statut = getProcessor().getVersionStatut();
 
 					switch (statut) {
 					case SYSTEM_NOT_AVAILABLE:

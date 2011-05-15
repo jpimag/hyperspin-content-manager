@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import jps.hyperspin.common.worker.CommonProcessor;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMBindingException;
@@ -19,7 +20,7 @@ import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
  * @author JPS
  * 
  */
-public abstract class AbstractDbDownloaderWorker extends CommonWorker {
+public abstract class AbstractDbDownloaderProcessor extends CommonProcessor {
 
 	protected static final String HYPERLIST_URL = "http://hyperlist.hyperspin-fe.com/";
 
@@ -33,8 +34,8 @@ public abstract class AbstractDbDownloaderWorker extends CommonWorker {
 	 * {@inheritDoc}
 	 * 
 	 */
-	public AbstractDbDownloaderWorker() {
-		super();
+	public AbstractDbDownloaderProcessor(CommonWorker worker, int untilProgress) {
+		super(worker, untilProgress);
 	}
 
 	/**
