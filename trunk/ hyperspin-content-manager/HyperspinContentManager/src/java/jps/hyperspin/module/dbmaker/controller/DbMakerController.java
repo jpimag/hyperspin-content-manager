@@ -8,6 +8,7 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.view.BasicProgressDialog;
 import jps.hyperspin.main.controller.CommonLogger;
+import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption.NamingConventions;
@@ -53,7 +54,8 @@ public class DbMakerController {
 		option.save();
 
 		// Process delta generator
-		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option, database);
+		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option, database,
+				MainController.instance.getDbDetail());
 		new BasicProgressDialog(worker);
 
 		// Make database
@@ -98,7 +100,7 @@ public class DbMakerController {
 	private DbMakerOption panelToModel() {
 		DbMakerOption option = new DbMakerOption();
 		option.noClone = getOptionPanel().getNoClones().isSelected();
-		option.removeReplacedRoms = getOptionPanel().getRemoveReplacedRoms().isSelected();
+		option.moveReplacedRoms = getOptionPanel().getRemoveReplacedRoms().isSelected();
 		option.useRegionPreference = getOptionPanel().getUseRegionPreference().isSelected();
 		if (option.useRegionPreference) {
 			option.country = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredCountry()
@@ -122,7 +124,7 @@ public class DbMakerController {
 	 */
 	private void modelToPanel(DbMakerOption option) {
 		getOptionPanel().getNoClones().setSelected(option.noClone);
-		getOptionPanel().getRemoveReplacedRoms().setSelected(option.removeReplacedRoms);
+		getOptionPanel().getRemoveReplacedRoms().setSelected(option.moveReplacedRoms);
 		getOptionPanel().getUseRegionPreference().setSelected(option.useRegionPreference);
 		if (option.useRegionPreference) {
 			getOptionPanel().getRegionPreferencePanel().getPreferredRegion().setSelectedItem(option.region);

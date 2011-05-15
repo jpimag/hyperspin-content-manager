@@ -40,7 +40,7 @@ public class DbMakerOption extends CommonOption {
 
 	public boolean noClone;
 
-	public boolean removeReplacedRoms;
+	public boolean moveReplacedRoms;
 
 	public boolean useRegionPreference;
 

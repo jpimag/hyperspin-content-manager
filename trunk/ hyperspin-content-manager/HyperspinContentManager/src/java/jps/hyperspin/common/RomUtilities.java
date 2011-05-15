@@ -6,6 +6,7 @@ import java.util.Map;
 
 import jps.hyperspin.common.file.FileFilterDirectory;
 import jps.hyperspin.common.file.FileFilterExtension;
+import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 
@@ -22,6 +23,35 @@ public class RomUtilities {
 	public static Map<String, String> listRoms(String system, DatabaseDetail detail) throws HCMDatabaseException {
 		File dir = new File(detail.systemIniProperties.getRomPath());
 		return listRomsRec(system, detail, dir);
+
+	}
+
+	/**
+	 * 
+	 * @param romFileName
+	 * @param system
+	 * @param detail
+	 * @throws HCMDatabaseException
+	 */
+	public static void moveRomToReplaceFolder(String romFileName, String system, DatabaseDetail detail)
+			throws HCMDatabaseException {
+		File destDir = new File(detail.systemIniProperties.getRomPath() + File.separator + "replaced");
+		destDir.mkdirs();
+
+		// Is it a simple file rom ?
+		File file = new File(detail.systemIniProperties.getRomPath(), romFileName);
+		if (file.exists() && file.isFile()) {
+			file.renameTo(new File(destDir, romFileName));
+		} else {
+			// Is the rom in a dedicated directory ?
+			file = new File(detail.systemIniProperties.getRomPath() + File.separator
+					+ FileUtilities.getNameWithoutExtension(romFileName));
+			if (file.exists() && file.isDirectory()) {
+				file.renameTo(new File(destDir, FileUtilities.getNameWithoutExtension(romFileName)));
+			} else {
+				throw new IllegalStateException("Error replacing a rom :" + romFileName);
+			}
+		}
 
 	}
 
