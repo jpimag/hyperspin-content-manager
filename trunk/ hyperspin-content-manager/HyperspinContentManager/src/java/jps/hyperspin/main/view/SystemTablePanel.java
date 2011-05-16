@@ -14,7 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.view.BasicProgressDialog;
 import jps.hyperspin.main.model.Systems;
-import jps.hyperspin.module.dbdownloader.worker.CheckDatabaseVersionWorker;
+import jps.hyperspin.module.dbdownloader.worker.CheckAllDatabaseVersionWorker;
 
 public class SystemTablePanel extends JPanel {
 
@@ -67,22 +67,17 @@ public class SystemTablePanel extends JPanel {
 	private JButton getCheckButton() {
 		if (checkButton == null) {
 			checkButton = new JButton();
-			checkButton.setText(Message
-					.getMessage("dbdownloader.system.check.label"));
+			checkButton.setText(Message.getMessage("dbdownloader.system.check.label"));
 			checkButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO
 																// Auto-generated
 																// Event stub
 																// actionPerformed()
-					for (String system : Systems.instance.list()) {
-						// worker
-						CheckDatabaseVersionWorker worker = new CheckDatabaseVersionWorker(
-								system);
+					// worker
+					CheckAllDatabaseVersionWorker worker = new CheckAllDatabaseVersionWorker();
+					new BasicProgressDialog(worker);
 
-						new BasicProgressDialog(worker);
-
-					}
 				}
 			});
 		}
@@ -112,15 +107,10 @@ public class SystemTablePanel extends JPanel {
 			jTable = new JTable(new SystemTableModel());
 			jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			jTable.setSize(new Dimension(400, 800));
-			jTable.setDefaultRenderer(String.class,
-					new SystemTableCellRenderer());
+			jTable.setDefaultRenderer(String.class, new SystemTableCellRenderer());
 
 		}
 		return jTable;
-	}
-
-	public void repaint() {
-
 	}
 
 	public String getSelection() {
