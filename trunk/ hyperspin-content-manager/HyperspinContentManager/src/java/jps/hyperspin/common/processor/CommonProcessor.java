@@ -1,4 +1,6 @@
-package jps.hyperspin.common.worker;
+package jps.hyperspin.common.processor;
+
+import jps.hyperspin.common.worker.CommonWorker;
 
 public abstract class CommonProcessor {
 

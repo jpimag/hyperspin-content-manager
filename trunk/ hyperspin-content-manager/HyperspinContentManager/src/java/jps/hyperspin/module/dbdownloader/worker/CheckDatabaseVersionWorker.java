@@ -1,6 +1,7 @@
 package jps.hyperspin.module.dbdownloader.worker;
 
 import jps.hyperspin.common.worker.CommonWorker;
+import jps.hyperspin.module.dbdownloader.processor.CheckDatabaseVersionProcessor;
 
 /**
  * This worker in in charge to check database version for the selected system.

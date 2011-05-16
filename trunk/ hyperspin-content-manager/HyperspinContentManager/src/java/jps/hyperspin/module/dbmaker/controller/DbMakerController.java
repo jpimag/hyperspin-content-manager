@@ -1,20 +1,16 @@
 package jps.hyperspin.module.dbmaker.controller;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
 
 import jps.hyperspin.MainClass;
-import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.i18n.Message;
 import jps.hyperspin.common.view.BasicProgressDialog;
-import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.main.controller.MainController;
-import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
+import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption.NamingConventions;
 import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
 import jps.hyperspin.module.dbmaker.view.DbMakerOptionPanel;
-import jps.hyperspin.module.dbmaker.worker.DeltaGeneratorWorker;
+import jps.hyperspin.module.dbmaker.worker.DbMakerWorker;
 
 public class DbMakerController {
 
@@ -35,32 +31,18 @@ public class DbMakerController {
 	public void process() {
 		String system = MainClass.mainFrame.getSystemSelected();
 
-		// First chec that database reference exist in Hyperspin Content Manager
-		// directory
-		MenuType database;
-		try {
-			database = DatabaseUtilities.loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(system));
-		} catch (Exception e) {
-			String msg = Message.getMessage("dbmaker.error.downloadeddatabase.notfound.msg");
-			JOptionPane.showMessageDialog(null, msg);
-			CommonLogger.instance.error(msg);
-			throw new IllegalArgumentException(e);
-		}
-
 		// Convert options choosen to DbMakerOption instance
 		DbMakerOption option = panelToModel();
 
 		// Save the model into a file
 		option.save();
 
-		// Process delta generator
-		DeltaGeneratorWorker worker = new DeltaGeneratorWorker(system, option, database,
-				MainController.instance.getDbDetail());
+		// DbMaker
+		DbMakerWorker worker = new DbMakerWorker(system, option, MainController.instance.getDbDetail());
 		new BasicProgressDialog(worker);
 
-		// Make database
-		// TODO
-
+		// Update detail
+		DbDownLoaderController.instance.updateDetails();
 	}
 
 	/**

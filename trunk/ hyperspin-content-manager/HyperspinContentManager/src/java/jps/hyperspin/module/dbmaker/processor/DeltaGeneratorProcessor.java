@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbmaker.worker;
+package jps.hyperspin.module.dbmaker.processor;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,11 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.DeltaFileUtilities;
 import jps.hyperspin.common.RomUtilities;
 import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.worker.CommonProcessor;
+import jps.hyperspin.common.i18n.Message;
+import jps.hyperspin.common.processor.CommonProcessor;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
@@ -29,7 +32,6 @@ import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConve
 public class DeltaGeneratorProcessor extends CommonProcessor {
 	private String system;
 	private DbMakerOption option;
-	private MenuType database;
 	private DatabaseDetail detail;
 
 	public class DeltaResult {
@@ -44,12 +46,11 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 
 	}
 
-	public DeltaGeneratorProcessor(String system, DbMakerOption option, MenuType mainDownloadedDatabase,
-			DatabaseDetail detail, CommonWorker worker, int untilProgress) {
+	public DeltaGeneratorProcessor(String system, DbMakerOption option, DatabaseDetail detail, CommonWorker worker,
+			int untilProgress) {
 		super(worker, untilProgress);
 		this.system = system;
 		this.option = option;
-		this.database = mainDownloadedDatabase;
 		this.detail = detail;
 
 	}
@@ -64,7 +65,20 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 
 		// Delete existing region and country delta files
 		FileUtilities.deleteAllFiles(DatabaseUtilities.getLogsDir(system));
+
 		// Load main database
+		// First check that database reference exist in Hyperspin Content
+		// Manager
+		// directory
+		MenuType database;
+		try {
+			database = DatabaseUtilities.loadDatabase(DatabaseUtilities.getDownloadedDatabasePath(system));
+		} catch (Exception e) {
+			String msg = Message.getMessage("dbmaker.error.downloadeddatabase.notfound.msg");
+			JOptionPane.showMessageDialog(null, msg);
+			CommonLogger.instance.error(msg);
+			throw new IllegalArgumentException(e);
+		}
 		Map<String, GameType> games = DatabaseUtilities.getAsMap(database);
 		if (option.useRegionPreference) {
 			if (option.region != DbMakerRegionEnum.NONE) {
