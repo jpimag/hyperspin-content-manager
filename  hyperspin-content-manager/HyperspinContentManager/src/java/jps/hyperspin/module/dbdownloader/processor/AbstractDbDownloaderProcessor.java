@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.worker;
+package jps.hyperspin.module.dbdownloader.processor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import jps.hyperspin.common.worker.CommonProcessor;
+import jps.hyperspin.common.processor.CommonProcessor;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMBindingException;

@@ -163,7 +163,7 @@ public class DatabaseUtilities {
 			FileWriter writer = new FileWriter(path + File.separator + fileName);
 			XmlBinding.getInstance().java2xml(db, writer);
 			writer.close();
-			CommonLogger.instance.info("Database File writed : " + path);
+			CommonLogger.instance.info("Database File writed : " + path + File.separator + fileName);
 		} catch (IOException e) {
 			CommonLogger.instance.error(e.getMessage());
 		} catch (HCMDatabaseException e) {

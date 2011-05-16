@@ -1,4 +1,4 @@
-package jps.hyperspin.module.dbdownloader.worker;
+package jps.hyperspin.module.dbdownloader.processor;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -68,6 +68,7 @@ public class DbDownloaderProcessor extends AbstractDbDownloaderProcessor {
 					String urlGenre = options[i].split("value='")[1];
 					urlGenre = urlGenre.split("'")[0];
 					urlGenre = urlGenre.replaceAll("%20", " ");
+					urlGenre = urlGenre.replaceAll("%26", "&");
 					url = new URL(HYPERLIST_URL + urlGenre);
 					urlConnTmp = (HttpURLConnection) url.openConnection();
 					BufferedReader inGenre = new BufferedReader(new InputStreamReader(urlConnTmp.getInputStream()));

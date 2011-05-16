@@ -42,7 +42,7 @@ public class MainController {
 				for (String s : settings.list()) {
 					if (s.endsWith(".ini")) {
 						String ini = s.substring(0, s.length() - 4);
-						if (!ini.equals("Main Menu") && !ini.equals("Settings")) {
+						if (!ini.equals("Main Menu") && !ini.equals("Settings") && !ini.equals("Betabrite")) {
 							Systems.instance.put(ini, null);
 						}
 					}

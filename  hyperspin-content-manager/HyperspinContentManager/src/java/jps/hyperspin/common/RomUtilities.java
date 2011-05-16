@@ -39,7 +39,8 @@ public class RomUtilities {
 		destDir.mkdirs();
 
 		// Is it a simple file rom ?
-		File file = new File(detail.systemIniProperties.getRomPath(), romFileName);
+		File file = new File(detail.systemIniProperties.getRomPath(), romFileName + "."
+				+ detail.systemIniProperties.getRomExtension());
 		if (file.exists() && file.isFile()) {
 			file.renameTo(new File(destDir, romFileName));
 		} else {
@@ -48,8 +49,6 @@ public class RomUtilities {
 					+ FileUtilities.getNameWithoutExtension(romFileName));
 			if (file.exists() && file.isDirectory()) {
 				file.renameTo(new File(destDir, FileUtilities.getNameWithoutExtension(romFileName)));
-			} else {
-				throw new IllegalStateException("Error replacing a rom :" + romFileName);
 			}
 		}
 
@@ -81,11 +80,15 @@ public class RomUtilities {
 				if (index != -1) {
 					name = name.substring(0, index);
 				}
-				romList.put(name, name);
+				// exclude 'replaced' folder
+				if (!file.getName().equals("replaced")) {
+					romList.put(name, name);
+				}
 
 			}
 			for (File file : dir.listFiles(new FileFilterDirectory())) {
 				romList.putAll(listRomsRec(system, detail, file));
+
 			}
 		}
 		return romList;

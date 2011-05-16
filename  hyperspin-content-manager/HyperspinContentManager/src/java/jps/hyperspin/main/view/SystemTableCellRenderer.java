@@ -20,10 +20,9 @@ public class SystemTableCellRenderer extends DefaultTableCellRenderer {
 	 * 
 	 */
 	@Override
-	public Component getTableCellRendererComponent(JTable jtable, Object value,
-			boolean isSelected, boolean cellHasFocus, int row, int column) {
-		Component c = super.getTableCellRendererComponent(jtable, value,
-				isSelected, cellHasFocus, row, column);
+	public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected,
+			boolean cellHasFocus, int row, int column) {
+		Component c = super.getTableCellRendererComponent(jtable, value, isSelected, cellHasFocus, row, column);
 		VersionStatut status;
 		try {
 			status = VersionStatut.valueOf(value.toString());
@@ -38,16 +37,16 @@ public class SystemTableCellRenderer extends DefaultTableCellRenderer {
 			switch (status) {
 			case SYSTEM_NOT_AVAILABLE:
 			case SYSTEM_NOT_VERSIONNED:
-			case OUT_DATED_DOWNLOADED_DB:
 				setBackground(Color.RED);
 				setForeground(Color.WHITE);
 				break;
 			case OUT_DATED_USER_DB:
+			case OUT_DATED_DOWNLOADED_DB:
 				setBackground(Color.ORANGE);
 				setForeground(Color.WHITE);
 				break;
 			case UP_TO_DATE:
-				setBackground(Color.GREEN);
+				setBackground(new Color(51200)); // Green
 				setForeground(Color.WHITE);
 				break;
 			}

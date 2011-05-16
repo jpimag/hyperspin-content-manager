@@ -1,10 +1,11 @@
-package jps.hyperspin.module.dbmaker.worker;
+package jps.hyperspin.module.dbmaker.processor;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import jps.hyperspin.common.DeltaFileUtilities;
 import jps.hyperspin.common.RomUtilities;
 import jps.hyperspin.common.file.FileFilterExtension;
 import jps.hyperspin.common.file.FileUtilities;
-import jps.hyperspin.common.worker.CommonProcessor;
+import jps.hyperspin.common.processor.CommonProcessor;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.main.controller.CommonLogger;
@@ -34,7 +35,7 @@ public class DbMakerProcessor extends CommonProcessor {
 
 	private Map<String, Delta> countryDelta;
 	private Map<String, Delta> regionDelta;
-	private Set<Delta> replacedGames;
+	private Set<Delta> replacedGames = new HashSet<Delta>();
 	private dbMakerResult result = new dbMakerResult();
 
 	public class dbMakerResult {
@@ -112,6 +113,7 @@ public class DbMakerProcessor extends CommonProcessor {
 				// Check if exist
 				boolean found = true;
 				if (!romMap.containsKey(game.getName())) {
+					CommonLogger.instance.trace("Rom not found : " + game.getName());
 					it.remove();
 					found = false;
 				}
@@ -120,6 +122,7 @@ public class DbMakerProcessor extends CommonProcessor {
 				if (option.noClone) {
 					if (game.getCloneof() != null && !"".equals(game.getCloneof().trim())) {
 						if (found) {
+							CommonLogger.instance.trace("Clone excluded : " + game.getName());
 							it.remove();
 						}
 						result.nbClones++;
@@ -171,8 +174,9 @@ public class DbMakerProcessor extends CommonProcessor {
 		// Logs
 		CommonLogger.instance.info("\nTotal of " + (result.dbSize - result.nbMissing) + "/" + result.dbSize
 				+ " rom found (" + result.nbMissing + " roms missing)");
-		CommonLogger.instance.info("\nTotal of " + (result.nbReplaced)
+		CommonLogger.instance.info("Total of " + (result.nbReplaced)
 				+ " roms replaced according to region preferences.");
+		CommonLogger.instance.info("-----------------------------------------------------");
 
 	}
 

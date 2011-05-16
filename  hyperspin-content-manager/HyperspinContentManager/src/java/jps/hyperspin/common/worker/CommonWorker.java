@@ -37,6 +37,7 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 		} catch (Exception e) {
 			// TODO add error dialog
 			CommonLogger.instance.info("Erreur : " + e);
+			e.printStackTrace();
 		} finally {
 			setProgress(100);
 		}
