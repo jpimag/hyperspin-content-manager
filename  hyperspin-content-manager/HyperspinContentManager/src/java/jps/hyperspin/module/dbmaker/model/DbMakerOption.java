@@ -42,8 +42,6 @@ public class DbMakerOption extends CommonOption {
 
 	public boolean moveReplacedRoms;
 
-	public boolean useRegionPreference;
-
 	public boolean useDeltaFiles;
 
 	public NamingConventions namingConventions;
