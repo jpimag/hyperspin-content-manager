@@ -21,9 +21,7 @@ public class DbMakerOptionPanel extends JPanel {
 	private JLabel noClonesLabel = null;
 	private JCheckBox removeReplacedRoms = null;
 	private JLabel removeReplacedRomsLabel = null;
-	private JCheckBox useRegionPreference = null;
-	private JLabel useRegionPreferenceLael = null;
-	private RegionPreferencePanel regionPreferencePanel = null;
+	private NamingConventionPanel namingConvention = null;
 	private JButton processButton = null;
 
 	/**
@@ -54,7 +52,7 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints2.anchor = GridBagConstraints.WEST;
 		gridBagConstraints2.gridx = 1;
 		GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
-		gridBagConstraints12.gridx = 1;
+		gridBagConstraints12.gridx = 0;
 		gridBagConstraints12.gridwidth = 8;
 		gridBagConstraints12.ipadx = 0;
 		gridBagConstraints12.fill = GridBagConstraints.HORIZONTAL;
@@ -63,8 +61,6 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints11.gridx = 1;
 		gridBagConstraints11.anchor = GridBagConstraints.WEST;
 		gridBagConstraints11.gridy = 2;
-		useRegionPreferenceLael = new JLabel();
-		useRegionPreferenceLael.setText(Message.getMessage("dbmaker.options.regionpreference.label"));
 		GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
 		gridBagConstraints10.gridx = 0;
 		gridBagConstraints10.gridy = 2;
@@ -87,16 +83,14 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.anchor = GridBagConstraints.CENTER;
 		gridBagConstraints.gridy = 0;
-		this.setSize(579, 207);
+		this.setSize(579, 250);
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.white);
 		this.add(getNoClones(), gridBagConstraints);
 		this.add(noClonesLabel, gridBagConstraints1);
 		this.add(getRemoveReplacedRoms(), gridBagConstraints8);
 		this.add(removeReplacedRomsLabel, gridBagConstraints9);
-		this.add(getUseRegionPreference(), gridBagConstraints10);
-		this.add(useRegionPreferenceLael, gridBagConstraints11);
-		this.add(getRegionPreferencePanel(), gridBagConstraints12);
+		this.add(getNamingConventionPanel(), gridBagConstraints12);
 		this.add(getProcessButton(), gridBagConstraints3);
 	}
 
@@ -127,39 +121,17 @@ public class DbMakerOptionPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes useRegionPreference
-	 * 
-	 * @return javax.swing.JCheckBox
-	 */
-	public JCheckBox getUseRegionPreference() {
-		if (useRegionPreference == null) {
-			useRegionPreference = new JCheckBox();
-			useRegionPreference.setBackground(Color.white);
-			useRegionPreference.addChangeListener(new javax.swing.event.ChangeListener() {
-				public void stateChanged(javax.swing.event.ChangeEvent e) {
-					System.out.println("stateChanged()"); // TODO Auto-generated
-															// Event stub
-															// stateChanged()
-					DbMakerController.instance.toggleUserRegion(useRegionPreference.isSelected());
-
-				}
-			});
-		}
-		return useRegionPreference;
-	}
-
-	/**
 	 * This method initializes regionPreferencePanel
 	 * 
 	 * @return jps.hyperspin.module.dbmaker.view.RegionPreferencePanel
 	 */
-	public RegionPreferencePanel getRegionPreferencePanel() {
-		if (regionPreferencePanel == null) {
-			regionPreferencePanel = new RegionPreferencePanel();
-			regionPreferencePanel.setPreferredSize(new Dimension(500, 76));
-			regionPreferencePanel.setBackground(Color.white);
+	public NamingConventionPanel getNamingConventionPanel() {
+		if (namingConvention == null) {
+			namingConvention = new NamingConventionPanel();
+			namingConvention.setPreferredSize(new Dimension(500, 100));
+			namingConvention.setBackground(Color.white);
 		}
-		return regionPreferencePanel;
+		return namingConvention;
 	}
 
 	/**

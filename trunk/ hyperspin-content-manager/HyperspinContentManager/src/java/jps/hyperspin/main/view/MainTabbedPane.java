@@ -5,14 +5,15 @@ import java.awt.Dimension;
 import javax.swing.JTabbedPane;
 
 import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
-import jps.hyperspin.module.dbmaker.presentation.DatabaseActionTab;
 import jps.hyperspin.module.dbmaker.view.DbMakerTab;
+import jps.hyperspin.module.mediachecker.view.MediaCheckerTab;
 
 public class MainTabbedPane extends JTabbedPane {
 
 	private static final long serialVersionUID = 1L;
 	private DatabaseTab dbDownloaderTab = null;
 	private DbMakerTab dbMakerTab = null;
+	private MediaCheckerTab mediaCheckerTab = null;
 
 	/**
 	 * This is the default constructor
@@ -34,7 +35,7 @@ public class MainTabbedPane extends JTabbedPane {
 
 		this.addTab("Database Maker", null, getDbMakerTab(), null);
 
-		this.addTab("Media Checker", new DatabaseActionTab());
+		this.addTab("Media Checker", getMediaCheckerTab());
 		// this.addTab("WHDLoad Tool", new WhdloadTab());
 	}
 
@@ -62,5 +63,18 @@ public class MainTabbedPane extends JTabbedPane {
 			dbMakerTab.setPreferredSize(new Dimension(800, 400));
 		}
 		return dbMakerTab;
+	}
+
+	/**
+	 * This method initializes dbMakerTab
+	 * 
+	 * @return jps.hyperspin.module.dbMaker.view.dbMakerTab
+	 */
+	public MediaCheckerTab getMediaCheckerTab() {
+		if (mediaCheckerTab == null) {
+			mediaCheckerTab = new MediaCheckerTab();
+			mediaCheckerTab.setPreferredSize(new Dimension(800, 400));
+		}
+		return mediaCheckerTab;
 	}
 }

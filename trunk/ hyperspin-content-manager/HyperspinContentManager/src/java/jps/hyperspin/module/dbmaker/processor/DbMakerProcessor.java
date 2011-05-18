@@ -62,13 +62,11 @@ public class DbMakerProcessor extends CommonProcessor {
 	public void execute() throws Exception {
 
 		// Deltas
-		if (option.useRegionPreference) {
-			countryDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
-					option.country));
+		countryDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
+				option.country));
 
-			regionDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
-					option.region));
-		}
+		regionDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
+				option.region));
 
 		// Delete existing database
 		FileUtilities.deleteAllFiles(DatabaseUtilities.getUserDatabaseDir(system), "xml");

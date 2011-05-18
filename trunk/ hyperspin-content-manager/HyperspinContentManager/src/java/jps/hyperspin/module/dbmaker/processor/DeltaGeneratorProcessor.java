@@ -80,51 +80,48 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 			throw new IllegalArgumentException(e);
 		}
 		Map<String, GameType> games = DatabaseUtilities.getAsMap(database);
-		if (option.useRegionPreference) {
-			if (option.region != DbMakerRegionEnum.NONE) {
-				// Find region matching roms
-				DeltaResult regionResult = computeDelta(option.region, games);
+		if (option.region != DbMakerRegionEnum.NONE) {
+			// Find region matching roms
+			DeltaResult regionResult = computeDelta(option.region, games);
 
-				// Save delta region file
-				writeDeltaFile(regionResult.deltas, option.region);
-				writeUnknwonRegionFile(regionResult.unknowns, option.region);
-				writeTraductionUnknwonRegionFile(new ArrayList<String>(regionResult.traductionNotFound), option.region);
+			// Save delta region file
+			writeDeltaFile(regionResult.deltas, option.region);
+			writeUnknwonRegionFile(regionResult.unknowns, option.region);
+			writeTraductionUnknwonRegionFile(new ArrayList<String>(regionResult.traductionNotFound), option.region);
 
-				// OriginalKept
-				originalKept = regionResult.originalKept;
+			// OriginalKept
+			originalKept = regionResult.originalKept;
 
-			}
-			setProgress(50);
-			if (option.country != DbMakerRegionEnum.NONE) {
-				// Find country roms
-				DeltaResult countryResult = computeDelta(option.country, games);
+		}
+		setProgress(50);
+		if (option.country != DbMakerRegionEnum.NONE) {
+			// Find country roms
+			DeltaResult countryResult = computeDelta(option.country, games);
 
-				// Save delta country file
-				writeDeltaFile(countryResult.deltas, option.country);
-				writeUnknwonRegionFile(countryResult.unknowns, option.country);
-				writeTraductionUnknwonRegionFile(new ArrayList<String>(countryResult.traductionNotFound),
-						option.country);
+			// Save delta country file
+			writeDeltaFile(countryResult.deltas, option.country);
+			writeUnknwonRegionFile(countryResult.unknowns, option.country);
+			writeTraductionUnknwonRegionFile(new ArrayList<String>(countryResult.traductionNotFound), option.country);
 
-				// Original kept
-				if (originalKept == null) {
-					originalKept = countryResult.originalKept;
-				} else {
-					// We kept only those not file neither in region nor country
-					Iterator<String> it = originalKept.iterator();
-					while (it.hasNext()) {
-						if (!countryResult.originalKept.contains(it.next())) {
-							it.remove();
-						}
+			// Original kept
+			if (originalKept == null) {
+				originalKept = countryResult.originalKept;
+			} else {
+				// We kept only those not file neither in region nor country
+				Iterator<String> it = originalKept.iterator();
+				while (it.hasNext()) {
+					if (!countryResult.originalKept.contains(it.next())) {
+						it.remove();
 					}
 				}
 			}
-			if (originalKept != null) {
-				CommonLogger.instance.info(originalKept.size()
-						+ " rom remaning in the database wich are not from preferred region");
-				// Write original kept file
-				writeOriginalKeptRegionFile(originalKept);
+		}
+		if (originalKept != null) {
+			CommonLogger.instance.info(originalKept.size()
+					+ " rom remaning in the database wich are not from preferred region");
+			// Write original kept file
+			writeOriginalKeptRegionFile(originalKept);
 
-			}
 		}
 	}
 

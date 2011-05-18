@@ -16,18 +16,6 @@ public class DbMakerController {
 
 	public static DbMakerController instance = new DbMakerController();
 
-	/**
-	 * Called when userRegion combobox is toggled.
-	 * 
-	 * @param selected
-	 */
-	public void toggleUserRegion(boolean selected) {
-		getOptionPanel().getRegionPreferencePanel().getNoIntro().setEnabled(selected);
-		getOptionPanel().getRegionPreferencePanel().getRedumpOrg().setEnabled(selected);
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().setEnabled(selected);
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().setEnabled(selected);
-	}
-
 	public void process() {
 		String system = MainClass.mainFrame.getSystemSelected();
 
@@ -51,15 +39,16 @@ public class DbMakerController {
 	public void load() {
 		// Intitialise some comonent
 		ButtonGroup group = new ButtonGroup();
-		group.add(getOptionPanel().getRegionPreferencePanel().getNoIntro());
-		group.add(getOptionPanel().getRegionPreferencePanel().getRedumpOrg());
+		group.add(getOptionPanel().getNamingConventionPanel().getNoIntro());
+		group.add(getOptionPanel().getNamingConventionPanel().getRedumpOrg());
+		group.add(getOptionPanel().getNamingConventionPanel().getOther());
 
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().removeAllItems();
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.EUROPE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredRegion().addItem(DbMakerRegionEnum.NONE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().removeAllItems();
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.FRANCE);
-		getOptionPanel().getRegionPreferencePanel().getPreferredCountry().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getNamingConventionPanel().getPreferredRegion().removeAllItems();
+		getOptionPanel().getNamingConventionPanel().getPreferredRegion().addItem(DbMakerRegionEnum.EUROPE);
+		getOptionPanel().getNamingConventionPanel().getPreferredRegion().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getNamingConventionPanel().getPreferredCountry().removeAllItems();
+		getOptionPanel().getNamingConventionPanel().getPreferredCountry().addItem(DbMakerRegionEnum.FRANCE);
+		getOptionPanel().getNamingConventionPanel().getPreferredCountry().addItem(DbMakerRegionEnum.NONE);
 
 		// Load preference into DbMakerOption instance
 
@@ -83,18 +72,15 @@ public class DbMakerController {
 		DbMakerOption option = new DbMakerOption();
 		option.noClone = getOptionPanel().getNoClones().isSelected();
 		option.moveReplacedRoms = getOptionPanel().getRemoveReplacedRoms().isSelected();
-		option.useRegionPreference = getOptionPanel().getUseRegionPreference().isSelected();
-		if (option.useRegionPreference) {
-			option.country = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredCountry()
-					.getSelectedItem();
-			option.region = (DbMakerRegionEnum) getOptionPanel().getRegionPreferencePanel().getPreferredRegion()
-					.getSelectedItem();
+		option.country = (DbMakerRegionEnum) getOptionPanel().getNamingConventionPanel().getPreferredCountry()
+				.getSelectedItem();
+		option.region = (DbMakerRegionEnum) getOptionPanel().getNamingConventionPanel().getPreferredRegion()
+				.getSelectedItem();
 
-			if (getOptionPanel().getRegionPreferencePanel().getNoIntro().isSelected()) {
-				option.namingConventions = NamingConventions.NO_INTRO;
-			} else {
-				option.namingConventions = NamingConventions.REDUMP_ORG;
-			}
+		if (getOptionPanel().getNamingConventionPanel().getNoIntro().isSelected()) {
+			option.namingConventions = NamingConventions.NO_INTRO;
+		} else {
+			option.namingConventions = NamingConventions.REDUMP_ORG;
 		}
 		return option;
 	}
@@ -107,20 +93,17 @@ public class DbMakerController {
 	private void modelToPanel(DbMakerOption option) {
 		getOptionPanel().getNoClones().setSelected(option.noClone);
 		getOptionPanel().getRemoveReplacedRoms().setSelected(option.moveReplacedRoms);
-		getOptionPanel().getUseRegionPreference().setSelected(option.useRegionPreference);
-		if (option.useRegionPreference) {
-			getOptionPanel().getRegionPreferencePanel().getPreferredRegion().setSelectedItem(option.region);
-			getOptionPanel().getRegionPreferencePanel().getPreferredCountry().setSelectedItem(option.country);
-			getOptionPanel().getRegionPreferencePanel().getNoIntro().setSelected(false);
-			getOptionPanel().getRegionPreferencePanel().getRedumpOrg().setSelected(false);
-			switch (option.namingConventions) {
-			case NO_INTRO:
-				getOptionPanel().getRegionPreferencePanel().getNoIntro().setSelected(true);
-				break;
-			case REDUMP_ORG:
-				getOptionPanel().getRegionPreferencePanel().getRedumpOrg().setSelected(true);
-				break;
-			}
+		getOptionPanel().getNamingConventionPanel().getPreferredRegion().setSelectedItem(option.region);
+		getOptionPanel().getNamingConventionPanel().getPreferredCountry().setSelectedItem(option.country);
+		getOptionPanel().getNamingConventionPanel().getNoIntro().setSelected(false);
+		getOptionPanel().getNamingConventionPanel().getRedumpOrg().setSelected(false);
+		switch (option.namingConventions) {
+		case NO_INTRO:
+			getOptionPanel().getNamingConventionPanel().getNoIntro().setSelected(true);
+			break;
+		case REDUMP_ORG:
+			getOptionPanel().getNamingConventionPanel().getRedumpOrg().setSelected(true);
+			break;
 		}
 
 	}

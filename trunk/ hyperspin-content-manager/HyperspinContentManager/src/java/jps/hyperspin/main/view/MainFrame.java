@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import jps.hyperspin.common.view.PanelLogger;
 import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 import jps.hyperspin.module.dbmaker.controller.DbMakerController;
+import jps.hyperspin.module.mediachecker.controller.MediaCheckerController;
 
 public class MainFrame extends JFrame {
 
@@ -58,6 +59,7 @@ public class MainFrame extends JFrame {
 						DbDownLoaderController.instance.updateDetails();
 						// Initialize some controllers
 						DbMakerController.instance.load();
+						MediaCheckerController.instance.load();
 					}
 
 				} catch (Exception e) {
