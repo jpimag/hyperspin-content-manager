@@ -46,9 +46,11 @@ public class DbMakerController {
 		getOptionPanel().getNamingConventionPanel().getPreferredRegion().removeAllItems();
 		getOptionPanel().getNamingConventionPanel().getPreferredRegion().addItem(DbMakerRegionEnum.EUROPE);
 		getOptionPanel().getNamingConventionPanel().getPreferredRegion().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getNamingConventionPanel().getPreferredRegion().setSelectedItem(DbMakerRegionEnum.NONE);
 		getOptionPanel().getNamingConventionPanel().getPreferredCountry().removeAllItems();
 		getOptionPanel().getNamingConventionPanel().getPreferredCountry().addItem(DbMakerRegionEnum.FRANCE);
 		getOptionPanel().getNamingConventionPanel().getPreferredCountry().addItem(DbMakerRegionEnum.NONE);
+		getOptionPanel().getNamingConventionPanel().getPreferredCountry().setSelectedItem(DbMakerRegionEnum.NONE);
 
 		// Load preference into DbMakerOption instance
 

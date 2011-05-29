@@ -13,22 +13,27 @@ public class FileFilterExtension implements FileFilter {
 	/**
 	 * 
 	 */
-	private String extension;
+	private String[] extensions;
 
 	/**
 	 * 
 	 * @param extension
 	 *            extension
 	 */
-	public FileFilterExtension(final String extension) {
-		this.extension = extension;
+	public FileFilterExtension(final String... extensions) {
+		this.extensions = extensions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final boolean accept(final File pathname) {
-		return pathname.isFile() && pathname.getName().endsWith(extension);
+		for (String extension : extensions) {
+			if (pathname.isFile() && pathname.getName().endsWith(extension)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

@@ -19,6 +19,8 @@ public class MediaCheckerOption extends CommonOption {
 
 	public boolean manualResolving;
 
+	public MediaCategoryEnum category;
+
 	/**
 	 * load a CommonOption instance from disk. Create a new one if no instance
 	 * are found on disk.

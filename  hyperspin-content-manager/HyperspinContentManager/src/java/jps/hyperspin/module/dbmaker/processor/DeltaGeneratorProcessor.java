@@ -130,94 +130,97 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 		// Result
 		DeltaResult result = new DeltaResult();
 		result.originalKept.addAll(games.keySet());
-		// Stat
-		int nbReplacement = 0;
+		if (type != null) {
+			// Stat
+			int nbReplacement = 0;
 
-		// The naming convention class
-		AbstractNamingConvention convention = option.namingConventions.getNamingConvention();
+			// The naming convention class
+			AbstractNamingConvention convention = option.namingConventions.getNamingConvention();
 
-		// Get the rom list
-		Map<String, String> romMap = RomUtilities.listRoms(system, detail);
-		// Candidate to replace
-		// ---------------------
-		// Candidate are all roms not belonging to region in database.
-		Map<String, String> candidtateRomMap = new HashMap<String, String>();
-		for (String name : games.keySet()) {
-			candidtateRomMap.put(name, name);
-		}
-		// Matching type roms
-		// -------------------
-		// Matching roms are all roms belonging region not in database
-		Map<String, String> matchingRomMap = new HashMap<String, String>();
-
-		// Browse all roms to determinate "candidate" and "matching"
-		for (String rom : romMap.keySet()) {
-			if (convention.isBelongingToType(rom, type)) {
-				candidtateRomMap.remove(rom);
-				if (!games.containsKey(rom)) {
-					// The game is not in db
-					matchingRomMap.put(rom, romMap.get(rom));
-				} else {
-					// this original rom belongs to preferred region
-					result.originalKept.remove(rom);
-				}
+			// Get the rom list
+			Map<String, String> romMap = RomUtilities.listRoms(system, detail);
+			// Candidate to replace
+			// ---------------------
+			// Candidate are all roms not belonging to region in database.
+			Map<String, String> candidtateRomMap = new HashMap<String, String>();
+			for (String name : games.keySet()) {
+				candidtateRomMap.put(name, name);
 			}
-		}
+			// Matching type roms
+			// -------------------
+			// Matching roms are all roms belonging region not in database
+			Map<String, String> matchingRomMap = new HashMap<String, String>();
 
-		// Custom traductions file
-		Map<String, Delta> traductionsMap = null;
-		try {
-			traductionsMap = DeltaFileUtilities.loadDeltaFileIndexedByReplacementName(DatabaseUtilities
-					.getTraductionPath(system, type.name()));
-		} catch (IOException e) {
-			CommonLogger.instance.info("No traduction file for the region : " + type.name());
-		}
-
-		// We browse all matching roms to find a good candidate for
-		// replacement.
-		for (String rom : matchingRomMap.keySet()) {
-			// 1 - Search in traduction map
-			if (traductionsMap != null && traductionsMap.containsKey(rom)
-					&& candidtateRomMap.containsKey(traductionsMap.get(rom).name)) {
-				String candidate = traductionsMap.get(rom).name;
-				Delta delta = new Delta(candidate, romMap.get(rom));
-				result.deltas.add(delta);
-				candidtateRomMap.remove(candidate);
-				nbReplacement++;
-				result.originalKept.remove(candidate);
-				traductionsMap.remove(rom);
-			} else {
-				// 2 - Search in candidate
-				boolean found = false;
-				for (String candidate : candidtateRomMap.keySet()) {
-
-					// Is it a correct candidate
-					if (convention.isCandidate(rom, candidate, type)) {
-						Delta delta = new Delta(candidate, romMap.get(rom));
-						result.deltas.add(delta);
-						candidtateRomMap.remove(candidate);
-						nbReplacement++;
-						found = true;
-						result.originalKept.remove(candidate);
-						break;
+			// Browse all roms to determinate "candidate" and "matching"
+			for (String rom : romMap.keySet()) {
+				if (convention.isBelongingToType(rom, type)) {
+					candidtateRomMap.remove(rom);
+					if (!games.containsKey(rom)) {
+						// The game is not in db
+						matchingRomMap.put(rom, romMap.get(rom));
+					} else {
+						// this original rom belongs to preferred region
+						result.originalKept.remove(rom);
 					}
 				}
-				// No candidate found
-				if (!found) {
-					result.unknowns.add(rom);
+			}
+
+			// Custom traductions file
+			Map<String, Delta> traductionsMap = null;
+			try {
+				traductionsMap = DeltaFileUtilities.loadDeltaFileIndexedByReplacementName(DatabaseUtilities
+						.getTraductionPath(system, type.name()));
+			} catch (IOException e) {
+				CommonLogger.instance.info("No traduction file for the region : " + type.name());
+			}
+
+			// We browse all matching roms to find a good candidate for
+			// replacement.
+			for (String rom : matchingRomMap.keySet()) {
+				// 1 - Search in traduction map
+				if (traductionsMap != null && traductionsMap.containsKey(rom)
+						&& candidtateRomMap.containsKey(traductionsMap.get(rom).name)) {
+					String candidate = traductionsMap.get(rom).name;
+					Delta delta = new Delta(candidate, romMap.get(rom));
+					result.deltas.add(delta);
+					candidtateRomMap.remove(candidate);
+					nbReplacement++;
+					result.originalKept.remove(candidate);
+					traductionsMap.remove(rom);
+				} else {
+					// 2 - Search in candidate
+					boolean found = false;
+					for (String candidate : candidtateRomMap.keySet()) {
+
+						// Is it a correct candidate
+						if (convention.isCandidate(rom, candidate, type)) {
+							Delta delta = new Delta(candidate, romMap.get(rom));
+							result.deltas.add(delta);
+							candidtateRomMap.remove(candidate);
+							nbReplacement++;
+							found = true;
+							result.originalKept.remove(candidate);
+							break;
+						}
+					}
+					// No candidate found
+					if (!found) {
+						result.unknowns.add(rom);
+					}
 				}
 			}
-		}
 
-		// traductions not found
-		if (traductionsMap != null && traductionsMap.size() > 0) {
-			result.traductionNotFound.addAll(traductionsMap.keySet());
-			CommonLogger.instance.info(traductionsMap.size() + " traduction unknowns for type " + type.name() + "\n");
-		}
+			// traductions not found
+			if (traductionsMap != null && traductionsMap.size() > 0) {
+				result.traductionNotFound.addAll(traductionsMap.keySet());
+				CommonLogger.instance.info(traductionsMap.size() + " traduction unknowns for type " + type.name()
+						+ "\n");
+			}
 
-		// Logs
-		CommonLogger.instance.info(matchingRomMap.size() + " rom found for type " + type.name());
-		CommonLogger.instance.info(nbReplacement + " rom replaced for type " + type.name() + "\n");
+			// Logs
+			CommonLogger.instance.info(matchingRomMap.size() + " rom found for type " + type.name());
+			CommonLogger.instance.info(nbReplacement + " rom replaced for type " + type.name() + "\n");
+		}
 		return result;
 
 	}
