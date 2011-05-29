@@ -18,10 +18,14 @@ public class DbMakerOption extends CommonOption {
 
 	public DbMakerOption() {
 		super();
+		region = DbMakerRegionEnum.NONE;
+		country = DbMakerRegionEnum.NONE;
+		namingConventions = NamingConventions.OTHER;
+
 	}
 
 	public enum NamingConventions {
-		NO_INTRO, REDUMP_ORG;
+		NO_INTRO, REDUMP_ORG, OTHER;
 
 		/**
 		 * 

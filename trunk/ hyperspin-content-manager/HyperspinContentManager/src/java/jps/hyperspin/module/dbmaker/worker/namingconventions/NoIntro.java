@@ -51,6 +51,7 @@ public class NoIntro extends AbstractNamingConvention {
 	@Override
 	public boolean isBelongingToType(String rom, DbMakerRegionEnum region) {
 		Set<String> regions = getRegions(rom);
+
 		if (regions.contains(getRegionAsString(region).toLowerCase())) {
 			return true;
 		}
