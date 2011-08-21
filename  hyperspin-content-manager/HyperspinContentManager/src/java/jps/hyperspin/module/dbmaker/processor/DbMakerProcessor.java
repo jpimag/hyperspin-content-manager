@@ -36,9 +36,9 @@ public class DbMakerProcessor extends CommonProcessor {
 	private Map<String, Delta> countryDelta;
 	private Map<String, Delta> regionDelta;
 	private Set<Delta> replacedGames = new HashSet<Delta>();
-	private dbMakerResult result = new dbMakerResult();
+	private DbMakerResult result = new DbMakerResult();
 
-	public class dbMakerResult {
+	public class DbMakerResult {
 		public long dbSize = 0;
 		public long nbMissing = 0;
 		public long nbReplaced = 0;
