@@ -1,9 +1,13 @@
 package jps.hyperspin.module.mediachecker.controller;
 
 import jps.hyperspin.MainClass;
+import jps.hyperspin.common.view.BasicProgressDialog;
+import jps.hyperspin.main.controller.MainController;
+import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
 import jps.hyperspin.module.mediachecker.model.MediaCategoryEnum;
 import jps.hyperspin.module.mediachecker.model.MediaCheckerOption;
 import jps.hyperspin.module.mediachecker.view.MediaCheckerOptionPanel;
+import jps.hyperspin.module.mediachecker.worker.MediaCheckerWorker;
 
 public class MediaCheckerController {
 
@@ -18,8 +22,12 @@ public class MediaCheckerController {
 		// Save the model into a file
 		option.save();
 
-		// Process
-		// TODO
+		// MediaChecker
+		MediaCheckerWorker worker = new MediaCheckerWorker(system, option, MainController.instance.getDbDetail());
+		new BasicProgressDialog(worker);
+
+		// Update detail
+		DbDownLoaderController.instance.updateDetails();
 	}
 
 	/**
@@ -27,6 +35,7 @@ public class MediaCheckerController {
 	 */
 	public void load() {
 		// Intitialise some comonent
+		getOptionPanel().getJComboBox().removeAllItems();
 		for (MediaCategoryEnum category : MediaCategoryEnum.values()) {
 			getOptionPanel().getJComboBox().addItem(category);
 		}
@@ -51,6 +60,8 @@ public class MediaCheckerController {
 	private MediaCheckerOption panelToModel() {
 		MediaCheckerOption option = new MediaCheckerOption();
 		option.manualResolving = getOptionPanel().getManualCheckBox().isSelected();
+		option.moveNotUsed = getOptionPanel().getPurgeCheckBox().isSelected();
+		option.category = (MediaCategoryEnum) getOptionPanel().getJComboBox().getSelectedItem();
 		return option;
 	}
 
@@ -61,7 +72,12 @@ public class MediaCheckerController {
 	 */
 	private void modelToPanel(MediaCheckerOption option) {
 		getOptionPanel().getManualCheckBox().setSelected(option.manualResolving);
-
+		getOptionPanel().getPurgeCheckBox().setSelected(option.moveNotUsed);
+		if (option.category != null) {
+			getOptionPanel().getJComboBox().setSelectedItem(option.category);
+		} else {
+			getOptionPanel().getJComboBox().setSelectedItem(MediaCategoryEnum.WHEEL);
+		}
 	}
 
 }

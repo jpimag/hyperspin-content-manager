@@ -1,6 +1,7 @@
 package jps.hyperspin.common;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +25,23 @@ public class DeltaFileUtilities {
 			writer.write(delta.name + "->" + delta.replacementName + "\n");
 		}
 		writer.close();
+	}
+
+	/**
+	 * Load a delta file
+	 * 
+	 * @param datas
+	 * @param type
+	 */
+	public static Map<String, Delta> loadAllDeltaFileIndexedByReplacementName(String path) throws IOException {
+		Map<String, Delta> result = new HashMap<String, Delta>();
+		File dir = new File(path);
+		for (File file : dir.listFiles()) {
+			if (file.getName().endsWith("delta")) {
+				result.putAll(loadDeltaFileIndexedByReplacementName(file.getAbsolutePath()));
+			}
+		}
+		return result;
 	}
 
 	/**

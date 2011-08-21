@@ -6,6 +6,7 @@ import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.main.controller.MainController;
 import jps.hyperspin.main.model.VersionStatut;
+import jps.hyperspin.module.dbdownloader.model.generated.menu.HeaderType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 public class CheckDatabaseVersionProcessor extends AbstractDbDownloaderProcessor {
@@ -62,19 +63,21 @@ public class CheckDatabaseVersionProcessor extends AbstractDbDownloaderProcessor
 			return VersionStatut.SYSTEM_NOT_AVAILABLE;
 		} else if (hyperlistDatabase.getHeader() == null) {
 			return VersionStatut.SYSTEM_NOT_VERSIONNED;
-		} else if (downloadedDatabase == null
-				|| downloadedDatabase.getHeader() == null
-				|| !downloadedDatabase.getHeader().getListversion()
-						.equals(hyperlistDatabase.getHeader().getListversion())) {
+		} else if (downloadedDatabase == null || downloadedDatabase.getHeader() == null
+				|| !getVersion(downloadedDatabase.getHeader()).equals(getVersion(hyperlistDatabase.getHeader()))) {
 			return VersionStatut.OUT_DATED_DOWNLOADED_DB;
 
 		} else if (userDatabase == null || userDatabase.getHeader() == null
-				|| !userDatabase.getHeader().getListversion().equals(downloadedDatabase.getHeader().getListversion())) {
+				|| !getVersion(userDatabase.getHeader()).equals(getVersion(downloadedDatabase.getHeader()))) {
 			return VersionStatut.OUT_DATED_USER_DB;
 		} else {
 			return VersionStatut.UP_TO_DATE;
 
 		}
 
+	}
+
+	private String getVersion(HeaderType header) {
+		return header.getListversion() + header.getLastlistupdate();
 	}
 }

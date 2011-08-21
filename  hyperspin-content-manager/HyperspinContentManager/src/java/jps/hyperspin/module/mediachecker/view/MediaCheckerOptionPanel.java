@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jps.hyperspin.common.i18n.Message;
+import jps.hyperspin.module.mediachecker.controller.MediaCheckerController;
 
 public class MediaCheckerOptionPanel extends JPanel {
 
@@ -109,7 +110,7 @@ public class MediaCheckerOptionPanel extends JPanel {
 	 * 
 	 * @return javax.swing.JCheckBox
 	 */
-	private JCheckBox getPurgeCheckBox() {
+	public JCheckBox getPurgeCheckBox() {
 		if (purgeCheckBox == null) {
 			purgeCheckBox = new JCheckBox();
 			purgeCheckBox.setBackground(Color.white);
@@ -126,6 +127,12 @@ public class MediaCheckerOptionPanel extends JPanel {
 		if (processButton == null) {
 			processButton = new JButton();
 			processButton.setText(Message.getMessage("mediachecker.process.label"));
+			processButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()");
+					MediaCheckerController.instance.process();
+				}
+			});
 		}
 		return processButton;
 	}

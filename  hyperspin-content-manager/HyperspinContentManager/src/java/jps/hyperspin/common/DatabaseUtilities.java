@@ -29,10 +29,11 @@ public class DatabaseUtilities {
 	 */
 	public static MenuType loadDatabase(String databaseFullPath) throws HCMDatabaseException, FileNotFoundException {
 		File database = new File(databaseFullPath);
-		CommonLogger.instance.info("Database parsed : " + databaseFullPath);
+		// CommonLogger.instance.info("Database parsed : " + databaseFullPath);
 		FileReader reader = new FileReader(database);
 		MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
-		CommonLogger.instance.info("Total number of roms : " + menu.getGame().size());
+		// CommonLogger.instance.info("Total number of roms : " +
+		// menu.getGame().size());
 		return menu;
 	}
 
@@ -121,7 +122,7 @@ public class DatabaseUtilities {
 	 * @return
 	 */
 	public static String getDeltaPath(String system, DbMakerRegionEnum region) {
-		if (region == DbMakerRegionEnum.NONE) {
+		if (region == DbMakerRegionEnum.NONE || region == null) {
 			return null;
 		}
 		String path = getLogsDir(system) + File.separator + region.name() + ".delta";

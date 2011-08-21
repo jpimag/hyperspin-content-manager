@@ -19,6 +19,8 @@ public class MediaCheckerOption extends CommonOption {
 
 	public boolean manualResolving;
 
+	public boolean moveNotUsed;
+
 	public MediaCategoryEnum category;
 
 	/**

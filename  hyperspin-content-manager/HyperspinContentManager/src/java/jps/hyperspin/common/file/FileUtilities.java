@@ -41,6 +41,10 @@ public class FileUtilities {
 	}
 
 	public static void moveFile(String directorySource, String directoryDest, String media, String game) {
+		File d = new File(directoryDest);
+		if (!d.exists()) {
+			d.mkdirs();
+		}
 		File file = new File(directorySource + File.separator + media);
 		file.renameTo(new File(directoryDest + File.separator + game));
 	}
