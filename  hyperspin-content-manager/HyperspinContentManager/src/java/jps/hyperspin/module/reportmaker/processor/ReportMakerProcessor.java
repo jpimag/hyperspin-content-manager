@@ -35,10 +35,10 @@ public class ReportMakerProcessor extends CommonProcessor {
 
 		for (String system : Systems.instance.list()) {
 			// For each system
-			DbMakerOption dbOption = DbMakerOption.load();
+			DbMakerOption dbOption = DbMakerOption.load(system);
 			// TODO
 
-			MediaCheckerOption mediaOption = MediaCheckerOption.load();
+			MediaCheckerOption mediaOption = MediaCheckerOption.load(system);
 			// TODO
 		}
 		CommonLogger.instance.info("Report generated");

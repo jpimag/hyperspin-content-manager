@@ -20,7 +20,7 @@ public class MediaCheckerController {
 		MediaCheckerOption option = panelToModel();
 
 		// Save the model into a file
-		option.save();
+		option.save(system);
 
 		// MediaChecker
 		MediaCheckerWorker worker = new MediaCheckerWorker(system, option, MainController.instance.getDbDetail());
@@ -32,8 +32,10 @@ public class MediaCheckerController {
 
 	/**
 	 * Load preferences.
+	 * 
+	 * @param system
 	 */
-	public void load() {
+	public void load(String system) {
 		// Intitialise some comonent
 		getOptionPanel().getJComboBox().removeAllItems();
 		for (MediaCategoryEnum category : MediaCategoryEnum.values()) {
@@ -41,7 +43,7 @@ public class MediaCheckerController {
 		}
 
 		// Load preference option
-		MediaCheckerOption option = MediaCheckerOption.load();
+		MediaCheckerOption option = MediaCheckerOption.load(system);
 
 		// Update view according to preference
 		modelToPanel(option);
