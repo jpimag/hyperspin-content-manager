@@ -7,6 +7,7 @@ import javax.swing.JTabbedPane;
 import jps.hyperspin.module.dbdownloader.view.DatabaseTab;
 import jps.hyperspin.module.dbmaker.view.DbMakerTab;
 import jps.hyperspin.module.mediachecker.view.MediaCheckerTab;
+import jps.hyperspin.module.reportmaker.view.ReportMakerTab;
 
 public class MainTabbedPane extends JTabbedPane {
 
@@ -14,6 +15,7 @@ public class MainTabbedPane extends JTabbedPane {
 	private DatabaseTab dbDownloaderTab = null;
 	private DbMakerTab dbMakerTab = null;
 	private MediaCheckerTab mediaCheckerTab = null;
+	private ReportMakerTab reportMakerTab = null;
 
 	/**
 	 * This is the default constructor
@@ -36,6 +38,9 @@ public class MainTabbedPane extends JTabbedPane {
 		this.addTab("Database Maker", null, getDbMakerTab(), null);
 
 		this.addTab("Media Checker", getMediaCheckerTab());
+
+		this.addTab("Report Maker", getReportMakerTab());
+
 		// this.addTab("WHDLoad Tool", new WhdloadTab());
 	}
 
@@ -66,9 +71,9 @@ public class MainTabbedPane extends JTabbedPane {
 	}
 
 	/**
-	 * This method initializes dbMakerTab
+	 * This method initializes MediaCheckerTab
 	 * 
-	 * @return jps.hyperspin.module.dbMaker.view.dbMakerTab
+	 * @return jps.hyperspin.module.dbMaker.view.mediaMakerTab
 	 */
 	public MediaCheckerTab getMediaCheckerTab() {
 		if (mediaCheckerTab == null) {
@@ -76,5 +81,18 @@ public class MainTabbedPane extends JTabbedPane {
 			mediaCheckerTab.setPreferredSize(new Dimension(800, 400));
 		}
 		return mediaCheckerTab;
+	}
+
+	/**
+	 * This method initializes reportMakerTab
+	 * 
+	 * @return jps.hyperspin.module.dbMaker.view.reportMakerTab
+	 */
+	public ReportMakerTab getReportMakerTab() {
+		if (reportMakerTab == null) {
+			reportMakerTab = new ReportMakerTab();
+			reportMakerTab.setPreferredSize(new Dimension(800, 400));
+		}
+		return reportMakerTab;
 	}
 }

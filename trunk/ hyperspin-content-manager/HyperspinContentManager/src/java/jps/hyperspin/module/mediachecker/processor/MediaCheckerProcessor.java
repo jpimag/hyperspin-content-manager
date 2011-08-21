@@ -31,9 +31,9 @@ public class MediaCheckerProcessor extends CommonProcessor {
 	private MediaCheckerOption option;
 	private DatabaseDetail detail;
 
-	private DbCheckerResult result = new DbCheckerResult();
+	private MediaCheckerResult result = new MediaCheckerResult();
 
-	public class DbCheckerResult {
+	public class MediaCheckerResult {
 		int nbMediaFound = 0;
 		int nbMediaMissing = 0;
 

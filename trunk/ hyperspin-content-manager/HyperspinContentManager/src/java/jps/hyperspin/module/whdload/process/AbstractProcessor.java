@@ -1,4 +1,4 @@
-package jps.hyperspin.module;
+package jps.hyperspin.module.whdload.process;
 
 import java.io.File;
 import java.io.FileNotFoundException;

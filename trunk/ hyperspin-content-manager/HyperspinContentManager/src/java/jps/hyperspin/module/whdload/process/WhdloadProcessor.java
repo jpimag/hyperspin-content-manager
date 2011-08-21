@@ -10,7 +10,6 @@ import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.xml.XmlBinding;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
-import jps.hyperspin.module.AbstractProcessor;
 import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 import jps.hyperspin.module.whdload.model.GameType;
 import jps.hyperspin.module.whdload.model.WhdloadType;
