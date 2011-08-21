@@ -26,10 +26,12 @@ public class MediaCheckerOption extends CommonOption {
 	/**
 	 * load a CommonOption instance from disk. Create a new one if no instance
 	 * are found on disk.
+	 * 
+	 * @param system
 	 */
-	public static MediaCheckerOption load() {
+	public static MediaCheckerOption load(String system) {
 		try {
-			return (MediaCheckerOption) CommonOption.load(MediaCheckerOption.class);
+			return (MediaCheckerOption) CommonOption.load(MediaCheckerOption.class, system);
 		} catch (Exception e2) {
 			throw new IllegalArgumentException();
 		}

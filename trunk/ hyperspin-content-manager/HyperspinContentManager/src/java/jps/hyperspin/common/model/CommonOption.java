@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.main.controller.CommonLogger;
 
@@ -30,9 +29,9 @@ public abstract class CommonOption implements Serializable {
 	/**
 	 * Save the object on the disk.
 	 */
-	public void save() {
+	public void save(String system) {
 		try {
-			FileOutputStream fichier = new FileOutputStream(getSaveFilePath(getClass()));
+			FileOutputStream fichier = new FileOutputStream(getSaveFilePath(getClass(), system));
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
 			oos.writeObject(this);
 			oos.flush();
@@ -46,10 +45,10 @@ public abstract class CommonOption implements Serializable {
 	 * load a CommonOption instance from disk. Create a new one if no instance
 	 * are found on disk.
 	 */
-	protected static CommonOption load(Class<? extends CommonOption> classe) throws IllegalAccessException,
-			InstantiationException {
+	protected static CommonOption load(Class<? extends CommonOption> classe, String system)
+			throws IllegalAccessException, InstantiationException {
 		try {
-			FileInputStream fichier = new FileInputStream(getSaveFilePath(classe));
+			FileInputStream fichier = new FileInputStream(getSaveFilePath(classe, system));
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			return (CommonOption) ois.readObject();
 		} catch (Exception e) {
@@ -67,9 +66,8 @@ public abstract class CommonOption implements Serializable {
 	 * 
 	 * @return
 	 */
-	private static String getSaveFilePath(Class<? extends CommonOption> classe) {
-		return DatabaseUtilities.getDownloadedDatabaseDir(MainClass.mainFrame.getSystemSelected()) + File.separator
-				+ classe.getSimpleName() + ".ser";
+	private static String getSaveFilePath(Class<? extends CommonOption> classe, String system) {
+		return DatabaseUtilities.getDownloadedDatabaseDir(system) + File.separator + classe.getSimpleName() + ".ser";
 
 	}
 }

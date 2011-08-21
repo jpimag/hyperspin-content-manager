@@ -23,7 +23,7 @@ public class DbMakerController {
 		DbMakerOption option = panelToModel();
 
 		// Save the model into a file
-		option.save();
+		option.save(system);
 
 		// DbMaker
 		DbMakerWorker worker = new DbMakerWorker(system, option, MainController.instance.getDbDetail());
@@ -36,7 +36,7 @@ public class DbMakerController {
 	/**
 	 * Load preferences.
 	 */
-	public void load() {
+	public void load(String system) {
 		// Intitialise some comonent
 		ButtonGroup group = new ButtonGroup();
 		group.add(getOptionPanel().getNamingConventionPanel().getNoIntro());
@@ -54,7 +54,7 @@ public class DbMakerController {
 
 		// Load preference into DbMakerOption instance
 
-		DbMakerOption option = DbMakerOption.load();
+		DbMakerOption option = DbMakerOption.load(system);
 
 		// Update view according to preference
 		modelToPanel(option);

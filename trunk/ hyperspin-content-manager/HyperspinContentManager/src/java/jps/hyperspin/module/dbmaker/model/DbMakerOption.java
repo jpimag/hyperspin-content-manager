@@ -58,9 +58,9 @@ public class DbMakerOption extends CommonOption {
 	 * load a CommonOption instance from disk. Create a new one if no instance
 	 * are found on disk.
 	 */
-	public static DbMakerOption load() {
+	public static DbMakerOption load(String system) {
 		try {
-			return (DbMakerOption) CommonOption.load(DbMakerOption.class);
+			return (DbMakerOption) CommonOption.load(DbMakerOption.class, system);
 		} catch (Exception e2) {
 			throw new IllegalArgumentException();
 		}

@@ -58,8 +58,8 @@ public class MainFrame extends JFrame {
 						lastSelection = getSystemSelected();
 						DbDownLoaderController.instance.updateDetails();
 						// Initialize some controllers
-						DbMakerController.instance.load();
-						MediaCheckerController.instance.load();
+						DbMakerController.instance.load(getSystemSelected());
+						MediaCheckerController.instance.load(getSystemSelected());
 					}
 
 				} catch (Exception e) {
