@@ -64,6 +64,9 @@ public class DbDownLoaderController {
 					case SYSTEM_NOT_VERSIONNED:
 						msg = Message.getMessage("dbdownloader.hyperlist.notversionned.msg");
 						break;
+					case UNOFFICIAL_DB:
+						msg = Message.getMessage("dbdownloader.hyperlist.unofficialdb.msg");
+						break;
 					case OUT_DATED_DOWNLOADED_DB:
 						msg = Message.getMessage("dbdownloader.download.db.old.msg");
 						break;

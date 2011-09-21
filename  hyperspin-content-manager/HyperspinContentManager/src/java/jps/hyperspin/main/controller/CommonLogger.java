@@ -48,4 +48,11 @@ public class CommonLogger implements Logger {
 		panel.clear();
 	}
 
+	/**
+	 * @param forceLevel
+	 *            the forceLevel to set
+	 */
+	public void setForceLevel(LoggerLevel forceLevel) {
+		panel.setForceLevel(forceLevel);
+	}
 }

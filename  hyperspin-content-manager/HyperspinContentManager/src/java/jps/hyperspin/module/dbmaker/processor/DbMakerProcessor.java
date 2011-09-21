@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -37,8 +39,9 @@ public class DbMakerProcessor extends CommonProcessor {
 	private Map<String, Delta> regionDelta;
 	private Set<Delta> replacedGames = new HashSet<Delta>();
 	private DbMakerResult result = new DbMakerResult();
+	private List<String> missings = new ArrayList<String>();
 
-	public class DbMakerResult {
+	public static class DbMakerResult implements Serializable {
 		public long dbSize = 0;
 		public long nbMissing = 0;
 		public long nbReplaced = 0;
@@ -122,6 +125,8 @@ public class DbMakerProcessor extends CommonProcessor {
 						if (found) {
 							CommonLogger.instance.trace("Clone excluded : " + game.getName());
 							it.remove();
+							result.nbClones++;
+							continue;
 						}
 						result.nbClones++;
 					}
@@ -139,6 +144,7 @@ public class DbMakerProcessor extends CommonProcessor {
 					}
 					if (!found) {
 						result.nbMissing++;
+						missings.add(originalName);
 					}
 				}
 
@@ -170,12 +176,20 @@ public class DbMakerProcessor extends CommonProcessor {
 		}
 
 		// Logs
+		writeMissingsFile(missings);
 		CommonLogger.instance.info("\nTotal of " + (result.dbSize - result.nbMissing) + "/" + result.dbSize
 				+ " rom found (" + result.nbMissing + " roms missing)");
 		CommonLogger.instance.info("Total of " + (result.nbReplaced)
 				+ " roms replaced according to region preferences.");
 		CommonLogger.instance.info("-----------------------------------------------------");
 
+	}
+
+	/**
+	 * @return the result
+	 */
+	public DbMakerResult getResult() {
+		return result;
 	}
 
 	/**
@@ -219,5 +233,23 @@ public class DbMakerProcessor extends CommonProcessor {
 		game.setCrc("");
 		game.setDescription(game.getName());
 		replacedGames.add(delta);
+	}
+
+	/**
+	 * Write all non replaced region file.
+	 * 
+	 * @param datas
+	 * @param type
+	 */
+	private void writeMissingsFile(List<String> datas) throws IOException {
+		Collections.sort(datas);
+		String path = DatabaseUtilities.getLogsDir(system);
+		File file = new File(path);
+		file.mkdirs();
+		FileWriter writer = new FileWriter(path + File.separator + "missings.txt");
+		for (String s : datas) {
+			writer.write(s + "\n");
+		}
+		writer.close();
 	}
 }

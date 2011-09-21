@@ -1,7 +1,8 @@
 package jps.hyperspin.module.reportmaker.controller;
 
+import jps.hyperspin.MainClass;
 import jps.hyperspin.common.view.BasicProgressDialog;
-import jps.hyperspin.module.dbdownloader.controller.DbDownLoaderController;
+import jps.hyperspin.module.reportmaker.view.ReportMakerTab;
 import jps.hyperspin.module.reportmaker.worker.ReportMakerWorker;
 
 public class ReportMakerController {
@@ -10,11 +11,17 @@ public class ReportMakerController {
 
 	public void process() {
 
-		ReportMakerWorker worker = new ReportMakerWorker();
+		final ReportMakerTab tab = MainClass.mainFrame.getMainTabbedPane().getReportMakerTab();
+
+		ReportMakerWorker worker = new ReportMakerWorker() {
+			@Override
+			public void done() {
+				tab.displayReport();
+				super.done();
+			}
+		};
 		new BasicProgressDialog(worker);
 
-		// Update detail
-		DbDownLoaderController.instance.updateDetails();
 	}
 
 }

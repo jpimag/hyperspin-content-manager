@@ -16,22 +16,31 @@ import jps.hyperspin.main.controller.CommonLogger;
  * @author jps
  * 
  */
-public abstract class CommonOption implements Serializable {
+public abstract class CommonPeristable implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected CommonOption() {
+	protected CommonPeristable() {
 	}
 
 	/**
 	 * Save the object on the disk.
 	 */
-	public void save(String system) {
+	public void save(String category) {
 		try {
-			FileOutputStream fichier = new FileOutputStream(getSaveFilePath(getClass(), system));
+			String sDir = getSaveFileDir(getClass(), category);
+			File dir = new File(sDir);
+			if (!dir.exists()) {
+				dir.mkdir();
+			}
+			File file = new File(getSaveFilePath(getClass(), category));
+			if (file.exists()) {
+				file.delete();
+			}
+			FileOutputStream fichier = new FileOutputStream(getSaveFilePath(getClass(), category));
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
 			oos.writeObject(this);
 			oos.flush();
@@ -45,20 +54,25 @@ public abstract class CommonOption implements Serializable {
 	 * load a CommonOption instance from disk. Create a new one if no instance
 	 * are found on disk.
 	 */
-	protected static CommonOption load(Class<? extends CommonOption> classe, String system)
+	protected static CommonPeristable load(Class<? extends CommonPeristable> classe, String category)
 			throws IllegalAccessException, InstantiationException {
 		try {
-			FileInputStream fichier = new FileInputStream(getSaveFilePath(classe, system));
+			FileInputStream fichier = new FileInputStream(getSaveFilePath(classe, category));
 			ObjectInputStream ois = new ObjectInputStream(fichier);
-			return (CommonOption) ois.readObject();
+			return (CommonPeristable) ois.readObject();
 		} catch (Exception e) {
 			if (!(e instanceof FileNotFoundException)) {
 				CommonLogger.instance.error("Error deserializing preferences : " + e.getMessage());
 			}
 
-			return (CommonOption) classe.newInstance();
+			return (CommonPeristable) classe.newInstance();
 
 		}
+
+	}
+
+	private static String getSaveFileDir(Class<? extends CommonPeristable> classe, String category) {
+		return DatabaseUtilities.getDownloadedDatabaseDir(category);
 
 	}
 
@@ -66,8 +80,8 @@ public abstract class CommonOption implements Serializable {
 	 * 
 	 * @return
 	 */
-	private static String getSaveFilePath(Class<? extends CommonOption> classe, String system) {
-		return DatabaseUtilities.getDownloadedDatabaseDir(system) + File.separator + classe.getSimpleName() + ".ser";
+	private static String getSaveFilePath(Class<? extends CommonPeristable> classe, String category) {
+		return getSaveFileDir(classe, category) + File.separator + classe.getSimpleName() + ".ser";
 
 	}
 }

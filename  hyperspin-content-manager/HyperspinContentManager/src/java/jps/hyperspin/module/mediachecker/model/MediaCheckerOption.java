@@ -1,13 +1,13 @@
 package jps.hyperspin.module.mediachecker.model;
 
-import jps.hyperspin.common.model.CommonOption;
+import jps.hyperspin.common.model.CommonPeristable;
 
 /**
  * 
  * @author jps
  * 
  */
-public class MediaCheckerOption extends CommonOption {
+public class MediaCheckerOption extends CommonPeristable {
 	/**
 	 * 
 	 */
@@ -17,9 +17,9 @@ public class MediaCheckerOption extends CommonOption {
 		super();
 	}
 
-	public boolean manualResolving;
+	public boolean manualResolving = false;
 
-	public boolean moveNotUsed;
+	public boolean moveNotUsed = false;
 
 	public MediaCategoryEnum category;
 
@@ -31,7 +31,7 @@ public class MediaCheckerOption extends CommonOption {
 	 */
 	public static MediaCheckerOption load(String system) {
 		try {
-			return (MediaCheckerOption) CommonOption.load(MediaCheckerOption.class, system);
+			return (MediaCheckerOption) CommonPeristable.load(MediaCheckerOption.class, system);
 		} catch (Exception e2) {
 			throw new IllegalArgumentException();
 		}
