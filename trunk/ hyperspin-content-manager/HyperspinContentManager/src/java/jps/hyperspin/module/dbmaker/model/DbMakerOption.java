@@ -1,6 +1,6 @@
 package jps.hyperspin.module.dbmaker.model;
 
-import jps.hyperspin.common.model.CommonOption;
+import jps.hyperspin.common.model.CommonPeristable;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConvention;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.NoIntro;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.RedumpOrg;
@@ -10,7 +10,7 @@ import jps.hyperspin.module.dbmaker.worker.namingconventions.RedumpOrg;
  * @author jps
  * 
  */
-public class DbMakerOption extends CommonOption {
+public class DbMakerOption extends CommonPeristable {
 	/**
 	 * 
 	 */
@@ -60,7 +60,7 @@ public class DbMakerOption extends CommonOption {
 	 */
 	public static DbMakerOption load(String system) {
 		try {
-			return (DbMakerOption) CommonOption.load(DbMakerOption.class, system);
+			return (DbMakerOption) CommonPeristable.load(DbMakerOption.class, system);
 		} catch (Exception e2) {
 			throw new IllegalArgumentException();
 		}

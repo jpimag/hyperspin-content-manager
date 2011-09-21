@@ -76,7 +76,6 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 		} catch (Exception e) {
 			String msg = Message.getMessage("dbmaker.error.downloadeddatabase.notfound.msg");
 			JOptionPane.showMessageDialog(null, msg);
-			CommonLogger.instance.error(msg);
 			throw new IllegalArgumentException(e);
 		}
 		Map<String, GameType> games = DatabaseUtilities.getAsMap(database);

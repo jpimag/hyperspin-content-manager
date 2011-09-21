@@ -19,9 +19,6 @@ public class MediaCheckerController {
 		// Convert options choosen to Option instance
 		MediaCheckerOption option = panelToModel();
 
-		// Save the model into a file
-		option.save(system);
-
 		// MediaChecker
 		MediaCheckerWorker worker = new MediaCheckerWorker(system, option, MainController.instance.getDbDetail());
 		new BasicProgressDialog(worker);

@@ -36,9 +36,11 @@ public class DeltaFileUtilities {
 	public static Map<String, Delta> loadAllDeltaFileIndexedByReplacementName(String path) throws IOException {
 		Map<String, Delta> result = new HashMap<String, Delta>();
 		File dir = new File(path);
-		for (File file : dir.listFiles()) {
-			if (file.getName().endsWith("delta")) {
-				result.putAll(loadDeltaFileIndexedByReplacementName(file.getAbsolutePath()));
+		if (dir.exists()) {
+			for (File file : dir.listFiles()) {
+				if (file.getName().endsWith("delta")) {
+					result.putAll(loadDeltaFileIndexedByReplacementName(file.getAbsolutePath()));
+				}
 			}
 		}
 		return result;

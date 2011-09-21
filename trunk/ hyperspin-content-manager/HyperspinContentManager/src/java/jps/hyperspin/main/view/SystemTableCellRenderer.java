@@ -37,6 +37,7 @@ public class SystemTableCellRenderer extends DefaultTableCellRenderer {
 			switch (status) {
 			case SYSTEM_NOT_AVAILABLE:
 			case SYSTEM_NOT_VERSIONNED:
+			case UNOFFICIAL_DB:
 				setBackground(Color.RED);
 				setForeground(Color.WHITE);
 				break;

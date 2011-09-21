@@ -17,6 +17,7 @@ public class PanelLogger extends JPanel {
 	private JTextArea jTextArea = null;
 	private JButton clearButton = null;
 	private JScrollPane jScrollPane = null; // @jve:decl-index=0:visual-constraint="636,39"
+	private LoggerLevel forceLevel = LoggerLevel.TRACE; // @jve:decl-index=0:
 
 	/**
 	 * This is the default constructor
@@ -89,7 +90,7 @@ public class PanelLogger extends JPanel {
 	}
 
 	public void append(String s, LoggerLevel level) {
-		if (level.getIndex() >= level.getIndex()) {
+		if (level.getIndex() <= forceLevel.getIndex()) {
 			getJTextArea().setText(getJTextArea().getText().concat("\n" + s + "\n"));
 		}
 	}
@@ -109,6 +110,21 @@ public class PanelLogger extends JPanel {
 			jScrollPane.setViewportView(getJTextArea());
 		}
 		return jScrollPane;
+	}
+
+	/**
+	 * @return the forceLevel
+	 */
+	public LoggerLevel getForceLevel() {
+		return forceLevel;
+	}
+
+	/**
+	 * @param forceLevel
+	 *            the forceLevel to set
+	 */
+	public void setForceLevel(LoggerLevel forceLevel) {
+		this.forceLevel = forceLevel;
 	}
 
 } // @jve:decl-index=0:visual-constraint="10,10"

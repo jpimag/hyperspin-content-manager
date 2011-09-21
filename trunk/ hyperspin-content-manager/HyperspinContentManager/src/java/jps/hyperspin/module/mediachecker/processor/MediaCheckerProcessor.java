@@ -1,6 +1,7 @@
 package jps.hyperspin.module.mediachecker.processor;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,9 +34,13 @@ public class MediaCheckerProcessor extends CommonProcessor {
 
 	private MediaCheckerResult result = new MediaCheckerResult();
 
-	public class MediaCheckerResult {
-		int nbMediaFound = 0;
-		int nbMediaMissing = 0;
+	public static class MediaCheckerResult implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public int nbMediaFound = 0;
+		public int nbMediaMissing = 0;
 
 	}
 
@@ -68,8 +73,10 @@ public class MediaCheckerProcessor extends CommonProcessor {
 		FileFilterExtension filter = new FileFilterExtension(option.category.getExtension());
 		File dir = new File(mediaDir);
 		File[] files = dir.listFiles(filter);
-		for (File file : files) {
-			medias.put(FileUtilities.getNameWithoutExtension(file), FileUtilities.getExtension(file));
+		if (files != null) {
+			for (File file : files) {
+				medias.put(FileUtilities.getNameWithoutExtension(file), FileUtilities.getExtension(file));
+			}
 		}
 		// Unused
 		Map<String, String> unused = new HashMap<String, String>();
@@ -180,6 +187,13 @@ public class MediaCheckerProcessor extends CommonProcessor {
 		result.nbMediaMissing = notfound.size();
 		CommonLogger.instance.info("\nTotal of " + result.nbMediaFound + "/" + menu.getGame().size() + " found ("
 				+ result.nbMediaMissing + "medias/video missing)");
+	}
+
+	/**
+	 * @return the result
+	 */
+	public MediaCheckerResult getResult() {
+		return result;
 	}
 
 	protected List<DistanceString> bestMatch(String game, Map<String, String> romsMap) {

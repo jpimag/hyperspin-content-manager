@@ -4,17 +4,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import jps.hyperspin.common.i18n.Message;
-import jps.hyperspin.module.mediachecker.controller.MediaCheckerController;
+import jps.hyperspin.module.reportmaker.controller.ReportMakerController;
+import jps.hyperspin.module.reportmaker.model.Report;
 
 public class ReportMakerTab extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JButton jButton = null; // @jve:decl-index=0:visual-constraint="205,103"
+	private JButton launchButton = null; // @jve:decl-index=0:visual-constraint="205,103"
+	private JButton viewButton = null; // @jve:decl-index=0:visual-constraint="205,103"
 
 	/**
 	 * This is the default constructor
@@ -37,27 +40,61 @@ public class ReportMakerTab extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(new Dimension(800, 400));
 		this.setBackground(Color.white);
-		this.add(getJButton(), gridBagConstraints);
+		this.add(getLaunchButton(), gridBagConstraints);
 
+		GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
+		gridBagConstraints2.insets = new Insets(50, 0, 0, 0);
+		gridBagConstraints2.gridx = 0;
+		gridBagConstraints2.gridy = 1;
+		this.add(getViewButton(), gridBagConstraints2);
 	}
 
 	/**
-	 * This method initializes jButton
+	 * This method initializes launchButton
 	 * 
 	 * @return javax.swing.JButton
 	 */
-	private JButton getJButton() {
-		if (jButton == null) {
-			jButton = new JButton();
-			jButton.setText(Message.getMessage("reportmaker.process.label"));
-			jButton.addActionListener(new java.awt.event.ActionListener() {
+	private JButton getLaunchButton() {
+		if (launchButton == null) {
+			launchButton = new JButton();
+			launchButton.setText(Message.getMessage("reportmaker.process.label"));
+			launchButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()");
-					MediaCheckerController.instance.process();
+					ReportMakerController.instance.process();
 				}
 			});
 		}
-		return jButton;
+		return launchButton;
 	}
 
+	/**
+	 * This method initializes viewButton
+	 * 
+	 * @return javax.swing.JButton
+	 */
+	private JButton getViewButton() {
+		if (viewButton == null) {
+			viewButton = new JButton();
+			viewButton.setText(Message.getMessage("reportmaker.view.label"));
+			viewButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()");
+					displayReport();
+				}
+			});
+		}
+		return viewButton;
+	}
+
+	public void displayReport() {
+		// Load report
+		Report report = Report.load();
+
+		// Display report
+		ReportFrame reportFrame = new ReportFrame(report);
+		reportFrame.setResizable(false);
+		reportFrame.setVisible(true);
+
+	}
 }

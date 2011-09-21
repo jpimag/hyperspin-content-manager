@@ -63,7 +63,9 @@ public class CheckDatabaseVersionProcessor extends AbstractDbDownloaderProcessor
 			return VersionStatut.SYSTEM_NOT_AVAILABLE;
 		} else if (hyperlistDatabase.getHeader() == null) {
 			return VersionStatut.SYSTEM_NOT_VERSIONNED;
-		} else if (downloadedDatabase == null || downloadedDatabase.getHeader() == null
+		} else if (downloadedDatabase == null) {
+			return VersionStatut.UNOFFICIAL_DB;
+		} else if (downloadedDatabase.getHeader() == null
 				|| !getVersion(downloadedDatabase.getHeader()).equals(getVersion(hyperlistDatabase.getHeader()))) {
 			return VersionStatut.OUT_DATED_DOWNLOADED_DB;
 
@@ -75,6 +77,13 @@ public class CheckDatabaseVersionProcessor extends AbstractDbDownloaderProcessor
 
 		}
 
+	}
+
+	public String getListversion() {
+		if (userDatabase == null || userDatabase.getHeader() == null) {
+			return "";
+		}
+		return userDatabase.getHeader().getListversion();
 	}
 
 	private String getVersion(HeaderType header) {
