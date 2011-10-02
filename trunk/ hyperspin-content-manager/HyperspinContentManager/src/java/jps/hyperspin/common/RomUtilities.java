@@ -35,14 +35,39 @@ public class RomUtilities {
 	 */
 	public static void moveRomToReplaceFolder(String romFileName, String system, DatabaseDetail detail)
 			throws HCMDatabaseException {
-		File destDir = new File(detail.systemIniProperties.getRomPath() + File.separator + "replaced");
+		moveRomToFolder(romFileName, system, detail, "replaced");
+
+	}
+
+	/**
+	 * 
+	 * @param romFileName
+	 * @param system
+	 * @param detail
+	 * @throws HCMDatabaseException
+	 */
+	public static void moveRomToNotUsedFolder(String romFileName, String system, DatabaseDetail detail)
+			throws HCMDatabaseException {
+		moveRomToFolder(romFileName, system, detail, "unused");
+	}
+
+	/**
+	 * 
+	 * @param romFileName
+	 * @param system
+	 * @param detail
+	 * @throws HCMDatabaseException
+	 */
+	private static void moveRomToFolder(String romFileName, String system, DatabaseDetail detail, String dirname)
+			throws HCMDatabaseException {
+		File destDir = new File(detail.systemIniProperties.getRomPath() + File.separator + dirname);
 		destDir.mkdirs();
 
 		// Is it a simple file rom ?
-		File file = new File(detail.systemIniProperties.getRomPath(), romFileName + "."
-				+ detail.systemIniProperties.getRomExtension());
+		String nameWithExtension = romFileName + "." + detail.systemIniProperties.getRomExtension();
+		File file = new File(detail.systemIniProperties.getRomPath(), nameWithExtension);
 		if (file.exists() && file.isFile()) {
-			file.renameTo(new File(destDir, romFileName));
+			file.renameTo(new File(destDir, nameWithExtension));
 		} else {
 			// Is the rom in a dedicated directory ?
 			file = new File(detail.systemIniProperties.getRomPath() + File.separator

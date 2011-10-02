@@ -125,10 +125,11 @@ public class ReportTableModel extends AbstractTableModel {
 		String result = "";
 		if (option != null) {
 			if (option.namingConventions != null) {
-				result += "Convention : " + option.namingConventions + "\n";
+				result += option.namingConventions;
 			}
-			result += "No Clones : " + option.noClone + "\n";
-			result += "Delta : " + option.useDeltaFiles + "\n";
+			if (option.noClone) {
+				result += " - no clones";
+			}
 		}
 		return result;
 	}

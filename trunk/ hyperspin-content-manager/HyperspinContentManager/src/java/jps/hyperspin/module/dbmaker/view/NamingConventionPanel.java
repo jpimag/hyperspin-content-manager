@@ -20,8 +20,10 @@ public class NamingConventionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JRadioButton noIntro = null;
 	private JRadioButton redumpOrg = null;
+	private JRadioButton tosec = null;
 	private JLabel noIntroLabel = null;
 	private JLabel redumpOrgLabel = null;
+	private JLabel tosecLabel = null;
 	private JLabel preferredRegionLabel = null;
 	private JLabel preferredCountryLabel = null;
 	private JComboBox preferredRegion = null;
@@ -43,15 +45,24 @@ public class NamingConventionPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
+		GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
+		gridBagConstraints12.gridx = 0;
+		gridBagConstraints12.gridy = 2;
+		tosecLabel = new JLabel();
+		tosecLabel.setText(Message.getMessage("dbmaker.nameconvention.tosec.label"));
+		GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+		gridBagConstraints11.gridx = 3;
+		gridBagConstraints11.anchor = GridBagConstraints.WEST;
+		gridBagConstraints11.gridy = 2;
 		GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
 		gridBagConstraints10.gridx = 3;
 		gridBagConstraints10.anchor = GridBagConstraints.WEST;
-		gridBagConstraints10.gridy = 2;
+		gridBagConstraints10.gridy = 3;
 		otherLabel = new JLabel();
 		otherLabel.setText(Message.getMessage("dbmaker.nameconvention.other.label"));
 		GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
 		gridBagConstraints9.gridx = 0;
-		gridBagConstraints9.gridy = 2;
+		gridBagConstraints9.gridy = 3;
 		GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
 		gridBagConstraints7.fill = GridBagConstraints.BOTH;
 		gridBagConstraints7.gridy = 1;
@@ -96,7 +107,7 @@ public class NamingConventionPanel extends JPanel {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		this.setSize(464, 134);
+		this.setSize(464, 145);
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.white);
 		this.setBorder(BorderFactory.createTitledBorder(null, Message.getMessage("dbmaker.options.naming.label"),
@@ -104,6 +115,7 @@ public class NamingConventionPanel extends JPanel {
 						51)));
 		this.add(getNoIntro(), gridBagConstraints);
 		this.add(getRedumpOrg(), gridBagConstraints1);
+		this.add(getTosec(), gridBagConstraints12);
 		this.add(noIntroLabel, gridBagConstraints2);
 		this.add(redumpOrgLabel, gridBagConstraints3);
 		this.add(preferredRegionLabel, gridBagConstraints4);
@@ -112,6 +124,7 @@ public class NamingConventionPanel extends JPanel {
 		this.add(getPreferredCountry(), gridBagConstraints7);
 		this.add(getOther(), gridBagConstraints9);
 		this.add(otherLabel, gridBagConstraints10);
+		this.add(tosecLabel, gridBagConstraints11);
 	}
 
 	/**
@@ -126,6 +139,19 @@ public class NamingConventionPanel extends JPanel {
 			noIntro.setSelected(true);
 		}
 		return noIntro;
+	}
+
+	/**
+	 * This method initializes Tosec
+	 * 
+	 * @return javax.swing.JRadioButton
+	 */
+	public JRadioButton getTosec() {
+		if (tosec == null) {
+			tosec = new JRadioButton();
+			tosec.setBackground(Color.white);
+		}
+		return tosec;
 	}
 
 	/**
