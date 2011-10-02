@@ -4,6 +4,7 @@ import jps.hyperspin.common.model.CommonPeristable;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.AbstractNamingConvention;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.NoIntro;
 import jps.hyperspin.module.dbmaker.worker.namingconventions.RedumpOrg;
+import jps.hyperspin.module.dbmaker.worker.namingconventions.Tosec;
 
 /**
  * 
@@ -25,7 +26,7 @@ public class DbMakerOption extends CommonPeristable {
 	}
 
 	public enum NamingConventions {
-		NO_INTRO, REDUMP_ORG, OTHER;
+		NO_INTRO, REDUMP_ORG, TOSEC, OTHER;
 
 		/**
 		 * 
@@ -37,6 +38,8 @@ public class DbMakerOption extends CommonPeristable {
 				return new NoIntro();
 			case REDUMP_ORG:
 				return new RedumpOrg();
+			case TOSEC:
+				return new Tosec();
 			}
 			return null;
 		}
@@ -45,6 +48,8 @@ public class DbMakerOption extends CommonPeristable {
 	public boolean noClone;
 
 	public boolean moveReplacedRoms;
+
+	public boolean moveNotUsedRoms;
 
 	public boolean useDeltaFiles;
 

@@ -21,6 +21,8 @@ public class DbMakerOptionPanel extends JPanel {
 	private JLabel noClonesLabel = null;
 	private JCheckBox removeReplacedRoms = null;
 	private JLabel removeReplacedRomsLabel = null;
+	private JCheckBox removeNotUsedRoms = null;
+	private JLabel removeNotUsedRomsLabel = null;
 	private NamingConventionPanel namingConvention = null;
 	private JButton processButton = null;
 
@@ -70,9 +72,18 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints9.gridy = 1;
 		removeReplacedRomsLabel = new JLabel();
 		removeReplacedRomsLabel.setText(Message.getMessage("dbmaker.options.movereplacedroms.label"));
+		GridBagConstraints gridBagConstraints19 = new GridBagConstraints();
+		gridBagConstraints19.gridx = 1;
+		gridBagConstraints19.anchor = GridBagConstraints.WEST;
+		gridBagConstraints19.gridy = 2;
+		removeNotUsedRomsLabel = new JLabel();
+		removeNotUsedRomsLabel.setText(Message.getMessage("dbmaker.options.movenotusedroms.label"));
 		GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 		gridBagConstraints8.gridx = 0;
 		gridBagConstraints8.gridy = 1;
+		GridBagConstraints gridBagConstraints18 = new GridBagConstraints();
+		gridBagConstraints18.gridx = 0;
+		gridBagConstraints18.gridy = 2;
 		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 		gridBagConstraints1.gridx = 1;
 		gridBagConstraints1.anchor = GridBagConstraints.WEST;
@@ -89,7 +100,9 @@ public class DbMakerOptionPanel extends JPanel {
 		this.add(getNoClones(), gridBagConstraints);
 		this.add(noClonesLabel, gridBagConstraints1);
 		this.add(getRemoveReplacedRoms(), gridBagConstraints8);
+		this.add(getRemoveNotUsedRoms(), gridBagConstraints18);
 		this.add(removeReplacedRomsLabel, gridBagConstraints9);
+		this.add(removeNotUsedRomsLabel, gridBagConstraints19);
 		this.add(getNamingConventionPanel(), gridBagConstraints12);
 		this.add(getProcessButton(), gridBagConstraints3);
 	}
@@ -118,6 +131,19 @@ public class DbMakerOptionPanel extends JPanel {
 			removeReplacedRoms.setBackground(Color.white);
 		}
 		return removeReplacedRoms;
+	}
+
+	/**
+	 * This method initializes removeNotUsedRoms
+	 * 
+	 * @return javax.swing.JCheckBox
+	 */
+	public JCheckBox getRemoveNotUsedRoms() {
+		if (removeNotUsedRoms == null) {
+			removeNotUsedRoms = new JCheckBox();
+			removeNotUsedRoms.setBackground(Color.white);
+		}
+		return removeNotUsedRoms;
 	}
 
 	/**

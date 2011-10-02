@@ -36,8 +36,8 @@ public class ReportFrame extends JFrame {
 	 * 
 	 */
 	private void initialize() {
-		setTitle(Message.getMessage("reportmaker.report.title")+ " " + report.date);
-		this.setSize(new Dimension(1024, 768));
+		setTitle(Message.getMessage("reportmaker.report.title") + " " + report.date);
+		this.setSize(new Dimension(1200, 768));
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
@@ -48,6 +48,9 @@ public class ReportFrame extends JFrame {
 		gridBagConstraints.weighty = 0.0;
 		gridBagConstraints.gridy = 0;
 		add(getReportTabletPanel(), gridBagConstraints);
+
+		this.setSize((int) getToolkit().getScreenSize().getWidth(),
+				((int) getToolkit().getScreenSize().getHeight() - 40));
 	}
 
 	/**

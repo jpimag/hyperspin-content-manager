@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,6 +41,7 @@ public class DbMakerProcessor extends CommonProcessor {
 	private Set<Delta> replacedGames = new HashSet<Delta>();
 	private DbMakerResult result = new DbMakerResult();
 	private List<String> missings = new ArrayList<String>();
+	private Set<String> used = new HashSet<String>();
 
 	public static class DbMakerResult implements Serializable {
 		public long dbSize = 0;
@@ -145,6 +147,8 @@ public class DbMakerProcessor extends CommonProcessor {
 					if (!found) {
 						result.nbMissing++;
 						missings.add(originalName);
+					} else {
+						used.add(game.getName());
 					}
 				}
 
@@ -152,6 +156,15 @@ public class DbMakerProcessor extends CommonProcessor {
 		}
 
 		setProgress(70);
+
+		if (option.moveNotUsedRoms) {
+			// We move all not used roms
+			for (String rom : romMap.keySet()) {
+				if (!used.contains(rom)) {
+					RomUtilities.moveRomToNotUsedFolder(rom, system, detail);
+				}
+			}
+		}
 
 		// Genre file
 		MenuTypeWrapper genreMenu = new MenuTypeWrapper(new MenuType(), "Genre.xml");
@@ -177,6 +190,9 @@ public class DbMakerProcessor extends CommonProcessor {
 
 		// Logs
 		writeMissingsFile(missings);
+		Collection<String> unused = romMap.keySet();
+		unused.removeAll(used);
+		writUnusedFile(new ArrayList<String>(unused));
 		CommonLogger.instance.info("\nTotal of " + (result.dbSize - result.nbMissing) + "/" + result.dbSize
 				+ " rom found (" + result.nbMissing + " roms missing)");
 		CommonLogger.instance.info("Total of " + (result.nbReplaced)
@@ -247,6 +263,24 @@ public class DbMakerProcessor extends CommonProcessor {
 		File file = new File(path);
 		file.mkdirs();
 		FileWriter writer = new FileWriter(path + File.separator + "missings.txt");
+		for (String s : datas) {
+			writer.write(s + "\n");
+		}
+		writer.close();
+	}
+
+	/**
+	 * Write all non replaced region file.
+	 * 
+	 * @param datas
+	 * @param type
+	 */
+	private void writUnusedFile(List<String> datas) throws IOException {
+		Collections.sort(datas);
+		String path = DatabaseUtilities.getLogsDir(system);
+		File file = new File(path);
+		file.mkdirs();
+		FileWriter writer = new FileWriter(path + File.separator + "unused.txt");
 		for (String s : datas) {
 			writer.write(s + "\n");
 		}

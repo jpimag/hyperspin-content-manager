@@ -41,6 +41,7 @@ public class DbMakerController {
 		ButtonGroup group = new ButtonGroup();
 		group.add(getOptionPanel().getNamingConventionPanel().getNoIntro());
 		group.add(getOptionPanel().getNamingConventionPanel().getRedumpOrg());
+		group.add(getOptionPanel().getNamingConventionPanel().getTosec());
 		group.add(getOptionPanel().getNamingConventionPanel().getOther());
 
 		getOptionPanel().getNamingConventionPanel().getPreferredRegion().removeAllItems();
@@ -74,6 +75,7 @@ public class DbMakerController {
 		DbMakerOption option = new DbMakerOption();
 		option.noClone = getOptionPanel().getNoClones().isSelected();
 		option.moveReplacedRoms = getOptionPanel().getRemoveReplacedRoms().isSelected();
+		option.moveNotUsedRoms = getOptionPanel().getRemoveNotUsedRoms().isSelected();
 		option.country = (DbMakerRegionEnum) getOptionPanel().getNamingConventionPanel().getPreferredCountry()
 				.getSelectedItem();
 		option.region = (DbMakerRegionEnum) getOptionPanel().getNamingConventionPanel().getPreferredRegion()
@@ -81,8 +83,12 @@ public class DbMakerController {
 
 		if (getOptionPanel().getNamingConventionPanel().getNoIntro().isSelected()) {
 			option.namingConventions = NamingConventions.NO_INTRO;
-		} else {
+		} else if (getOptionPanel().getNamingConventionPanel().getRedumpOrg().isSelected()) {
 			option.namingConventions = NamingConventions.REDUMP_ORG;
+		} else if (getOptionPanel().getNamingConventionPanel().getTosec().isSelected()) {
+			option.namingConventions = NamingConventions.TOSEC;
+		} else {
+			option.namingConventions = NamingConventions.OTHER;
 		}
 		return option;
 	}
@@ -95,16 +101,21 @@ public class DbMakerController {
 	private void modelToPanel(DbMakerOption option) {
 		getOptionPanel().getNoClones().setSelected(option.noClone);
 		getOptionPanel().getRemoveReplacedRoms().setSelected(option.moveReplacedRoms);
+		getOptionPanel().getRemoveNotUsedRoms().setSelected(option.moveNotUsedRoms);
 		getOptionPanel().getNamingConventionPanel().getPreferredRegion().setSelectedItem(option.region);
 		getOptionPanel().getNamingConventionPanel().getPreferredCountry().setSelectedItem(option.country);
 		getOptionPanel().getNamingConventionPanel().getNoIntro().setSelected(false);
 		getOptionPanel().getNamingConventionPanel().getRedumpOrg().setSelected(false);
+		getOptionPanel().getNamingConventionPanel().getTosec().setSelected(false);
 		switch (option.namingConventions) {
 		case NO_INTRO:
 			getOptionPanel().getNamingConventionPanel().getNoIntro().setSelected(true);
 			break;
 		case REDUMP_ORG:
 			getOptionPanel().getNamingConventionPanel().getRedumpOrg().setSelected(true);
+			break;
+		case TOSEC:
+			getOptionPanel().getNamingConventionPanel().getTosec().setSelected(true);
 			break;
 		}
 
