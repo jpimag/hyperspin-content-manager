@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.DeltaFileUtilities;
 import jps.hyperspin.common.RomUtilities;
@@ -124,17 +123,18 @@ public class DbMakerProcessor extends CommonProcessor {
 				// exclude clones
 				if (option.noClone) {
 					if (game.getCloneof() != null && !"".equals(game.getCloneof().trim())) {
+						if (menu.getFileName().startsWith(system)) {
+							result.nbClones++;
+						}
 						if (found) {
 							CommonLogger.instance.trace("Clone excluded : " + game.getName());
 							it.remove();
-							result.nbClones++;
 							continue;
 						}
-						result.nbClones++;
 					}
 				}
 
-				if (menu.getFileName().startsWith(MainClass.mainFrame.getSystemSelected())) {
+				if (menu.getFileName().startsWith(system)) {
 					// Main database
 					result.dbSize++;
 					if (replaced) {
@@ -169,7 +169,7 @@ public class DbMakerProcessor extends CommonProcessor {
 		// Genre file
 		MenuTypeWrapper genreMenu = new MenuTypeWrapper(new MenuType(), "Genre.xml");
 		for (MenuTypeWrapper menu : menus) {
-			if (!menu.getFileName().startsWith(MainClass.mainFrame.getSystemSelected())) {
+			if (!menu.getFileName().startsWith(system)) {
 				GameType category = new GameType();
 				category.setName(FileUtilities.getNameWithoutExtension(menu.getFileName()));
 				genreMenu.getMenu().getGame().add(category);

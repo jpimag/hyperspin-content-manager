@@ -1,5 +1,6 @@
 package jps.hyperspin.module.dbdownloader.worker;
 
+import jps.hyperspin.MainClass;
 import jps.hyperspin.common.worker.CommonWorker;
 import jps.hyperspin.module.dbdownloader.processor.DbDownloaderProcessor;
 
@@ -15,7 +16,7 @@ public class DbDowloaderWorker extends CommonWorker {
 
 	public DbDowloaderWorker() {
 		super();
-		processor = new DbDownloaderProcessor(this, MAX_PROGRESS_VALUE);
+		processor = new DbDownloaderProcessor(MainClass.mainFrame.getSystemSelected(), this, MAX_PROGRESS_VALUE);
 
 	}
 
