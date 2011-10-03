@@ -60,7 +60,6 @@ public class ReportMakerTab extends JPanel {
 			launchButton.setText(Message.getMessage("reportmaker.process.label"));
 			launchButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()");
 					ReportMakerController.instance.process();
 				}
 			});
@@ -79,7 +78,6 @@ public class ReportMakerTab extends JPanel {
 			viewButton.setText(Message.getMessage("reportmaker.view.label"));
 			viewButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()");
 					displayReport();
 				}
 			});

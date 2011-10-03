@@ -3,10 +3,10 @@ package jps.hyperspin.main.controller;
 import java.io.File;
 
 import jps.hyperspin.MainClass;
+import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.main.model.Systems;
 import jps.hyperspin.main.model.VersionStatut;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
-import jps.hyperspin.module.dbdownloader.view.DatabaseDetailPanel;
 import jps.hyperspin.module.dbdownloader.view.SystemIniProperties;
 
 public class MainController {
@@ -32,7 +32,6 @@ public class MainController {
 	 */
 	public int computeSystems() {
 
-		System.out.println("Hyper spin field  edited");
 		// Update JList
 
 		File file = new File(MainClass.HYPERSPIN_PATH);
@@ -53,16 +52,12 @@ public class MainController {
 		return Systems.instance.list().size();
 	}
 
-	public DatabaseDetail getDbDetail() {
-		DatabaseDetailPanel detailPanel = MainClass.mainFrame.getMainTabbedPane().getDbDownloaderTab()
-				.getDatabaseDetailPanel();
+	public DatabaseDetail getDbDetail(String system) {
 		DatabaseDetail detail = new DatabaseDetail();
-		detail.mediaDir = detailPanel.getMediaDirField().getText();
-		detail.userDatabaseDir = detailPanel.getUserDatabaseDirField().getText();
-		detail.systemIniProperties = new SystemIniProperties(MainClass.HYPERSPIN_PATH,
-				MainClass.mainFrame.getSystemSelected());
+		detail.systemIniProperties = new SystemIniProperties(MainClass.HYPERSPIN_PATH, system);
+		detail.mediaDir = MainClass.HYPERSPIN_PATH + File.separator + "Media" + File.separator + system;
+		detail.userDatabaseDir = DatabaseUtilities.getUserDatabaseDir(system);
 		return detail;
 
 	}
-
 }

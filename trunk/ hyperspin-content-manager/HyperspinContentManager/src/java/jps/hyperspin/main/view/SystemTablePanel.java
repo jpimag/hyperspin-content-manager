@@ -70,10 +70,6 @@ public class SystemTablePanel extends JPanel {
 			checkButton.setText(Message.getMessage("dbdownloader.system.check.label"));
 			checkButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO
-																// Auto-generated
-																// Event stub
-																// actionPerformed()
 					// worker
 					CheckAllDatabaseVersionWorker worker = new CheckAllDatabaseVersionWorker();
 					new BasicProgressDialog(worker);

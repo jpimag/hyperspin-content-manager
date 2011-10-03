@@ -6,7 +6,6 @@ import java.util.Map;
 
 import jps.hyperspin.common.file.FileFilterDirectory;
 import jps.hyperspin.common.file.FileFilterExtension;
-import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 
@@ -70,10 +69,9 @@ public class RomUtilities {
 			file.renameTo(new File(destDir, nameWithExtension));
 		} else {
 			// Is the rom in a dedicated directory ?
-			file = new File(detail.systemIniProperties.getRomPath() + File.separator
-					+ FileUtilities.getNameWithoutExtension(romFileName));
+			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romFileName);
 			if (file.exists() && file.isDirectory()) {
-				file.renameTo(new File(destDir, FileUtilities.getNameWithoutExtension(romFileName)));
+				file.renameTo(new File(destDir, romFileName));
 			}
 		}
 

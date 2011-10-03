@@ -39,86 +39,89 @@ public class ReportMakerWorker extends CommonWorker {
 
 	@Override
 	protected void executeInternal() throws Exception {
-		CommonLogger.instance.setForceLevel(LoggerLevel.ERROR);
-		Report report = new Report();
-		report.date = new Date();
+		try {
+			CommonLogger.instance.setForceLevel(LoggerLevel.NOTIF);
+			Report report = new Report();
+			report.date = new Date();
 
-		// progess count
-		double progressUnit = (double) MAX_PROGRESS_VALUE / (double) (Systems.instance.list().size() * 11);
-		double progress = 0;
+			// progess count
+			double progressUnit = (double) MAX_PROGRESS_VALUE / (double) (Systems.instance.list().size() * 11);
+			double progress = 0;
 
-		// system loop
-		int i = 0;
-		for (String system : Systems.instance.list()) {
-			if (i == 2) {
-				break;
-			}
-			i++;
-			ReportRow row = new ReportRow();
-			row.system = system;
-			DatabaseDetail detail = MainController.instance.getDbDetail();
+			// system loop
+			int i = 0;
+			for (String system : Systems.instance.list()) {
+				// if (i == 2) {
+				// break;
+				// }
+				i++;
+				ReportRow row = new ReportRow();
+				row.system = system;
+				DatabaseDetail detail = MainController.instance.getDbDetail(system);
 
-			// Step 0 - check version
-			progress += progressUnit;
-			CheckDatabaseVersionProcessor checkDbProcessor = new CheckDatabaseVersionProcessor(system, this,
-					(int) progressUnit);
-			checkDbProcessor.execute();
-			VersionStatut status = checkDbProcessor.getVersionStatut();
+				// Step 0 - check version
+				progress += progressUnit;
+				CheckDatabaseVersionProcessor checkDbProcessor = new CheckDatabaseVersionProcessor(system, this,
+						(int) progressUnit);
+				checkDbProcessor.execute();
+				VersionStatut status = checkDbProcessor.getVersionStatut();
 
-			if (status == VersionStatut.UNOFFICIAL_DB || status == VersionStatut.SYSTEM_NOT_AVAILABLE) {
-				// Step 1 - no db downloaded, we only read current db
-				File file = new File(DatabaseUtilities.getUserDatabasePath(system));
-				int size;
-				try {
-					FileReader reader = new FileReader(file);
-					MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
-					size = menu.getGame().size();
-				} catch (Exception e) {
-					size = 0;
+				if (status == VersionStatut.UNOFFICIAL_DB || status == VersionStatut.SYSTEM_NOT_AVAILABLE) {
+					// Step 1 - no db downloaded, we only read current db
+					File file = new File(DatabaseUtilities.getUserDatabasePath(system));
+					int size;
+					try {
+						FileReader reader = new FileReader(file);
+						MenuType menu = (MenuType) XmlBinding.getInstance().xml2java(MenuType.class, reader);
+						size = menu.getGame().size();
+					} catch (Exception e) {
+						size = 0;
+					}
+					row.dbMakerResult = new DbMakerResult();
+					row.dbMakerResult.dbSize = size;
+				} else {
+					// Step 1 - We make the db
+					// Load preference into DbMakerOption instance
+					DbMakerOption dbMakerOption = DbMakerOption.load(system);
+					DeltaGeneratorProcessor deltaProcessor = new DeltaGeneratorProcessor(system, dbMakerOption, detail,
+							this, (int) progress);
+					DbMakerProcessor dbMakerProcessor = new DbMakerProcessor(system, dbMakerOption, detail, this,
+							(int) progress);
+					progress += progressUnit;
+					deltaProcessor.execute();
+					progress += progressUnit;
+					dbMakerProcessor.execute();
+					row.dbMakerResult = dbMakerProcessor.getResult();
+					row.dbMakerOption = dbMakerOption;
 				}
-				row.dbMakerResult = new DbMakerResult();
-				row.dbMakerResult.dbSize = size;
-			} else {
-				// Step 1 - We make the db
-				// Load preference into DbMakerOption instance
-				DbMakerOption dbMakerOption = DbMakerOption.load(system);
-				DeltaGeneratorProcessor deltaProcessor = new DeltaGeneratorProcessor(system, dbMakerOption, detail,
-						this, (int) progress);
-				DbMakerProcessor dbMakerProcessor = new DbMakerProcessor(system, dbMakerOption, detail, this,
-						(int) progress);
+				// Step 2 - Medias
+				for (MediaCategoryEnum category : MediaCategoryEnum.values()) {
+					progress += progressUnit;
+					MediaCheckerOption mediaCheckerOption = new MediaCheckerOption();
+					mediaCheckerOption.category = category;
+					MediaCheckerProcessor mediaCheckerProcessor = new MediaCheckerProcessor(system, mediaCheckerOption,
+							detail, this, (int) progress);
+					mediaCheckerProcessor.execute();
+					row.mediaCheckerResults.put(category, mediaCheckerProcessor.getResult());
+				}
+
+				// Step 3 - check version
 				progress += progressUnit;
-				deltaProcessor.execute();
-				progress += progressUnit;
-				dbMakerProcessor.execute();
-				row.dbMakerResult = dbMakerProcessor.getResult();
-				row.dbMakerOption = dbMakerOption;
-			}
-			// Step 2 - Medias
-			for (MediaCategoryEnum category : MediaCategoryEnum.values()) {
-				progress += progressUnit;
-				MediaCheckerOption mediaCheckerOption = new MediaCheckerOption();
-				mediaCheckerOption.category = category;
-				MediaCheckerProcessor mediaCheckerProcessor = new MediaCheckerProcessor(system, mediaCheckerOption,
-						detail, this, (int) progress);
-				mediaCheckerProcessor.execute();
-				row.mediaCheckerResults.put(category, mediaCheckerProcessor.getResult());
+				checkDbProcessor = new CheckDatabaseVersionProcessor(system, this, (int) progressUnit);
+				checkDbProcessor.execute();
+				row.versionStatut = checkDbProcessor.getVersionStatut();
+				row.version = checkDbProcessor.getListversion();
+
+				// Step 4 : Add row report
+				CommonLogger.instance.notif("Report row finished for system : " + system);
+				report.rows.add(row);
 			}
 
-			// Step 3 - check version
-			progress += progressUnit;
-			checkDbProcessor = new CheckDatabaseVersionProcessor(system, this, (int) progressUnit);
-			checkDbProcessor.execute();
-			row.versionStatut = checkDbProcessor.getVersionStatut();
-			row.version = checkDbProcessor.getListversion();
-
-			// Step 4 : Add row report
-			report.rows.add(row);
+			// Store report
+			report.save();
+		} finally {
+			CommonLogger.instance.setForceLevel(LoggerLevel.TRACE);
 		}
 
-		// Store report
-		report.save();
-		CommonLogger.instance.setForceLevel(LoggerLevel.TRACE);
-
 	}
-
 }

@@ -39,6 +39,15 @@ public class CommonLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public final void notif(final String message) {
+		panel.append(message, LoggerLevel.NOTIF);
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public final void error(final String message) {
 		panel.append(message, LoggerLevel.ERROR);
 

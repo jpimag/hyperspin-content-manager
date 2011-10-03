@@ -26,7 +26,7 @@ public class DbMakerController {
 		option.save(system);
 
 		// DbMaker
-		DbMakerWorker worker = new DbMakerWorker(system, option, MainController.instance.getDbDetail());
+		DbMakerWorker worker = new DbMakerWorker(system, option, MainController.instance.getDbDetail(system));
 		new BasicProgressDialog(worker);
 
 		// Update detail
@@ -116,6 +116,9 @@ public class DbMakerController {
 			break;
 		case TOSEC:
 			getOptionPanel().getNamingConventionPanel().getTosec().setSelected(true);
+			break;
+		case OTHER:
+			getOptionPanel().getNamingConventionPanel().getOther().setSelected(true);
 			break;
 		}
 

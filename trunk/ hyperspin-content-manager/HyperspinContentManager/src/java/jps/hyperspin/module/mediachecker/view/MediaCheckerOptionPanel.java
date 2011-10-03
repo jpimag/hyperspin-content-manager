@@ -129,7 +129,6 @@ public class MediaCheckerOptionPanel extends JPanel {
 			processButton.setText(Message.getMessage("mediachecker.process.label"));
 			processButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()");
 					MediaCheckerController.instance.process();
 				}
 			});
