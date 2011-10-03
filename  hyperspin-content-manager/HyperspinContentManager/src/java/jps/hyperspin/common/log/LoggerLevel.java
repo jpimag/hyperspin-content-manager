@@ -1,7 +1,7 @@
 package jps.hyperspin.common.log;
 
 public enum LoggerLevel {
-	INFO("Info", 0), TRACE("Trace", 1), ERROR("Error", -1);
+	INFO("Info", 0), TRACE("Trace", 1), NOTIF("Notif", -1), ERROR("Error", -2);
 
 	private int index;
 	private String name;

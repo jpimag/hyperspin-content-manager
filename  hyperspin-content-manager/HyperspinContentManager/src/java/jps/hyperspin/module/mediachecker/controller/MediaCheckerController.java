@@ -20,7 +20,7 @@ public class MediaCheckerController {
 		MediaCheckerOption option = panelToModel();
 
 		// MediaChecker
-		MediaCheckerWorker worker = new MediaCheckerWorker(system, option, MainController.instance.getDbDetail());
+		MediaCheckerWorker worker = new MediaCheckerWorker(system, option, MainController.instance.getDbDetail(system));
 		new BasicProgressDialog(worker);
 
 		// Update detail

@@ -30,6 +30,13 @@ public interface Logger {
 
 	/**
 	 * 
+	 * @param message
+	 *            message
+	 */
+	void notif(final String message);
+
+	/**
+	 * 
 	 */
 	void clear();
 }

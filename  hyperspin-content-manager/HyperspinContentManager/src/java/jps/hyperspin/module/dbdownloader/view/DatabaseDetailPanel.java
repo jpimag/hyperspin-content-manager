@@ -85,8 +85,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints22.gridy = 12;
 		noteLabel = new JLabel();
 		noteLabel.setText("");
-		noteLabel.setBorder(BorderFactory.createTitledBorder(Message
-				.getMessage("dbdownloader.note.title")));
+		noteLabel.setBorder(BorderFactory.createTitledBorder(Message.getMessage("dbdownloader.note.title")));
 		noteLabel.setPreferredSize(new Dimension(300, 100));
 		noteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		noteLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -114,8 +113,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints12.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints12.gridy = 8;
 		hyperlistVersionLabel = new JLabel();
-		hyperlistVersionLabel.setText(Message
-				.getMessage("dbdownloader.hyperlist.version"));
+		hyperlistVersionLabel.setText(Message.getMessage("dbdownloader.hyperlist.version"));
 		hyperlistVersionLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		hyperlistVersionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
@@ -130,8 +128,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints10.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints10.gridy = 7;
 		downloadedVersionLabel = new JLabel();
-		downloadedVersionLabel.setText(Message
-				.getMessage("dbdownloader.downoader.version"));
+		downloadedVersionLabel.setText(Message.getMessage("dbdownloader.downoader.version"));
 		GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
 		gridBagConstraints9.fill = GridBagConstraints.BOTH;
 		gridBagConstraints9.gridy = 6;
@@ -143,8 +140,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints8.insets = new Insets(0, 0, 0, 20);
 		gridBagConstraints8.gridy = 6;
 		userVersionLabel = new JLabel();
-		userVersionLabel.setText(Message
-				.getMessage("dbdownloader.user.version"));
+		userVersionLabel.setText(Message.getMessage("dbdownloader.user.version"));
 		userVersionLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		userVersionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
@@ -153,8 +149,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints7.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints7.gridy = 1;
 		userDatabaseDirLabel = new JLabel();
-		userDatabaseDirLabel.setText(Message
-				.getMessage("dbdownloader.user.database.dir.label"));
+		userDatabaseDirLabel.setText(Message.getMessage("dbdownloader.user.database.dir.label"));
 		userDatabaseDirLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		userDatabaseDirLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
@@ -183,8 +178,7 @@ public class DatabaseDetailPanel extends JPanel {
 		gridBagConstraints3.insets = new Insets(0, 0, 0, 20);
 		gridBagConstraints3.gridy = 4;
 		mediaDirLabel = new JLabel();
-		mediaDirLabel.setText(Message
-				.getMessage("dbdownloader.media.dir.label"));
+		mediaDirLabel.setText(Message.getMessage("dbdownloader.media.dir.label"));
 		mediaDirLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
 		mediaDirLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
@@ -301,23 +295,16 @@ public class DatabaseDetailPanel extends JPanel {
 	public JButton getDownloadButton() {
 		if (downloadButton == null) {
 			downloadButton = new JButton();
-			downloadButton.setText(Message
-					.getMessage("dbdownloader.upload.database.label"));
+			downloadButton.setText(Message.getMessage("dbdownloader.upload.database.label"));
 			downloadButton.setEnabled(false);
-			downloadButton
-					.addActionListener(new java.awt.event.ActionListener() {
-						public void actionPerformed(java.awt.event.ActionEvent e) {
-							System.out.println("actionPerformed()"); // TODO
-																		// Auto-generated
-																		// Event
-																		// stub
-																		// actionPerformed()
-							// Process
-							new BasicProgressDialog(new DbDowloaderWorker());
-							// Update filed
-							DbDownLoaderController.instance.updateDetails();
-						}
-					});
+			downloadButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					// Process
+					new BasicProgressDialog(new DbDowloaderWorker());
+					// Update filed
+					DbDownLoaderController.instance.updateDetails();
+				}
+			});
 		}
 		return downloadButton;
 	}

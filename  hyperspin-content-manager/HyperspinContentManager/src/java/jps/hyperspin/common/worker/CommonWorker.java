@@ -71,7 +71,6 @@ public abstract class CommonWorker extends SwingWorker<Void, Void> {
 	public void setProgressFromAchievedStep(int currentStep, int nbstep, int until) {
 		double percent = (double) currentStep / (double) nbstep;
 		double progress = getProgress() + (percent * (until - getProgress()));
-		System.out.println(progress);
 		setProgress(Math.min(99, (int) progress));
 	}
 

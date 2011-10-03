@@ -171,10 +171,6 @@ public class DbMakerOptionPanel extends JPanel {
 			processButton.setText(Message.getMessage("dbmaker.process.label"));
 			processButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO
-																// Auto-generated
-																// Event stub
-																// actionPerformed()
 					DbMakerController.instance.process();
 				}
 			});

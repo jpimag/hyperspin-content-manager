@@ -32,12 +32,10 @@ public class DbDownLoaderController {
 			// Ini file
 			SystemIniProperties iniProp = new SystemIniProperties(MainClass.HYPERSPIN_PATH, system);
 
-			System.out.println("Ini file combo box change");
 			// Xml
-			String selected = system;
 			detailPanel.getUserDatabaseDirField().setText(DatabaseUtilities.getUserDatabaseDir(system));
 			detailPanel.getMediaDirField().setText(
-					MainClass.HYPERSPIN_PATH + File.separator + "Media" + File.separator + selected);
+					MainClass.HYPERSPIN_PATH + File.separator + "Media" + File.separator + system);
 
 			detailPanel.getRomsPathField().setText(iniProp.getRomPath());
 
