@@ -85,15 +85,6 @@ public class DatabaseUtilities {
 	}
 
 	/**
-	 * 
-	 * @param genre
-	 * @return
-	 */
-	public static String getDownloadedGenreDatabasePath(String genre) {
-		return getDownloadedGenreDatabasePath(MainClass.mainFrame.getSystemSelected());
-	}
-
-	/**
 	 * Get the main directory path of the reference directory of the selected
 	 * system.
 	 * 

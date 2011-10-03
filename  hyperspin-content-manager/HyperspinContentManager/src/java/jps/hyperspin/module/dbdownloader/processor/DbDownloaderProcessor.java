@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import jps.hyperspin.MainClass;
 import jps.hyperspin.common.DatabaseUtilities;
 import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.worker.CommonWorker;
@@ -16,13 +15,16 @@ import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 
 public class DbDownloaderProcessor extends AbstractDbDownloaderProcessor {
 
+	private String system;
+
 	/**
 	 * 
 	 * @param worker
 	 * @param untilProgress
 	 */
-	public DbDownloaderProcessor(CommonWorker worker, int untilProgress) {
+	public DbDownloaderProcessor(String system, CommonWorker worker, int untilProgress) {
 		super(worker, untilProgress);
+		this.system = system;
 	}
 
 	/**
@@ -37,7 +39,6 @@ public class DbDownloaderProcessor extends AbstractDbDownloaderProcessor {
 
 		setProgress(1);
 
-		String system = MainClass.mainFrame.getSystemSelected();
 		if (system != null) {
 
 			Map<String, MenuType> map = new HashMap<String, MenuType>();
@@ -47,13 +48,12 @@ public class DbDownloaderProcessor extends AbstractDbDownloaderProcessor {
 
 				// Main database
 				// -------------
-				map.put(MainClass.mainFrame.getSystemSelected(),
-						getLastAvailableDb(MainClass.mainFrame.getSystemSelected()));
+				map.put(system, getLastAvailableDb(system));
 				setProgress(10);
 
 				// Genre databases
 				// ---------------
-				URL url = new URL(getLastAvailableDbUrls(MainClass.mainFrame.getSystemSelected()).urlGenre);
+				URL url = new URL(getLastAvailableDbUrls(system).urlGenre);
 				urlConnGenre = (HttpURLConnection) url.openConnection();
 				BufferedReader in = new BufferedReader(new InputStreamReader(urlConnGenre.getInputStream()));
 				String sLine;
