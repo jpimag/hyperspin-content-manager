@@ -112,8 +112,8 @@ public class MediaCheckerProcessor extends CommonProcessor {
 						unused.remove(game.getName());
 						used.add(game.getName());
 						found = true;
-						CommonLogger.instance.info("Media found from delta file. File " + delta.name + extension
-								+ "renamed into " + delta.replacementName + extension);
+						/*CommonLogger.instance.info("Media found from delta file. File " + delta.name + extension
+								+ "renamed into " + delta.replacementName + extension);*/
 					}
 				}
 			}

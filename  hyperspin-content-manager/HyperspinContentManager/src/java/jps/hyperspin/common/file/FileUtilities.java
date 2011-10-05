@@ -18,7 +18,7 @@ public class FileUtilities {
 		if (index == -1) {
 			return "";
 		} else {
-			return s.substring(index);
+			return s.substring(index).toLowerCase();
 		}
 	}
 
