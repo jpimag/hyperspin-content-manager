@@ -76,7 +76,7 @@ public class ReportTableModel extends AbstractTableModel {
 			result = (row.dbMakerResult.dbSize - row.dbMakerResult.nbMissing) + "/" + row.dbMakerResult.dbSize + "roms";
 			break;
 		case 5:
-			result = row.dbMakerResult.nbMissing + " missing";
+			result = String.valueOf(row.dbMakerResult.nbMissing);
 			break;
 		case 6:
 			result = row.dbMakerResult.nbReplaced + " replaced";
@@ -115,7 +115,7 @@ public class ReportTableModel extends AbstractTableModel {
 
 	private String getMessage(MediaCheckerResult result) {
 		if (result.nbMediaFound == 0) {
-			return "NA";
+			return "";
 		} else {
 			return String.valueOf(result.nbMediaMissing);
 		}

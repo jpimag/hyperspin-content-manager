@@ -60,7 +60,7 @@ public abstract class AbstractDbDownloaderProcessor extends CommonProcessor {
 			while (!found && (sLine = in.readLine()) != null) {
 				if (sLine.contains("System Name")) {
 					while (!found && (sLine = in.readLine()) != null) {
-						if (sLine.contains(system)) {
+						if (sLine.contains(">" + system + "<")) {
 							while (!found && (sLine = in.readLine()) != null) {
 								if (sLine.contains("Download XML")) {
 									databaseUrls.urlDb = sLine.split("href='")[1];
