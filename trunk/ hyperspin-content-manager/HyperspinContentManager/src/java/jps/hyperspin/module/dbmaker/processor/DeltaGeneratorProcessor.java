@@ -152,7 +152,7 @@ public class DeltaGeneratorProcessor extends CommonProcessor {
 
 			// Browse all roms to determinate "candidate" and "matching"
 			for (String rom : romMap.keySet()) {
-				if (convention.isBelongingToType(rom, type)) {
+				if (convention != null && convention.isBelongingToType(rom, type)) {
 					candidtateRomMap.remove(rom);
 					if (!games.containsKey(rom)) {
 						// The game is not in db
