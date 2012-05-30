@@ -30,7 +30,7 @@ public class RedumpOrg extends AbstractNamingConvention {
 	/**
 	 * 
 	 */
-	private final static String DISC_SECTION_PATTERN = "(\\s)*disc(\\s)*";
+	private final static String DISC_SECTION_PATTERN = "\\(disc\\s\\d\\)";
 
 	/**
 	 * List off languages use in redumpOrg convention.
@@ -91,6 +91,8 @@ public class RedumpOrg extends AbstractNamingConvention {
 	 */
 	private Set<String> getRegions(String rom) {
 		Set<String> regions = new HashSet<String>();
+		// Certaines roms ont le disc avant la région (non standard)
+		rom = removeDisc(rom);
 		Matcher matcher = Pattern.compile(SECTION_PATTERN).matcher(rom);
 		if (matcher.find()) {
 			String regionSection = matcher.group();
@@ -110,10 +112,10 @@ public class RedumpOrg extends AbstractNamingConvention {
 	 */
 	private String cleanSections(String rom) {
 		String result = rom;
+		result = removeDisc(result);
 		result = removeRegion(result);
 		result = removeLanguage(result);
 		result = removeVersion(result);
-		result = removeDisc(result);
 		return result;
 	}
 
@@ -203,23 +205,8 @@ public class RedumpOrg extends AbstractNamingConvention {
 	public static void main(final String[] args) {
 		RedumpOrg n = new RedumpOrg();
 
-		System.out.println(n.isCandidate("Z (Europe)", "Z (USA)", DbMakerRegionEnum.EUROPE));
-
-		Set<String> s = n.getRegions("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1)");
-		for (String string : s) {
-			System.out.println(string);
-		}
-
-		System.out.println(n.removeLanguage("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1)")
-				.replaceAll("\\s*\\(", "\\("));
-		System.out.println(n.removeRegion("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1)")
-				.replaceAll("\\s*\\(", "\\("));
-		System.out.println(n
-				.removeVersion("Wreckin Crew - Drive Dangerously (Europe) (En,Fr,De,Es,It) (Disc 1) (v1.0)")
-				.replaceAll("\\s*\\(", "\\("));
-
-		System.out.println(n.clean(n.cleanSections("Command & Conquer - Red Alert (USA) (Disc 1) (Allies)")));
-		System.out.println(n.clean(n.cleanSections("Command & Conquer - Red Alert (Europe) (Disc 1) (Allies Disc)")));
-
+		String rom = "Alone in the Dark - The New Nightmare (Disc 1) (France)";
+		rom = n.cleanSections(rom);
+		System.out.println(rom);
 	}
 }
