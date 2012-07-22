@@ -96,27 +96,27 @@ public class MediaCheckerProcessor extends CommonProcessor {
 		// -------------
 		for (GameType game : menu.getGame()) {
 			boolean found = false;
+			// Search in delta file
+			// Indeed, first we try to copy original media
+			if (deltas.containsKey(game.getName())) {
+				Delta delta = deltas.get(game.getName());
+				if (medias.containsKey(delta.name)) {
+					String extension = medias.get(delta.name);
+					FileUtilities.copyFile(mediaDir, delta.name + extension, delta.replacementName + extension);
+					unused.remove(game.getName());
+					used.add(game.getName());
+					found = true;
+					/*CommonLogger.instance.info("Media found from delta file. File " + delta.name + extension
+							+ "renamed into " + delta.replacementName + extension);*/
+				}
+			}
 			// Search if media exist
-			if (medias.containsKey(game.getName())) {
+			if (!found && medias.containsKey(game.getName())) {
 				unused.remove(game.getName());
 				used.add(game.getName());
 				found = true;
-			} else {
-				// Search in delta file
-				if (!found && deltas.containsKey(game.getName())) {
-					Delta delta = deltas.get(game.getName());
-					if (medias.containsKey(delta.name)) {
-						String extension = medias.get(delta.name);
-						FileUtilities.moveFile(mediaDir, mediaDir, delta.name + extension, delta.replacementName
-								+ extension);
-						unused.remove(game.getName());
-						used.add(game.getName());
-						found = true;
-						/*CommonLogger.instance.info("Media found from delta file. File " + delta.name + extension
-								+ "renamed into " + delta.replacementName + extension);*/
-					}
-				}
 			}
+
 			if (!found) {
 				notfound.add(game.getName());
 				CommonLogger.instance.info("Media not found for game : " + game.getName());

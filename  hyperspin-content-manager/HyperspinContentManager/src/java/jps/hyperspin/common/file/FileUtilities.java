@@ -45,8 +45,12 @@ public class FileUtilities {
 		if (!d.exists()) {
 			d.mkdirs();
 		}
+		File dest = new File(directoryDest + File.separator + game);
+		if (dest.exists()) {
+			dest.delete();
+		}
 		File file = new File(directorySource + File.separator + media);
-		file.renameTo(new File(directoryDest + File.separator + game));
+		file.renameTo(dest);
 	}
 
 	public static void deleteFile(String directorySource, String media) {
@@ -73,7 +77,10 @@ public class FileUtilities {
 	}
 
 	public static void copyFile(String directory, String media, String game) throws FileNotFoundException, IOException {
+		// Delete destination if needed
+		deleteFile(directory, game);
 
+		// Copy
 		FileInputStream fis = new FileInputStream(directory + "/" + media);
 		FileOutputStream fos = new FileOutputStream(directory + "/" + game);
 		FileChannel channelSrc = fis.getChannel();
