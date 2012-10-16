@@ -180,6 +180,11 @@ public class MediaCheckerProcessor extends CommonProcessor {
 				FileUtilities.moveFile(mediaDir, mediaDir + File.separator + "notused" + File.separator, fileName,
 						fileName);
 			}
+		} else if (option.deleteNotUsed) {
+			for (String game : unused.keySet()) {
+				String fileName = game + medias.get(game);
+				FileUtilities.deleteFile(mediaDir, fileName);
+			}
 		}
 
 		// Logs

@@ -20,8 +20,10 @@ public class MediaCheckerOptionPanel extends JPanel {
 	private JComboBox jComboBox = null;
 	private JCheckBox manualCheckBox = null;
 	private JLabel manualLabel = null;
-	private JCheckBox purgeCheckBox = null;
-	private JLabel purgeLabel = null;
+	private JCheckBox moveCheckBox = null;
+	private JLabel moveLabel = null;
+	private JCheckBox deleteCheckBox = null;
+	private JLabel deleteLabel = null;
 	private JButton processButton = null;
 
 	/**
@@ -38,18 +40,27 @@ public class MediaCheckerOptionPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
-		gridBagConstraints8.gridx = 0;
-		gridBagConstraints8.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints8.gridwidth = 3;
-		gridBagConstraints8.gridy = 3;
-		gridBagConstraints8.insets = new Insets(50, 0, 0, 0);
+		GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
+		gridBagConstraints10.gridx = 0;
+		gridBagConstraints10.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints10.gridwidth = 4;
+		gridBagConstraints10.gridy = 4;
+		gridBagConstraints10.insets = new Insets(50, 0, 0, 0);
 		GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
 		gridBagConstraints7.gridx = 1;
 		gridBagConstraints7.anchor = GridBagConstraints.WEST;
 		gridBagConstraints7.gridy = 2;
-		purgeLabel = new JLabel();
-		purgeLabel.setText(Message.getMessage("dbmaker.purge.label"));
+		moveLabel = new JLabel();
+		moveLabel.setText(Message.getMessage("dbmaker.purge.label"));
+		GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
+		gridBagConstraints9.gridx = 1;
+		gridBagConstraints9.anchor = GridBagConstraints.WEST;
+		gridBagConstraints9.gridy = 3;
+		deleteLabel = new JLabel();
+		deleteLabel.setText(Message.getMessage("dbmaker.delete.label"));
+		GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
+		gridBagConstraints8.gridx = 0;
+		gridBagConstraints8.gridy = 3;
 		GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
 		gridBagConstraints6.gridx = 0;
 		gridBagConstraints6.gridy = 2;
@@ -75,9 +86,11 @@ public class MediaCheckerOptionPanel extends JPanel {
 		this.add(getJComboBox(), gridBagConstraints);
 		this.add(getManualCheckBox(), gridBagConstraints2);
 		this.add(manualLabel, gridBagConstraints3);
-		this.add(getPurgeCheckBox(), gridBagConstraints6);
-		this.add(purgeLabel, gridBagConstraints7);
-		this.add(getProcessButton(), gridBagConstraints8);
+		this.add(getMoveCheckBox(), gridBagConstraints6);
+		this.add(moveLabel, gridBagConstraints7);
+		this.add(getDeleteCheckBox(), gridBagConstraints8);
+		this.add(deleteLabel, gridBagConstraints9);
+		this.add(getProcessButton(), gridBagConstraints10);
 	}
 
 	/**
@@ -110,12 +123,25 @@ public class MediaCheckerOptionPanel extends JPanel {
 	 * 
 	 * @return javax.swing.JCheckBox
 	 */
-	public JCheckBox getPurgeCheckBox() {
-		if (purgeCheckBox == null) {
-			purgeCheckBox = new JCheckBox();
-			purgeCheckBox.setBackground(Color.white);
+	public JCheckBox getMoveCheckBox() {
+		if (moveCheckBox == null) {
+			moveCheckBox = new JCheckBox();
+			moveCheckBox.setBackground(Color.white);
 		}
-		return purgeCheckBox;
+		return moveCheckBox;
+	}
+
+	/**
+	 * This method initializes deleteCheckBox
+	 * 
+	 * @return javax.swing.JCheckBox
+	 */
+	public JCheckBox getDeleteCheckBox() {
+		if (deleteCheckBox == null) {
+			deleteCheckBox = new JCheckBox();
+			deleteCheckBox.setBackground(Color.white);
+		}
+		return deleteCheckBox;
 	}
 
 	/**
