@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jps.hyperspin.common.i18n.Message;
@@ -18,6 +19,7 @@ public class ReportMakerTab extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton launchButton = null; // @jve:decl-index=0:visual-constraint="205,103"
 	private JButton viewButton = null; // @jve:decl-index=0:visual-constraint="205,103"
+	private JLabel launchSubLabel = null;
 
 	/**
 	 * This is the default constructor
@@ -33,6 +35,11 @@ public class ReportMakerTab extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
+		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+		gridBagConstraints1.gridx = 0;
+		gridBagConstraints1.gridy = 1;
+		launchSubLabel = new JLabel();
+		launchSubLabel.setText(Message.getMessage("reportmaker.process.sublabel"));
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
@@ -45,8 +52,9 @@ public class ReportMakerTab extends JPanel {
 		GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 		gridBagConstraints2.insets = new Insets(50, 0, 0, 0);
 		gridBagConstraints2.gridx = 0;
-		gridBagConstraints2.gridy = 1;
+		gridBagConstraints2.gridy = 2;
 		this.add(getViewButton(), gridBagConstraints2);
+		this.add(launchSubLabel, gridBagConstraints1);
 	}
 
 	/**

@@ -21,6 +21,8 @@ public class MediaCheckerOption extends CommonPeristable {
 
 	public boolean moveNotUsed = false;
 
+	public boolean deleteNotUsed = false;
+
 	public MediaCategoryEnum category;
 
 	/**

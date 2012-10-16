@@ -59,7 +59,8 @@ public class MediaCheckerController {
 	private MediaCheckerOption panelToModel() {
 		MediaCheckerOption option = new MediaCheckerOption();
 		option.manualResolving = getOptionPanel().getManualCheckBox().isSelected();
-		option.moveNotUsed = getOptionPanel().getPurgeCheckBox().isSelected();
+		option.moveNotUsed = getOptionPanel().getMoveCheckBox().isSelected();
+		option.deleteNotUsed = getOptionPanel().getDeleteCheckBox().isSelected();
 		option.category = (MediaCategoryEnum) getOptionPanel().getJComboBox().getSelectedItem();
 		return option;
 	}
@@ -71,7 +72,8 @@ public class MediaCheckerController {
 	 */
 	private void modelToPanel(MediaCheckerOption option) {
 		getOptionPanel().getManualCheckBox().setSelected(option.manualResolving);
-		getOptionPanel().getPurgeCheckBox().setSelected(option.moveNotUsed);
+		getOptionPanel().getMoveCheckBox().setSelected(option.moveNotUsed);
+		getOptionPanel().getDeleteCheckBox().setSelected(option.deleteNotUsed);
 		if (option.category != null) {
 			getOptionPanel().getJComboBox().setSelectedItem(option.category);
 		} else {

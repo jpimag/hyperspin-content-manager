@@ -99,6 +99,7 @@ public class ReportMakerWorker extends CommonWorker {
 					for (MediaCategoryEnum category : MediaCategoryEnum.values()) {
 						progress += progressUnit;
 						MediaCheckerOption mediaCheckerOption = new MediaCheckerOption();
+						mediaCheckerOption.deleteNotUsed = true;
 						mediaCheckerOption.category = category;
 						MediaCheckerProcessor mediaCheckerProcessor = new MediaCheckerProcessor(system,
 								mediaCheckerOption, detail, this, (int) progress);
