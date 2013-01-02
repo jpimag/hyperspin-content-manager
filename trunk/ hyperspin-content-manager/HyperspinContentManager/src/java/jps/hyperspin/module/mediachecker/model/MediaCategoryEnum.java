@@ -4,7 +4,7 @@ public enum MediaCategoryEnum {
 
 	WHEEL("Images\\Wheel", "png"),
 
-	VIDEO("Video", "flv"),
+	VIDEO("Video", "flv", "mp4"),
 
 	ARTWORK1("Images\\Artwork1", "png"),
 
