@@ -33,7 +33,7 @@ public class ReportTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public int getColumnCount() {
-		return 15;
+		return 14;
 	}
 
 	/**
@@ -79,30 +79,27 @@ public class ReportTableModel extends AbstractTableModel {
 			result = String.valueOf(row.dbMakerResult.nbMissing);
 			break;
 		case 6:
-			result = row.dbMakerResult.nbReplaced + " replaced";
-			break;
-		case 7:
 			result = row.dbMakerResult.nbClones + " clones";
 			break;
-		case 8:
+		case 7:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.WHEEL));
 			break;
-		case 9:
+		case 8:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.VIDEO));
 			break;
-		case 10:
+		case 9:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.ARTWORK1));
 			break;
-		case 11:
+		case 10:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.ARTWORK2));
 			break;
-		case 12:
+		case 11:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.ARTWORK3));
 			break;
-		case 13:
+		case 12:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.ARTWORK4));
 			break;
-		case 14:
+		case 13:
 			result = getMessage(row.mediaCheckerResults.get(MediaCategoryEnum.THEME));
 			break;
 

@@ -40,7 +40,6 @@ public class DbMakerProcessor extends CommonProcessor {
 	public static class DbMakerResult implements Serializable {
 		public long dbSize = 0;
 		public long nbMissing = 0;
-		public long nbReplaced = 0;
 		public long nbClones = 0;
 
 	}
@@ -170,8 +169,6 @@ public class DbMakerProcessor extends CommonProcessor {
 		writUnusedFile(new ArrayList<String>(unused));
 		CommonLogger.instance.info("\nTotal of " + (result.dbSize - result.nbMissing) + "/" + result.dbSize
 				+ " rom found (" + result.nbMissing + " roms missing)");
-		CommonLogger.instance.info("Total of " + (result.nbReplaced)
-				+ " roms replaced according to region preferences.");
 		CommonLogger.instance.info("-----------------------------------------------------");
 
 	}
