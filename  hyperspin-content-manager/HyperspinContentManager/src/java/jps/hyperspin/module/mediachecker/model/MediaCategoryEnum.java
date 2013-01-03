@@ -24,11 +24,11 @@ public enum MediaCategoryEnum {
 	/**
 	 * 
 	 */
-	private String[] extension;
+	private String[] extensions;
 
-	private MediaCategoryEnum(String path, String... extension) {
+	private MediaCategoryEnum(String path, String... extensions) {
 		this.path = path;
-		this.extension = extension;
+		this.extensions = extensions;
 	}
 
 	/**
@@ -41,8 +41,8 @@ public enum MediaCategoryEnum {
 	/**
 	 * @return the extension
 	 */
-	public String[] getExtension() {
-		return extension;
+	public String[] getExtensions() {
+		return extensions;
 	}
 
 }

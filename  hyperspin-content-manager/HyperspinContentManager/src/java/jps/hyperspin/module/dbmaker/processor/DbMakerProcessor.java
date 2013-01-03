@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.DeltaFileUtilities;
 import jps.hyperspin.common.RomUtilities;
 import jps.hyperspin.common.file.FileFilterExtension;
 import jps.hyperspin.common.file.FileUtilities;
@@ -64,13 +63,6 @@ public class DbMakerProcessor extends CommonProcessor {
 	 */
 	@Override
 	public void execute() throws Exception {
-
-		// Deltas
-		countryDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
-				option.country));
-
-		regionDelta = DeltaFileUtilities.loadDeltaFileIndexedByOriginalName(DatabaseUtilities.getDeltaPath(system,
-				option.region));
 
 		// Delete existing database
 		FileUtilities.deleteAllFiles(DatabaseUtilities.getUserDatabaseDir(system), "xml");

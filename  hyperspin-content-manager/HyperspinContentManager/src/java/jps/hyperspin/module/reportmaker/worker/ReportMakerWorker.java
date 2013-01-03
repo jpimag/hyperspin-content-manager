@@ -18,7 +18,6 @@ import jps.hyperspin.module.dbdownloader.processor.CheckDatabaseVersionProcessor
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
 import jps.hyperspin.module.dbmaker.processor.DbMakerProcessor;
 import jps.hyperspin.module.dbmaker.processor.DbMakerProcessor.DbMakerResult;
-import jps.hyperspin.module.dbmaker.processor.DeltaGeneratorProcessor;
 import jps.hyperspin.module.mediachecker.model.MediaCategoryEnum;
 import jps.hyperspin.module.mediachecker.model.MediaCheckerOption;
 import jps.hyperspin.module.mediachecker.processor.MediaCheckerProcessor;
@@ -84,12 +83,9 @@ public class ReportMakerWorker extends CommonWorker {
 						// Step 1 - We make the db
 						// Load preference into DbMakerOption instance
 						DbMakerOption dbMakerOption = DbMakerOption.load(system);
-						DeltaGeneratorProcessor deltaProcessor = new DeltaGeneratorProcessor(system, dbMakerOption,
-								detail, this, (int) progress);
 						DbMakerProcessor dbMakerProcessor = new DbMakerProcessor(system, dbMakerOption, detail, this,
 								(int) progress);
 						progress += progressUnit;
-						deltaProcessor.execute();
 						progress += progressUnit;
 						dbMakerProcessor.execute();
 						row.dbMakerResult = dbMakerProcessor.getResult();
