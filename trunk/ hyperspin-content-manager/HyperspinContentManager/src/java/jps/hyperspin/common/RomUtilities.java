@@ -32,19 +32,6 @@ public class RomUtilities {
 	 * @param detail
 	 * @throws HCMDatabaseException
 	 */
-	public static void moveRomToReplaceFolder(String romFileName, String system, DatabaseDetail detail)
-			throws HCMDatabaseException {
-		moveRomToFolder(romFileName, system, detail, "replaced");
-
-	}
-
-	/**
-	 * 
-	 * @param romFileName
-	 * @param system
-	 * @param detail
-	 * @throws HCMDatabaseException
-	 */
 	public static void moveRomToNotUsedFolder(String romFileName, String system, DatabaseDetail detail)
 			throws HCMDatabaseException {
 		moveRomToFolder(romFileName, system, detail, "unused");
@@ -63,10 +50,9 @@ public class RomUtilities {
 		destDir.mkdirs();
 
 		// Is it a simple file rom ?
-		String nameWithExtension = romFileName + "." + detail.systemIniProperties.getRomExtension();
-		File file = new File(detail.systemIniProperties.getRomPath(), nameWithExtension);
+		File file = new File(detail.systemIniProperties.getRomPath(), romFileName);
 		if (file.exists() && file.isFile()) {
-			file.renameTo(new File(destDir, nameWithExtension));
+			file.renameTo(new File(destDir, romFileName));
 		} else {
 			// Is the rom in a dedicated directory ?
 			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romFileName);
@@ -105,7 +91,7 @@ public class RomUtilities {
 				}
 				// exclude 'replaced' folder
 				if (!file.getName().equals("replaced")) {
-					romList.put(name, name);
+					romList.put(name, file.getName());
 				}
 
 			}

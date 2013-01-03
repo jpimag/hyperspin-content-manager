@@ -1,7 +1,6 @@
 package jps.hyperspin.module.dbmaker.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -19,11 +18,8 @@ public class DbMakerOptionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JCheckBox noClones = null;
 	private JLabel noClonesLabel = null;
-	private JCheckBox removeReplacedRoms = null;
-	private JLabel removeReplacedRomsLabel = null;
 	private JCheckBox removeNotUsedRoms = null;
 	private JLabel removeNotUsedRomsLabel = null;
-	private NamingConventionPanel namingConvention = null;
 	private JButton processButton = null;
 
 	/**
@@ -70,17 +66,12 @@ public class DbMakerOptionPanel extends JPanel {
 		gridBagConstraints9.gridx = 1;
 		gridBagConstraints9.anchor = GridBagConstraints.WEST;
 		gridBagConstraints9.gridy = 1;
-		removeReplacedRomsLabel = new JLabel();
-		removeReplacedRomsLabel.setText(Message.getMessage("dbmaker.options.movereplacedroms.label"));
 		GridBagConstraints gridBagConstraints19 = new GridBagConstraints();
 		gridBagConstraints19.gridx = 1;
 		gridBagConstraints19.anchor = GridBagConstraints.WEST;
 		gridBagConstraints19.gridy = 2;
 		removeNotUsedRomsLabel = new JLabel();
 		removeNotUsedRomsLabel.setText(Message.getMessage("dbmaker.options.movenotusedroms.label"));
-		GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
-		gridBagConstraints8.gridx = 0;
-		gridBagConstraints8.gridy = 1;
 		GridBagConstraints gridBagConstraints18 = new GridBagConstraints();
 		gridBagConstraints18.gridx = 0;
 		gridBagConstraints18.gridy = 2;
@@ -99,11 +90,8 @@ public class DbMakerOptionPanel extends JPanel {
 		this.setBackground(Color.white);
 		this.add(getNoClones(), gridBagConstraints);
 		this.add(noClonesLabel, gridBagConstraints1);
-		this.add(getRemoveReplacedRoms(), gridBagConstraints8);
 		this.add(getRemoveNotUsedRoms(), gridBagConstraints18);
-		this.add(removeReplacedRomsLabel, gridBagConstraints9);
 		this.add(removeNotUsedRomsLabel, gridBagConstraints19);
-		this.add(getNamingConventionPanel(), gridBagConstraints12);
 		this.add(getProcessButton(), gridBagConstraints3);
 	}
 
@@ -121,20 +109,7 @@ public class DbMakerOptionPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes removeReplacedRoms
-	 * 
-	 * @return javax.swing.JCheckBox
-	 */
-	public JCheckBox getRemoveReplacedRoms() {
-		if (removeReplacedRoms == null) {
-			removeReplacedRoms = new JCheckBox();
-			removeReplacedRoms.setBackground(Color.white);
-		}
-		return removeReplacedRoms;
-	}
-
-	/**
-	 * This method initializes removeNotUsedRoms
+	 * /** This method initializes removeNotUsedRoms
 	 * 
 	 * @return javax.swing.JCheckBox
 	 */
@@ -144,20 +119,6 @@ public class DbMakerOptionPanel extends JPanel {
 			removeNotUsedRoms.setBackground(Color.white);
 		}
 		return removeNotUsedRoms;
-	}
-
-	/**
-	 * This method initializes regionPreferencePanel
-	 * 
-	 * @return jps.hyperspin.module.dbmaker.view.RegionPreferencePanel
-	 */
-	public NamingConventionPanel getNamingConventionPanel() {
-		if (namingConvention == null) {
-			namingConvention = new NamingConventionPanel();
-			namingConvention.setPreferredSize(new Dimension(500, 100));
-			namingConvention.setBackground(Color.white);
-		}
-		return namingConvention;
 	}
 
 	/**
