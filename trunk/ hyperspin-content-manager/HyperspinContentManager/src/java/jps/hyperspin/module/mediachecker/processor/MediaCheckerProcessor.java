@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import jps.hyperspin.common.DatabaseUtilities;
-import jps.hyperspin.common.DeltaFileUtilities;
 import jps.hyperspin.common.file.FileFilterExtension;
 import jps.hyperspin.common.file.FileUtilities;
 import jps.hyperspin.common.processor.CommonProcessor;
@@ -20,7 +19,6 @@ import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
-import jps.hyperspin.module.dbmaker.model.Delta;
 import jps.hyperspin.module.mediachecker.model.MediaCheckerOption;
 
 import org.apache.commons.lang.StringUtils;
@@ -70,7 +68,7 @@ public class MediaCheckerProcessor extends CommonProcessor {
 		String mediaDir = detail.mediaDir + File.separator;
 		mediaDir += option.category.getPath();
 		// Files
-		FileFilterExtension filter = new FileFilterExtension(option.category.getExtension());
+		FileFilterExtension filter = new FileFilterExtension(option.category.getExtensions());
 		File dir = new File(mediaDir);
 		File[] files = dir.listFiles(filter);
 		if (files != null) {
@@ -87,29 +85,11 @@ public class MediaCheckerProcessor extends CommonProcessor {
 		// Used
 		Set<String> used = new HashSet<String>();
 
-		// Load delta file
-		// ------------
-		Map<String, Delta> deltas = DeltaFileUtilities.loadAllDeltaFileIndexedByReplacementName(DatabaseUtilities
-				.getLogsDir(system));
-
 		// Browse games
 		// -------------
 		for (GameType game : menu.getGame()) {
 			boolean found = false;
-			// Search in delta file
-			// Indeed, first we try to copy original media
-			if (deltas.containsKey(game.getName())) {
-				Delta delta = deltas.get(game.getName());
-				if (medias.containsKey(delta.name)) {
-					String extension = medias.get(delta.name);
-					FileUtilities.copyFile(mediaDir, delta.name + extension, delta.replacementName + extension);
-					unused.remove(game.getName());
-					used.add(game.getName());
-					found = true;
-					/*CommonLogger.instance.info("Media found from delta file. File " + delta.name + extension
-							+ "renamed into " + delta.replacementName + extension);*/
-				}
-			}
+
 			// Search if media exist
 			if (!found && medias.containsKey(game.getName())) {
 				unused.remove(game.getName());
