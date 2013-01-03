@@ -14,7 +14,6 @@ import jps.hyperspin.exception.HCMDatabaseException;
 import jps.hyperspin.main.controller.CommonLogger;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
-import jps.hyperspin.module.dbmaker.model.DbMakerRegionEnum;
 
 public class DatabaseUtilities {
 
@@ -103,32 +102,6 @@ public class DatabaseUtilities {
 	 */
 	public static String getUserDatabaseDir(String system) {
 		String path = MainClass.HYPERSPIN_PATH + File.separator + "Databases" + File.separator + system;
-		return path;
-	}
-
-	/**
-	 * 
-	 * @param system
-	 * 
-	 * @return
-	 */
-	public static String getDeltaPath(String system, DbMakerRegionEnum region) {
-		if (region == DbMakerRegionEnum.NONE || region == null) {
-			return null;
-		}
-		String path = getLogsDir(system) + File.separator + region.name() + ".delta";
-		return path;
-	}
-
-	/**
-	 * 
-	 * @param system
-	 * 
-	 * @return
-	 */
-	public static String getTraductionPath(String system, String type) {
-		String path = getDownloadedDatabaseDir(system) + File.separator + "traduction" + File.separator + type
-				+ ".traduction";
 		return path;
 	}
 
