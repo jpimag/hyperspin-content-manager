@@ -26,7 +26,6 @@ import jps.hyperspin.module.dbdownloader.model.DatabaseDetail;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.GameType;
 import jps.hyperspin.module.dbdownloader.model.generated.menu.MenuType;
 import jps.hyperspin.module.dbmaker.model.DbMakerOption;
-import jps.hyperspin.module.dbmaker.model.Delta;
 import jps.hyperspin.module.dbmaker.model.MenuTypeWrapper;
 
 public class DbMakerProcessor extends CommonProcessor {
@@ -34,9 +33,6 @@ public class DbMakerProcessor extends CommonProcessor {
 	private DbMakerOption option;
 	private DatabaseDetail detail;
 
-	private Map<String, Delta> countryDelta;
-	private Map<String, Delta> regionDelta;
-	private Set<Delta> replacedGames = new HashSet<Delta>();
 	private DbMakerResult result = new DbMakerResult();
 	private List<String> missings = new ArrayList<String>();
 	private Set<String> used = new HashSet<String>();
@@ -97,13 +93,6 @@ public class DbMakerProcessor extends CommonProcessor {
 			while (it.hasNext()) {
 				GameType game = it.next();
 
-				// Check Replacement
-				String originalName = game.getName();
-				boolean replaced = checkReplacement(game, countryDelta);
-				if (!replaced) {
-					replaced = checkReplacement(game, regionDelta);
-				}
-
 				// Check if exist
 				boolean found = true;
 				if (!romMap.containsKey(game.getName())) {
@@ -129,16 +118,10 @@ public class DbMakerProcessor extends CommonProcessor {
 				if (menu.getFileName().startsWith(system)) {
 					// Main database
 					result.dbSize++;
-					if (replaced) {
-						result.nbReplaced++;
-						if (found && option.moveReplacedRoms) {
-							// Move replaced roms
-							RomUtilities.moveRomToReplaceFolder(originalName, system, detail);
-						}
-					}
+
 					if (!found) {
 						result.nbMissing++;
-						missings.add(originalName);
+						missings.add(game.getName());
 					} else {
 						used.add(game.getName());
 					}
@@ -153,7 +136,7 @@ public class DbMakerProcessor extends CommonProcessor {
 			// We move all not used roms
 			for (String rom : romMap.keySet()) {
 				if (!used.contains(rom)) {
-					RomUtilities.moveRomToNotUsedFolder(rom, system, detail);
+					RomUtilities.moveRomToNotUsedFolder(romMap.get(rom), system, detail);
 				}
 			}
 		}
@@ -208,39 +191,6 @@ public class DbMakerProcessor extends CommonProcessor {
 		File dir = new File(DatabaseUtilities.getDownloadedDatabaseDir(system));
 		File[] databases = dir.listFiles(new FileFilterExtension("xml"));
 		return databases;
-	}
-
-	private boolean checkReplacement(GameType game, Map<String, Delta> deltas) throws IOException {
-		if (deltas == null) {
-			return false;
-		}
-
-		boolean replaced = false;
-		// Try to replace name
-		Delta delta = deltas.get(game.getName());
-		if (delta != null) {
-			applyReplacement(game, delta);
-			replaced = true;
-		}
-
-		// Try to replace cloneof section
-		delta = deltas.get(game.getClass());
-		if (delta != null) {
-			game.setCloneof(delta.replacementName);
-		}
-		return replaced;
-	}
-
-	/**
-	 * 
-	 * @param game
-	 * @param delta
-	 */
-	private void applyReplacement(GameType game, Delta delta) {
-		game.setName(delta.replacementName);
-		game.setCrc("");
-		game.setDescription(game.getName());
-		replacedGames.add(delta);
 	}
 
 	/**

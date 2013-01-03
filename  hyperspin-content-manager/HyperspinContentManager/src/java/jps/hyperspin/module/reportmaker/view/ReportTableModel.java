@@ -124,9 +124,7 @@ public class ReportTableModel extends AbstractTableModel {
 	private String getMessage(DbMakerOption option) {
 		String result = "";
 		if (option != null) {
-			if (option.namingConventions != null) {
-				result += option.namingConventions;
-			}
+
 			if (option.noClone) {
 				result += " - no clones";
 			}
