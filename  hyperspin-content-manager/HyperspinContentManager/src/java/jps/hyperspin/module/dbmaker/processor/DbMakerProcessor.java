@@ -38,6 +38,10 @@ public class DbMakerProcessor extends CommonProcessor {
 	private Set<String> used = new HashSet<String>();
 
 	public static class DbMakerResult implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public long dbSize = 0;
 		public long nbMissing = 0;
 		public long nbClones = 0;

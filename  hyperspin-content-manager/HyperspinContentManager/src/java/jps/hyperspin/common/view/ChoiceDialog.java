@@ -19,6 +19,7 @@ import javax.swing.ListSelectionModel;
 
 public class ChoiceDialog extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private Object[] selections;
 	private JList list;
 	private JButton buttonOk;
@@ -32,8 +33,7 @@ public class ChoiceDialog extends JDialog implements ActionListener {
 	private boolean isOk = false;
 	private boolean isRemoved = false;
 
-	public ChoiceDialog(JFrame parent, String title, String message,
-			Object[] selections) {
+	public ChoiceDialog(JFrame parent, String title, String message, Object[] selections) {
 
 		super(parent, title, true);
 		this.selections = selections;
