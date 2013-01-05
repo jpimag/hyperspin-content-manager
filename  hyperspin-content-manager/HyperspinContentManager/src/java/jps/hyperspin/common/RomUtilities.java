@@ -64,7 +64,7 @@ public class RomUtilities {
 
 			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romNameWithoutExtension);
 			if (file.exists() && file.isDirectory()) {
-				file.renameTo(new File(destDir, romFileName));
+				file.renameTo(new File(destDir, romNameWithoutExtension));
 			}
 		}
 
