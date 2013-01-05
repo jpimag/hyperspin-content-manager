@@ -55,7 +55,13 @@ public class RomUtilities {
 			file.renameTo(new File(destDir, romFileName));
 		} else {
 			// Is the rom in a dedicated directory ?
-			String romNameWithoutExtension = romFileName.split("\\.")[0];
+			String romNameWithoutExtension = romFileName;
+			// Is there a file extension
+			int endIndex = romFileName.lastIndexOf(".");
+			if (endIndex != -1) {
+				romNameWithoutExtension = romFileName.substring(0, endIndex);
+			}
+
 			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romNameWithoutExtension);
 			if (file.exists() && file.isDirectory()) {
 				file.renameTo(new File(destDir, romFileName));
