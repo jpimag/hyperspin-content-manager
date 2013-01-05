@@ -3,10 +3,10 @@ package jps.hyperspin.module.dbdownloader.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+
 import jps.hyperspin.common.properties.IniProperties;
 import jps.hyperspin.exception.HCMDBadFileException;
 import jps.hyperspin.exception.HCMDatabaseException;
-
 
 public class SystemIniProperties {
 	private IniProperties iniProp = new IniProperties();
@@ -15,8 +15,7 @@ public class SystemIniProperties {
 
 	public SystemIniProperties(String hyperSpinPath, String inFileName) {
 
-		File iniFile = new File(hyperSpinPath + "/settings/" + inFileName
-				+ ".ini");
+		File iniFile = new File(hyperSpinPath + "/settings/" + inFileName + ".ini");
 		this.inFileName = inFileName;
 		try {
 			iniProp.load(new FileReader(iniFile));
@@ -33,17 +32,16 @@ public class SystemIniProperties {
 
 	}
 
-	public String getRomExtension() throws HCMDatabaseException {
+	public String[] getRomExtensions() throws HCMDatabaseException {
 		String romExtension = iniProp.getProperty("[exe info]", "romextension");
 		if (romExtension == null) {
-			throw new HCMDBadFileException(null,
-					"romExtension not found in ini file");
+			throw new HCMDBadFileException(null, "romExtension not found in ini file");
 		}
 		// Workaround for MAME. With MAME we have to include sub dir as rom.
 		if (inFileName.equals("MAME")) {
 			romExtension = "";
 		}
-		return romExtension;
+		return romExtension.split(",");
 
 	}
 

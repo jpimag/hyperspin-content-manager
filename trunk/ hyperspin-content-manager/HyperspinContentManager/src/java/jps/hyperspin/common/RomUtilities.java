@@ -55,7 +55,8 @@ public class RomUtilities {
 			file.renameTo(new File(destDir, romFileName));
 		} else {
 			// Is the rom in a dedicated directory ?
-			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romFileName);
+			String romNameWithoutExtension = romFileName.split("\\.")[0];
+			file = new File(detail.systemIniProperties.getRomPath() + File.separator + romNameWithoutExtension);
 			if (file.exists() && file.isDirectory()) {
 				file.renameTo(new File(destDir, romFileName));
 			}
@@ -75,11 +76,11 @@ public class RomUtilities {
 	private static Map<String, String> listRomsRec(String system, DatabaseDetail detail, File dir)
 			throws HCMDatabaseException {
 		Map<String, String> romList = new HashMap<String, String>();
-		String extension = detail.systemIniProperties.getRomExtension();
+		String[] extensions = detail.systemIniProperties.getRomExtensions();
 		if (dir.isDirectory()) {
 			File[] files;
-			if (extension != null && !extension.equals("")) {
-				files = dir.listFiles(new FileFilterExtension(extension));
+			if (extensions != null && !(extensions.length == 0) && !extensions[0].equals("")) {
+				files = dir.listFiles(new FileFilterExtension(extensions));
 			} else {
 				files = dir.listFiles();
 			}
@@ -89,10 +90,7 @@ public class RomUtilities {
 				if (index != -1) {
 					name = name.substring(0, index);
 				}
-				// exclude 'replaced' folder
-				if (!file.getName().equals("replaced")) {
-					romList.put(name, file.getName());
-				}
+				romList.put(name, file.getName());
 
 			}
 			for (File file : dir.listFiles(new FileFilterDirectory())) {

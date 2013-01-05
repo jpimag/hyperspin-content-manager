@@ -11,6 +11,10 @@ import jps.hyperspin.module.mediachecker.model.MediaCategoryEnum;
 import jps.hyperspin.module.mediachecker.processor.MediaCheckerProcessor.MediaCheckerResult;
 
 public class ReportRow implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String system;
 	public VersionStatut versionStatut;
 	public String version;
